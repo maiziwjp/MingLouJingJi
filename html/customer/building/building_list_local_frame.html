@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/btn_style.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../../css/lhf-index.css">
+    <style>
+	  html,body{height:100%;margin:0px;background: #f5f5f5;}
+      input,button{outline:none;}	
+      /* .lazyload-img{height:4.4rem;width:5.5rem;} */
+      .article{font-size:0.29rem;margin:0;margin-bottom:0.96rem;padding:0;}
+       p::-webkit-scrollbar{width:0;height:0}
+	  .sub_btn{color:#0af;}
+	  /* list */  
+	  .items{height:2.4rem;border-bottom: 1px solid #ccc;padding:0 0.3rem;background:white;}
+	  .items:after{content:'';display:inline-block;height:2.4rem;vertical-align: middle;}
+	  .items .img{width:2.8rem;display:inline-block;vertical-align: middle;} 
+	  .img img{width:2.8rem;height:2.0rem;display:inline-block;}
+	  
+	  .items .intro{width:3.3rem;display:inline-block;padding:0 0.2rem;vertical-align: middle;} 
+	  .items .checkbox{width:0.5rem;display:inline-block;vertical-align: middle;}
+	  p{overflow: auto;white-space:nowrap;}
+	  /* footer */
+	  footer{position: fixed;bottom:0;width:100%;color:white;font-size: 0.4rem;font-weight:600;height:0.96rem;line-height: 0.96rem;background: #F63F3F;}
+	  footer button{width:100%;text-align: center;}
+    </style>
+</head>
+<body>
+<article class="article" id="article">
+	<!-- <section class="items">
+	  <a href="javascript:void(0)" onclick="openframe(${item.id})" class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="http://www.minglou360.com${item.basePic}" src="../../../image/11.jpg" alt="">
+	  </a>
+	  <div class="intro"><strong>ttt</strong> <p class="price">均价： <span class="text-orange">19990元/m²</span></p>
+		  <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+		  <span class="label-black">佣金：13377</span>
+	  </div>
+	  <div class="checkbtn checkbox">
+	  	<input type="checkbox" name="buildingid" value="${item.id}" id="${item.id}"/><label class="text" for="${item.id}"></label>
+	  </div>
+	  <input type="hidden" name="time" value="${item.watchGuideDate}" />
+	</section>  -->
+</article>
+<footer>
+	<button onclick="record()">提&nbsp&nbsp交</button>
+</footer>
+  <!--定义juicer模板 -->
+<script type="text/template" id="tmp">
+	{@each datalist as item,index}
+	<section class="items">
+	  <a href="javascript:void(0)" onclick="openframe(${item.buildingid})" class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="${item.picurl}" src="../../../image/11.jpg" alt="">
+	  </a>
+	  <div class="intro"><strong class="buildingname">${item.buildingname}</strong> <p class="price">均价： <span class="text-orange">${item.avgprice}元/m²</span></p>
+		  <p>${item.address}</p>
+		  <span class="label-black">佣金：${item.commission}</span>
+	  </div>
+	  <div class="checkbtn checkbox">
+	  	<input type="checkbox" name="buildingid" value="${item.buildingid}" id="${item.buildingid}"/><label class="text" for="${item.buildingid}"></label>
+	  </div>
+	  <input type="hidden" name="time" value="${item.watchGuideDate}" />
+	</section>
+	{@/each}
+</script> 
+ <script type="text/javascript" src="../../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+  <script src="../../../script/img.js"></script>
+<!--模版引擎-->  
+  <script src="../../../script/juicer.js"></script>
+<!--ajax-->
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/btn.js"></script>
+<script>
+	//	触发图片懒加载
+    var imgs = new img({
+      class: 'lazyload-img', // img 样式名称
+      dataSrc: 'data-src',
+      size: '200x200', // cdn尺寸
+      sharpen: '100sh', // 锐化参数
+      q: '90q', // 图片质量,
+      lazyHeight: 0,
+      lazyWidth: 0,
+      fireEvent: 'scroll'
+    });
+    
+</script>
+<script type="text/javascript">
+    locked=false;
+	apiready = function  () {
+	    //获取数据
+		areaid=$api.getStorage("areaid");
+	    storeid=$api.getStorage("storeid");
+	    userid=$api.getStorage("userid");
+	    companyid=$api.getStorage("companyid");
+	    customerid=api.pageParam.customerid;
+	    
+	    container=document.getElementById("article");
+	    keyword='';
+	    pageNum=1;
+	    pageSize=10;
+	    locked=false;
+	    
+        /*初始化方法*/
+	    init();
+	    count();
+	    //下拉刷新
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	    	count();
+	        init();
+	        api.refreshHeaderLoadDone();
+	    });
+	    //下拉加载
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+        	pageNum++;
+	        getData();       
+	    });
+	}
+	
+	//count
+	function count(){
+	    $.ajax({
+		  type: 'GET',
+		  url:  ipAddress+'/record/localBuildingCount/'+customerid+'/'+userid,
+		  data: '',
+		  dataType: 'json',
+		  success: function(data){
+		    num=data.count;
+		  },
+		  error: function(xhr, type){
+		  }
+		  
+		})
+	}
+	
+	//初始化楼盘列表 分页参数
+	function init(){
+		pageNum=1;
+		container.innerHTML='';
+		getData();
+	}
+	
+	function search(key){
+		keyword=key;
+		init();
+	    locked=false;
+	}
+	
+	//获取本地楼盘列表
+	function getData(){
+        if(!locked){
+            locked=true;
+            console.log(ipAddress+'/building/bulidingList/'+areaid+'/'+customerid+'/'+pageNum+'/'+pageSize);
+		  	$.ajax({
+			  type: 'post',
+			  url:  ipAddress+'/building/bulidingList/'+areaid+'/'+customerid+'/'+pageNum+'/'+pageSize,
+			  data: {keyword:keyword},
+			  success: function(data){
+			  	console.log(JSON.stringify(data));
+			    datas=data;
+			    if(data.buildingList.objs.length>0)
+			    {
+				  	xuanran(data.buildingList.objs);
+				}
+				else if(pageNum==1)
+				{
+				    document.getElementById("article").innerHTML = '<p style="padding-top:0.3rem;text-align:center;color:#666;">对不起，找不到相关楼盘</p>';
+				}
+			    locked=false;
+			  },
+			  error: function(xhr, type){
+			  	locked=false;
+			  }
+			})
+		}
+	}
+	//渲染页面
+	function xuanran(data){
+		var tmp = document.getElementById("tmp").innerHTML;
+		var dataList={datalist:data};
+		console.log(JSON.stringify(data));
+	  	var result = juicer(tmp, dataList);
+		document.getElementById("article").innerHTML += result;
+		setTimeout(function () { imgs.fireLazyload(); }, 400);
+	}
+	
+	//全选  取消
+	function select_all(all){
+	    var inputs = document.getElementsByTagName('input');
+	    if(!all)
+	    {  
+			for(var i=0;i<inputs.length;i++)   
+			{   
+			   if(inputs[i].getAttribute('type')=='checkbox')   
+			   {   
+			   inputs[i].checked = true;   
+			   }   
+			}
+	    }
+		else
+		{
+		    for(var i=0;i<inputs.length;i++)   
+			{   
+			   if(inputs[i].getAttribute('type')=='checkbox')   
+			   {   
+			   inputs[i].checked = false;   
+			   }   
+			}
+		}
+	} 
+	
+	//报备楼盘
+	function record(){
+	  if(!locked)
+	  {
+	    locked=true; 
+	    var idArr=document.getElementsByName('buildingid');   
+	    var nameArr=document.getElementsByClassName('buildingname');
+	    var idArray = [];  
+	    var nameArray=[];
+	    //取出所有选中的楼盘的buildingid
+	    for(k in idArr){
+	        if(idArr[k].checked)
+	        {
+	            idArray.push(idArr[k].value);
+	            nameArray.push(nameArr[k].innerHTML);
+	        }
+	    }
+	    //判断所选楼盘加上已报备楼盘是否超过三个
+	    if(num+idArray.length<=3)
+	    {  
+	    	console.log(ipAddress+"/order/insert");
+		    $.ajax({            
+		         type: "post",
+		         url: ipAddress+"/order/insert",
+		         dataType: "json",
+		         traditional: true,
+		         data: {
+		             puserid:companyid,storeid:storeid,userid:userid,customerid:customerid,
+                     tagid:areaid,buildingidArr:idArray,buildingnameArr:nameArray,notes:''
+		         },                              
+		         success: function(data){
+		             if(data.code=="200")
+		                 api.toast({
+		                     msg:data.msg
+	                     });
+	                 else{
+	                     api.toast({
+		                     msg:data.msg
+	                     });
+	                 }
+	                 api.execScript({
+	                     name : 'root',
+	                     frameName : 'frame1',
+	                     script : 'init();'
+	                 });
+	                 locked=false;
+	                 setTimeout("api.closeWin();",2000); 
+		         },
+		         error:function(){
+		         alert("error");
+		             locked=false;
+		         }
+		    });
+		 }
+		 else
+		 {
+		     alert("本地报备最多不超过3个，您之前已经报备了"+num+"个楼盘");
+		     locked=false;
+		 }
+	  }
+    }
+    
+ 
+	
+	
+	//打开其他页面
+	 function openframe(id){
+	    api.openWin({
+	        name: 'building.detail_win',
+	        url: '../../building/building.detail_win.html',
+	        pageParam: {
+		        buildingid: id
+		    }
+        });
+	}
+</script>
+</body>
+</html>

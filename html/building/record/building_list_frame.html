@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/btn_style.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../../css/lhf-index.css">
+  <style>
+	  html,body{height:100%;margin:0px;background: #f5f5f5;}
+      input,button{outline:none;}	
+      /* .lazyload-img{height:4.4rem;width:5.5rem;} */
+      .article{font-size:0.29rem;margin:0;margin-bottom:0.96rem;padding:0;}
+       p::-webkit-scrollbar{width:0;height:0}
+	  .sub_btn{color:#0af;}
+	  /* list */  
+	  .items{height:2.4rem;border-bottom: 1px solid #ccc;padding:0 0.3rem;background:white;}
+	  .items:after{content:'';display:inline-block;height:2.4rem;vertical-align: middle;}
+	  .items .img{width:2.8rem;display:inline-block;vertical-align: middle;} 
+	  .img img{width:2.8rem;height:2.0rem;display:inline-block;}
+	  
+	  .items .intro{width:3.3rem;display:inline-block;padding:0 0.2rem;vertical-align: middle;} 
+	  .items .checkbox{width:0.5rem;display:inline-block;vertical-align: middle;}
+	  p{overflow: auto;white-space:nowrap;}
+	  /* footer */
+	  footer{position: fixed;bottom:0;width:100%;color:white;font-size: 0.4rem;font-weight:600;height:0.96rem;line-height: 0.96rem;background: #F63F3F;}
+	  footer button{width:100%;text-align: center;}
+    </style>
+</head>
+<body>
+<div id="connector-remark">
+	<div class="erasable"><input placeholder="搜索" id="search" class="search_input" oninput="search(this)"/><img src="../../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div>
+	<button onclick="openrecommemd()" class="sub_btn" >提交</button>
+</div>
+<article class="article" id="article">
+</article>
+  <!--定义juicer模板 -->
+<!-- <script type="text/template" id="tmp">
+	{@each  bulidingList as item,index}
+	<section class="items">
+	  <a href="javascript:void(0)"  class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="http://www.minglou360.com${item.basePic}" src="../image/11.jpg" alt="">
+	  </a>
+	  <div class="intro"><strong class="name">${item.buildingName}</strong> <p class="price">均价： <span class="text-orange">${item.priceAvg}元/m²</span></p>
+		  <p>${item.address}</p>
+		  <span class="label-black" class="commission">佣金：${item.commission}</span>
+	  </div>
+	  <div class="checkbox">
+	      <input type="checkbox" name="buildingid" value="${item.id}"/>
+	  </div>
+	  <input type="hidden" name="time" value="${item.watchGuideDate}" />
+	</section>
+	{@/each}
+</script>  -->
+<script type="text/template" id="tmp">
+	{@each objs as item,index}
+	<section class="items">
+	  <a href="javascript:void(0)" onclick="" class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="http://www.minglou360.com:8080/minglouapp/resources/buildingfiles/B1.png" src="../../../image/11.jpg" alt="">
+	  </a>
+	  <div class="intro"><strong name="buildingname">${item.buildingname}</strong> <p class="price">均价： <span class="text-orange">${item.avgprice}元/m²</span></p>
+		  <p>${item.address}</p>
+		  <span class="label-black">佣金：${item.commission}%</span>
+	  </div>
+	  <!-- <div class="checkbox">
+	      <input type="checkbox" name="buildingid" value="${item.id}"/>
+	  </div> -->
+	  <div class="checkbox">
+	      <input type="checkbox" name="buildingid" value="${item.buildingid}"/>
+	  </div>
+	</section>
+	{@/each} 
+</script>
+ <script type="text/javascript" src="../../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+  <script src="../../../script/img.js"></script>
+<!--模版引擎-->  
+  <script src="../../../script/juicer.js"></script>
+<!--ajax-->
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/btn.js"></script>
+<script>
+	//	触发图片懒加载
+    var imgs = new img({
+      class: 'lazyload-img', // img 样式名称
+      dataSrc: 'data-src',
+      size: '200x200', // cdn尺寸
+      sharpen: '100sh', // 锐化参数
+      q: '90q', // 图片质量,
+      lazyHeight: 0,
+      lazyWidth: 0,
+      fireEvent: 'scroll'
+    });
+    
+</script>
+<script type="text/javascript">
+    locked=false;
+    searchlocked=false;
+	apiready = function  () {
+	    /* 初始化变量 */
+        companyid=$api.getStorage("companyid");
+	    storeid=$api.getStorage("storeid");
+	    userid=$api.getStorage("userid");
+	    mobile=api.pageParam.mobile;
+	    tagid=$api.getStorage("areaid");
+	    pageNum=1;
+	    pageSize=10;
+	    article=document.getElementById("article");
+	    customerid=api.pageParam.customerid;
+
+	    /* 初始化方法 */
+	    getData(true);
+	    
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	        locked=false;
+	        init();
+	        getData(false);
+	        api.refreshHeaderLoadDone();
+	    });
+	    
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+        	pageNum++;
+	        getData(true);       
+	    });
+	}
+	
+	function init(){
+		article.innerHTML="";
+		pageNum=1;
+	}
+	
+	function openrecommemd(){
+		var idarr=document.getElementsByName('buildingid');
+		var namearr=document.getElementsByName('buildingname');
+		//alert(JSON.stringify(namearr[1].innerHTML));
+		var idArray = [];
+		var nameArray=[];
+	    for(k in idarr){
+	        if(idarr[k].checked)
+	        {
+	            idArray.push(idarr[k].value);
+	            nameArray.push(namearr[k].innerHTML);
+	        }
+	    }
+	    //alert(nameArray);
+	    //alert(idArray.length);
+		if(idArray.length > 3)
+		{
+			api.toast({
+	            msg:'最多报备三个楼盘'
+            });
+		}
+		else
+		{
+		    var param=JSON.stringify(idArray);
+		    var buildingname=JSON.stringify(nameArray);
+		    var method='getBuilInfo('+param+','+buildingname+')';
+			api.execScript({
+	            name : 'recommend_cus_win',
+	            frameName : 'recommend_cus_frame',
+	            script : method
+	        });
+	        api.closeWin();
+        }
+	}
+	
+	
+	function getData(asyn){			
+	//	var customerid=0;
+		customerid=api.pageParam.customerid;
+        if(!locked){
+            locked=true;
+            var keyword=document.getElementById("search").value;
+		  	$.ajax({
+			  type: 'post',
+			  async: asyn,
+			  url:  ipAddress+'/building/bulidingList/'+tagid+'/'+customerid+'/'+pageNum+'/'+pageSize,
+			  data: {"keyword":keyword},
+			  success: function(data){
+			  	console.log(JSON.stringify(data));
+			    	var tmp = document.getElementById("tmp").innerHTML;
+			  	if(data.buildingList.objs.length>0){
+				  	var result = juicer(tmp, data.buildingList);
+				  	if(pageNum==1)
+				  	{
+					    document.getElementById("article").innerHTML = result;					    
+					}
+					else
+					    document.getElementById("article").innerHTML += result;
+			    	}
+			    	else if(pageNum==1)
+			    	{
+			        	document.getElementById("article").innerHTML='<p style="text-align:center;font-size:0.3rem;color:#999;">该项暂未开放</p>';
+			    	}
+		    		var pic =document.getElementsByClassName("lazyload-img")[0].src="http://192.168.8.111:8080/minglouapp/resources/buildingfiles/B"+data.buildingList.objs[0].buildingid+".png";
+		   
+		    		
+			  	if (data.buildingList.pageOffset < data.buildingList.pageCount) {
+		        	locked=false;
+		        	pageNum ++;
+		      	} else {
+		        	locked = true;
+		      	}
+
+			  	setTimeout(function () { imgs.fireLazyload(); }, 400); 			    
+			  },
+			  error: function(xhr, type){
+			  alert("数据异常");
+			  }
+			})
+		}
+	}
+	function xuanran(){
+		var tmp = document.getElementById("tmp").innerHTML;
+	  	var result = juicer(tmp, {bulidingList:bulidingList});
+		article.innerHTML += result;
+		setTimeout(function () { imgs.fireLazyload(); }, 400);
+	} 	
+	
+	
+	function hunt(){
+   		var key=document.getElementById("search").value;
+        init();
+        getData(false);
+    }
+     
+    
+    
+    function search(elem){
+    	showclear(elem);
+        if(!searchlocked)
+        {
+            searchlocked=true;
+            setTimeout("hunt()",200);
+            searchlocked=false;
+	    }
+    }
+</script>
+</body>
+</html>

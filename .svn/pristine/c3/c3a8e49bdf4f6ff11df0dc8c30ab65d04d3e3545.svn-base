@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>个人资料</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/icon1.css">
+    <style> 
+        input,label,select{font-size: 0.32rem;}
+        input,button,select,textarea{outline:none;margin:0px;padding: 0;}
+        div{padding: 0;margin: 0;font-size:0.32rem;}
+        button{font-size: 0.38rem;}
+        textarea{resize:none}  
+        .intro{width:4.3rem;}
+        .my_item{background: white;padding:0 0.3rem;border-bottom: 1px solid #cccccc;height:1.2rem;width:100%;font-size: 0.28rem;}
+        .my_item:after{content:'';height:0.9rem;width:0;vertical-align: middle;display:inline-block;}
+        .my_item > *{vertical-align: middle;}
+        .my_item input,.item select{height:0.4rem;width:4.0rem;}
+        .my_item label{display:inline-block;width:2.0rem;}
+        .clearfix:after{content:"";display:block;height:0;clear:both;}
+		.my_item .area{width:0.9rem;height:0.4rem;text-align: right;}
+		.my_item .source{width:2.0rem;}
+		.dkr{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+		.remark{height:6.0rem;}
+		textarea{height:6.0rem;}
+		
+		.add_btn{display: block;width:6.7rem;margin:auto;background: #F63F3f;color:white;height:1.1rem;
+		   line-height: 1.1rem;
+		   border-radius: 0.22rem;
+		   margin-bottom: 0.40rem;
+		   margin-top:0.8rem;
+		}
+		
+		.red{
+		    color:red;
+		}
+		.item{margin-top: 0.2rem;}
+    </style>
+</head>
+<body class="bg-gray">
+  <div class="item">
+      <div class="my_item"><label class="dkr">姓名<span class="red">*</span></label><input   id="name" value="" placeholder="请填写姓名 必填"/></div>
+      <div class="my_item"><label class="dkr">手机号码<span class="red">*</span></label><input id="mobile" disabled="disabled"/></div>
+      <div class="my_item" style="display: none;"><label  class="dkr">密码<span class="red">*</span></label><input value="" id="password" type="password" placeholder="请填写密码"/></div>
+      
+      </div>
+      <div class="my_item" ><label  class="dkr">门店编号<span class="red">*</span></label><input id="storesn" value="" placeholder="输入所在门店的编号" oninput="getunitName()" /></div>
+      <div class="my_item" ><label  class="dkr">单位<span class="red">*</span></label><span id="unitName"  ></span></div>
+  </div>
+  <div class="item">
+      <div class="my_item"><label class="dkr">用户名</label><input id="username" value="" disabled="disabled"/></div>
+  </div>
+  <div>
+      <button class="add_btn" onclick="updateuser()">提交</button>
+  </div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<script type="text/javascript">
+	apiready = function () {
+         api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+         });
+         username=$api.getStorage('username');
+         userid=$api.getStorage('userid');
+		 companyid=$api.getStorage("companyid")*1;
+  	     storeid=$api.getStorage("storeid")*1;
+         getdata(userid);
+    }
+
+    
+    function getdata(id){
+    	userid=id;
+        $.ajax({
+		  type: 'post',
+		  url:  ipAddress+'/agent/getinfo',
+		  data: {userid:userid},
+		  success: function(data){
+		     document.getElementById("mobile").value=data.user.username;
+		     document.getElementById("username").value=data.user.username;
+             document.getElementById("password").value=data.user.password; 
+             document.getElementById("name").value=data.user.realname;
+			
+             document.getElementById("storesn").value=data.user.storeid;
+             if($api.getStorage("companyid")=="")
+                 document.getElementById("unitName").innerHTML="";
+             else
+             {
+             	getunitName();
+             }
+             user=data.user;
+		  }
+	  })
+    }
+    
+    //点击提交
+    function updateuser(){
+    	 //姓名是否输入
+         if(document.getElementById("name").value=="")
+         {
+             document.getElementById("name").focus();
+             api.toast({
+	             msg:'请输入姓名'
+             });
+         }
+         //门店编号是否存在
+         else if(document.getElementById("storesn").value=="")
+         {
+             document.getElementById("storesn").focus();
+             api.toast({
+	             msg:'请输入门店编号'
+             });
+         }
+         else
+         {
+             user.realname=document.getElementById("name").value;
+             user.username=document.getElementById("username").value;
+             storesn=document.getElementById("storesn").value;
+             if(storesn!="")
+	         {
+	             $.ajax({
+					  type: 'get',
+					  url:  ipAddress+'/partner/checkstoreid/'+storesn,
+					  data:{},
+					  success: function(data){
+					      if(data.code==-1)
+					      {
+					          document.getElementById("storesn").value="";
+					          api.toast({
+		                          msg:data.msg
+	                          });
+					      }
+					      else if(data.code==1){
+					      	  //改变经纪人对应的信息
+					      	  data=data.store;
+					      	  user.areatag=data.areatag;
+					          user.storeid=data.storeid;
+					          document.getElementById("unitName").innerHTML=data.storename;
+					          update();
+					      }
+					  }
+				  })
+		      }
+			  else
+			  {
+			      if(storesn=="")
+			      update();
+			  }
+		}
+    }
+    
+    //更新信息    并改变storage的值
+    function update(){
+      console.log("user:"+JSON.stringify(user));
+      $.ajax({
+		  type: 'post',
+		  url:  ipAddress+'/agent/update',
+		  data: {user:JSON.stringify(user)},
+		  dataType: 'json',
+		  success: function(data){
+		  	  $api.setStorage('realname',document.getElementById("name").value)
+		      //改变我的页面的经纪人姓名
+		  	  api.execScript({
+			    name: 'root',
+			    frameName: 'frame2',
+			    script: "init()"
+			  });
+		      api.toast({
+	              msg:data.msg
+	          });
+	          setTimeout("api.closeWin();",1000);
+		  }
+	  })
+    }
+    
+    
+    //判断门店编号是否存在   并且获取门店信息
+    function getunitName(){
+        var selem=document.getElementById("storesn");
+        //alert(selem.value);
+        if(selem.value.length==7)
+        { 
+	    	$.ajax({
+			  type: 'get',
+			  url:  ipAddress+'/partner/checkstoreid/'+selem.value,
+			  data:{},
+			  success: function(data){
+			  	  console.log(JSON.stringify(data));
+		          document.getElementById("unitName").innerHTML=data.store.storename;	
+		          if(data.code==1)	
+		          {
+			          $api.setStorage('companyid',data.store.parentid);
+		  	     	  $api.setStorage('storeid',data.store.storeid);
+			  	      $api.setStorage('areaid',data.store.areatag);   
+			  	      $api.setStorage('storename',data.store.pusername);   
+		  	      }
+			  },
+			  error: function(xhr, type){
+			      alert("网络或服务器出错！");
+			  }
+		    })
+	    }
+    }
+</script>
+</html>

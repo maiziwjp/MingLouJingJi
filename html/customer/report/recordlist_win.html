@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>合作楼盘</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+  <link rel="stylesheet" href="../../../css/stylesheet/index.css">
+  <link rel="stylesheet" href="../../../css/stylesheet/icon1.css">
+  <style>
+  html, body {height: 100%;background: #000;margin:0;}
+  .body{height:100%;background:#f0f0f0;position:fixed;top:30px;width:100%;}
+  #connector{background: white;text-align: center;height:45px;line-height: 45px;border-bottom: 1px solid #ececec;}
+  .fl{float:left;}
+  span{font-size:0.37rem;}
+  .icon{color:#0588ff;font-size:0.35rem;}
+  
+  #connector{font-size:0.36rem}
+  .choose{background:white;height:45px;line-height: 45px;width: 7.5rem; font-size: 0;display: -webkit-box;display: -webkit-flex;-webkit-flex-flow: row;}
+  .my_item{-webkit-box-flex:1.0;-webkit-flex:1;font-size: 0.26rem;font-size:14px; box-sizing: border-box;text-align: center;color: #0588ff;}
+  </style>
+</head>
+<body >
+  <div class="body" id="header">
+      <header id="connector">
+		<span class="icon icon-back fl" onclick="api.closeWin();"></span>
+	    <span>楼盘备案详情</span>
+	  </header>
+      <div class="choose" id="distant">
+          <div class="my_item" onclick="choose(1,this)">本地楼盘</div>
+          <div class="my_item" onclick="choose(2,this)">异地楼盘</div>
+      </div>
+  </div>
+
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<script>
+    apiready = function  () {
+        /* 状态栏高度获取 */
+		headerHeight=0; 
+	    var header=document.getElementById("header");
+	    var systemType = api.systemType;
+	    height=document.getElementById("connector").offsetHeight+document.getElementById("distant").offsetHeight;
+		if(systemType == "ios")
+		{
+		    header.style.top="20px";
+		    headerHeight=20;
+		}
+		else
+		{
+			header.style.top="25px";
+		    headerHeight=25;
+		}
+		//初始化参数
+	    userid=$api.getStorage("userid");
+	    customerid=api.pageParam.customerid;
+	    mycustomerid=api.pageParam.mycustomerid;
+	    customerName=api.pageParam.customerName;
+	    //初始化方法 
+	    choose(1);  
+	}
+	
+	var recordlist=document.getElementsByClassName("my_item");
+	function choose(k){
+	    for(var i=0;i<recordlist.length;i++)
+	    {
+	        recordlist[i].style.borderBottom="1px solid #ececec";
+	        recordlist[i].style.color="#000";
+	    }
+	    recordlist[k-1].style.borderBottom="3px solid #0588ff";
+	    recordlist[k-1].style.color="#0588ff";
+	    kind=k;
+	    for(var i=1;i<=2;i++)
+	    {
+	        api.setFrameAttr({
+			    name: 'recordlist_frame'+i,
+			    hidden:true,
+			});
+	    }
+	    api.openFrame({
+	        name: 'recordlist_frame'+k,
+	        url: './recordlist_frame'+k+'.html',
+	        rect: {
+		        x:0,
+		        y:headerHeight+height,
+		        w:'auto',
+	        },
+	        pageParam: {
+	        	customerid:customerid,
+	        	customerName:customerName
+		    },
+        });
+	}
+	
+  
+</script>
+</body>
+</html>

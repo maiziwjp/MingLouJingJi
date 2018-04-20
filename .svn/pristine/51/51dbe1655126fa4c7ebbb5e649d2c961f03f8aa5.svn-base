@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>添加客户</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+    <style>
+        body{margin:none;}
+        input,button,select,textarea{outline:none;margin:0px;padding: 0;}
+        div{padding: 0;margin: 0;font-size: 0.31rem;}
+        textarea{resize:none}  
+        .clearfix:after{content:"";display:block;height:0;clear:both;}
+        /*  */
+        .contacts{float:right;color:#0089FF;}
+        .contacts:active{background: rgba(0,0,0,0.1)}
+        .contacts img{height:0.3rem;vertical-align: middle;}
+        .contacts span{vertical-align: middle;}
+		/* list */
+        .my_item{background: white;padding:0.22rem 0.3rem;border-bottom: 1px solid #cccccc;height:0.9rem;}
+        .division{padding:0 0.3rem;height:0.8rem;line-height:0.8rem;}
+        .my_item label{display:inline-block;width:1.8rem;}
+        .my_item input,.item select{ height:0.45rem;width:4.5rem;}
+		.my_item .source{width:1.2rem;}
+		#state{width:1.5rem;}
+		.remark{width:100%;background: white;line-height:0.45rem;padding:0.22rem 0.45rem;margin-bottom:0.45rem;min-height:0.9rem;}
+		.add_btn{display: block;width:6.7rem;color:white;font-size: 0.4rem;font-weight:600;height:0.96rem;line-height: 0.96rem;margin:auto;background: #f63f3f;border-radius: 0.1rem;margin-bottom: 0.40rem;}
+		.red{color:red;}
+		#tradeType,#tradeStage{width:1.8rem;}
+		#othercity{width:3.0rem;padding-left:0.3rem;}
+		#remark{outline:none;-webkit-user-select:text;}
+		.body{margin-top:0.45rem;}
+		
+    </style>
+</head>
+<body class="bg-gray">
+  <div class="division"><span>必填项</span><button class="contacts" onclick="opencotacts()" ><img src="../../icon/contacts.png"/><span>通讯录中添加</span></button></div>
+  <div class="">
+      <div class="my_item"><label><span class="red">*</span>姓名</label><input  id="name" value="" placeholder="请填写姓名 必填"/></div>
+      <div class="my_item"><label><span class="red">*</span>手机号码</label><input id="mobile" value="" placeholder="请填写手机" oninput="checkmobile()"/></div>
+      <div class="my_item"><label style="float: left; "><span class="red">*</span>购房区域</label>
+      	<P id="no" style="float: left; ">
+        <span  id="selcity" placeholder="请点击选择城市"  onclick="fnOpens()">杭州</span>
+	    <input style="display: none;" id="othercity" placeholder="请输入所在城市" value=""/>
+	    <span id="requiredArea" name="gender" style="display: none;"></span>
+	    </p>
+      </div>
+      <!-- <div class="my_item"><label>报备楼盘：</label><label class="fr">+</label></div> -->
+  </div>
+  <div class="division">选填项</div>
+  <div class="">
+      <div class="my_item"><label>性别</label><select id="gender" name="gender" >
+              <option value="男">男</option><option value="女">女</option>
+		  </select>
+      </div>
+      <div class="my_item"><label>电话</label><input name="tel" id="tel" value="" placeholder="请填写其他联系方式"/></div>
+  </div>
+  <div class="">   
+	  <div class="my_item"><label>客户来源</label><select id="source" class="source">
+              <option value="来电">来电</option><option value="来访">来访</option>
+              <option value="中介">中介</option><option value="朋友">朋友</option><option value="广告">广告</option>
+              <option value="扫街">扫街</option><option value="网络">网络</option><option value="搜房">搜房</option>
+              <option value="口碑">口碑</option><option value="不明">不明</option>
+		    </select>
+      </div>
+      <div class="my_item"><label>客户质量</label><select id="state" class="source" >
+              <option value="0">无效客户</option><option value="1" selected="selected">一般客户</option><option value="2">优质客</option><option value="3">水客</option><option value="4">黑客</option>
+		    </select> 
+      </div>
+      <div class="my_item"><label>交易类型</label><select id="tradeType" >
+              <option value="求购">求购</option><option value="求租">求租</option><option value="出租">出租</option><option value="出售">出售</option>
+		  </select>
+	  </div>
+  </div>
+  <div class="division">备注</div>
+  <div class="remark">
+      <div contenteditable="true" name="remark" id="remark"></div>
+  </div>
+  <div>
+      <button class="add_btn" onclick="addcustomer()" type="button">提&nbsp&nbsp交</button>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/zepto.js"></script>
+<script src="../../script/global_variables.js"></script>
+<script type="text/javascript">
+var UIMultiSelector;
+	apiready = function(){
+		UIMultiSelector = api.require('UIMultiSelector');
+        api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+        contacts = api.require('contacts');
+        locked=false;
+	    userid=$api.getStorage("userid");
+  	    storeid=$api.getStorage("storeid");
+	};
+	function fnOpens(){
+	     var itemArr = [];
+			$.ajax({
+		  type: 'GET',
+		  url:  ipAddress+'/areatag/getlist',
+		  data: '',
+		  dataType: 'json',
+		  success: function(data){
+			console.log(JSON.stringify(data));
+			var arrlist=data.arealist;
+			
+			for(var i=0;i<arrlist.length;i++)
+			{
+			
+                        
+                  var obj = {
+                              text : arrlist[i].tagname,
+                              static : 'normal',
+                            }
+                  itemArr.push(obj);
+                  console.log(itemArr);
+			}
+			UIMultiSelector.open({
+				rect : {
+					h : api.winHeight / 2 //（可选项）数字类型；模块的高度；默认：244
+				},
+				text : {
+					title : '区域多选', //（可选项）字符串类型；模块左上按钮和右上按钮中间显示的标题文字，若不传则不显示
+					leftBtn : '取消', //（可选项）字符串类型；模块左上按钮的显示文字；默认：取消
+					rightBtn : '完成', //（可选项）字符串类型；模块右上按钮的显示文字；默认：完成
+					selectAll : '全选' //（可选项）字符串类型；模块的全选项文字；默认：全选
+				},
+				max : 3, //最多允许同时选中的项数，0 时可选中所有项
+				 styles: {
+                        bg: '#fff',                        //（可选项）字符串类型；主体的背景，支持 rgb，rgba，#，widget://，fs://；默认：#fff
+                    mask: 'rgba(0,0,0,0.2)',           //（可选项）字符串类型；遮罩层的背景，支持 rgb、rgba、#、img；默认：rgba(0,0,0,0)
+                    title: {                           //（可选项）JSON 类型；标题栏样式；默认：见内部字段
+                        bg: '#fff',                    //（可选项）字符串类型；标题栏的背景，支持 rgb、rgba、#、img；默认：#ddd
+                        color:'#333',                  //（可选项）字符串类型；标题字体颜色，支持 rgb、gba、#；默认：#444
+                        size: 16,                      //（可选项）数字类型；标题字体大小；默认：16
+                        h: 40                        //（可选项）数字类型；标题栏的高度；默认：44
+                    },
+                    leftButton: {                      //（可选项）JSON 类型；左上角按钮样式；默认：见内部字段
+                        bg: 'rgba(0,0,0,0)',                    //（可选项）字符串类型；按钮的背景，支持 rgb、rgba、#、img；默认：#f00
+                        w: 80,                         //（可选项）数字类型；按钮的宽度；默认：80
+                        h: 36,                         //（可选项）数字类型；按钮的高度；默认：35
+                        marginT: 2,                    //（可选项）数字类型；按钮的上边距；默认：5
+                        marginL: 5,                    //（可选项）数字类型；按钮的左边距；默认：8
+                        color: '#999',                 //（可选项）字符串类型；按钮的文字颜色，支持 rgb、rgba、#；默认：#fff
+                        size: 14                       //（可选项）数字类型；按钮的文字大小；默认：14
+                    },
+                    rightButton: {                     //（可选项）JSON 类型；右上角按钮样式；默认：见内部字段
+                        bg: 'rgba(0,0,0,0)',                    //（可选项）字符串类型；按钮的背景，支持 rgb、rgba、#、img；默认：#0f0
+                        w: 80,                         //（可选项）数字类型；按钮的宽度；默认：80
+                        h: 36,                         //（可选项）数字类型；按钮的高度；默认：35
+                        marginT: 2,                    //（可选项）数字类型；按钮的上边距；默认：5
+                        marginR: 5,                    //（可选项）数字类型；按钮的右边距；默认：8
+                        color: '#16a085',                 //（可选项）字符串类型；按钮的文字颜色，支持 rgb、rgba、#；默认：#fff
+                        size: 14                       //（可选项）数字类型；按钮的文字大小；默认：14
+                    },
+                    item: {                            //（可选项）JSON 类型；每个选项的样式；默认：见内部字段
+                        h: 40,                         //（可选项）数字类型；按钮的高度；默认：35
+                        bg: '#fff',                    //（可选项）字符串类型；选项的背景，支持 rgb、rgba、#、img；默认：#fff
+                        bgActive: '#f4f4f4',              //（可选项）字符串类型；已选中选项的背景，支持 rgb、rgba、#、img；默认：bg
+                        bgHighlight: '#f4f4f4',           //（可选项）字符串类型；选项的高亮背景，支持 rgb、rgba、#、img；默认：bg
+                        color: '#666',                 //（可选项）字符串类型；选项的文字颜色，支持 rgb，rgba，#；默认：#444
+                        active: '#16a085',                //（可选项）字符串类型；已选中选项的文字颜色，支持 rgb、rgba、#；默认：color
+                        highlight: '#16a085',             //（可选项）字符串类型；选项的高亮文字颜色，支持 rgb、rgba、#；默认：color
+                        size: 14,                      //（可选项）数字类型；选项的文字大小；默认：14
+                        lineColor: '#e6e6e6',             //（可选项）字符串类型；分隔线的颜色，支持 rgb、rgba、#；默认：rgba(0,0,0,0)
+                        textAlign: 'center'              //（可选项）字符串类型；选项文字的对齐方式，'left|center|right'，当值为 left 或 right 时文字会根据情况空留 icon 已占的位置；默认：left
+                    },
+                    icon:{
+                            w: 0,
+                                h: 0,
+                                marginT: 0,
+                                marginH: 0,
+                                bg:'#f4f4f4',
+                                align:'left'
+                    }
+				},
+				animation : true,
+				items : itemArr
+			}, function(ret, err) {
+				if ( ret.eventType === 'clickRight') {
+					document.getElementById("selcity").innerHTML='';
+				    for(var i=0;i<ret.items.length;i++)
+				    {
+				    	    document.getElementById("selcity").style.display="inline-block";
+				    		document.getElementById("othercity").style.display="none";
+				    	   	if(i<ret.items.length-1)
+				    	   	{
+				    			
+				    			document.getElementById("selcity").innerHTML+=ret.items[i].text+"|";
+				    		}
+				    		else
+				    		{
+				    			
+				    			document.getElementById("selcity").innerHTML+=ret.items[i].text;
+				    		}
+				    }
+				    	document.getElementById("requiredArea").value=document.getElementById("selcity").innerHTML;
+				    					fnClose();
+					
+				} else if(ret.eventType === 'clickLeft'){
+					fnClose();
+                   //alert(JSON.stringify(err));
+				}else
+				{}
+			});
+		
+		  },
+		  error: function(xhr, type){
+		    alert("error");
+		  }
+		})
+		
+			}
+		function fnShow() {
+			UIMultiSelector.show();
+		}
+		function fnHide() {
+			UIMultiSelector.hide();
+		}
+		function fnClose() {
+			UIMultiSelector.close();
+		}
+	
+	//打开通讯录
+	function opencotacts(){
+		
+		api.openContacts(function(ret, err){
+	          if(ret.status){
+	               document.getElementById("name").value=ret.name||ret.fullName||"";
+			       document.getElementById("mobile").value=ret.phone||ret.phones["住宅"]||"";
+	               //document.getElementById("tel").value=ret.phones[1]&&ret.phones[1].phone||"";
+	          }else{
+				   api.alert({msg:'用户取消'});
+	          }
+       });
+	}
+	
+	//检查是否输入完整
+	function addcustomer(ev){
+	    getdata();
+	    if(name=="")
+	    {
+	        document.getElementById("name").focus();
+	        api.toast({
+	            msg:'请填写姓名',
+	            location:'top'
+            });
+	    }
+	    else  if(mobile=="")
+	    {
+	        document.getElementById("mobile").focus();
+	        api.toast({
+	            msg:'请填写手机号码',
+	            location:'top'
+            });
+	    }
+	    else if(!(/^[0-1]\d{0,15}$/.test(mobile)))
+	    {
+	        api.toast({
+	            msg:'手机格式不正确',
+	            location:'top'
+            });
+            document.getElementById("mobile").focus();
+	    }
+	    else  if(requiredArea=="")
+	    {
+	        document.getElementById("requiredArea").focus();
+	        api.toast({
+	            msg:'请填写房源区域',
+	            location:'top'
+            });
+	    }
+	    else  if(requiredArea=="手写"&&!document.getElementById("othercity").value)
+	    {
+	        document.getElementById("othercity").focus();
+	        api.toast({
+	            msg:'请填写房源区域',
+	            location:'top'
+            });
+	    }
+	    else{
+	        if(!locked)
+	        {
+	            locked=true;
+			    checkmobile(false);
+			    if(code==1)
+			    {
+			    	if(requiredArea=="手写")
+			    		requiredArea=document.getElementById("othercity").value;
+			        add();
+			    }
+			    locked=false;
+			}
+	    }
+	}
+	
+	//获取用户输入的客户信息
+	function getdata(){
+	    name=document.getElementById("name").value;
+	    state=document.getElementById("state").value;
+	    gender=document.getElementById("gender").value;
+	    mobile=document.getElementById("mobile").value;
+	    tel=document.getElementById("tel").value;
+	    rank=1;
+	    tradeType=document.getElementById("tradeType").value;
+	    tradeStage="";
+	    source=document.getElementById("source").value;
+	    remark=document.getElementById("remark").innerHTML;
+	    requiredArea = document.getElementById("requiredArea").value||document.getElementById("othercity").value;
+	}
+	
+	//添加客户
+	function add(){
+		if(!locked)
+		{
+			locked=true;
+		    $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/mycustomer/add',
+				  async:false,
+				  data:{
+				  	storeid:storeid,
+				  	userid:userid,
+					username:mobile,
+					telphone:tel,
+					reqloc:requiredArea,
+					gender:gender,
+					realname:name,
+					source:source,
+					type:state,
+					perfer:tradeType,
+					notes:remark
+				  },
+				  success: function(data){
+				    if(data.code=="200")
+				    {
+					    var jsfun = 'init()';
+						api.execScript({
+						    name: 'root',
+						    frameName: 'frame1',
+						    script: jsfun
+						});
+						api.toast({
+		                    msg:data.msg
+	                    });
+					    setTimeout("api.closeWin();",2000); 
+				    }
+				    locked=false;
+				  },
+				  error: function(xhr, type){
+				  	alert("error");
+				    locked=false;
+				  }
+			})
+		 }
+	}
+	
+	//手机号查重
+	function checkmobile(async){
+	    var mobile=document.getElementById("mobile").value;
+	    console.log(storeid);
+	    $.ajax({
+		  type: 'get',
+		  url: ipAddress+'/account/checkmobile/'+mobile+'/'+storeid+'/'+userid,
+		  async:async,
+		  data:{},
+		  success: function(data){
+		  	code=data.code;
+		    if(data.code==-1||data.code==2||data.code=="500")
+		    {
+		        document.getElementById("mobile").focus();
+		        api.toast({
+                    msg:data.msg,
+                    location:'top'
+                });
+		    }
+		    locked=false;
+		  },
+		  error: function(xhr, type){
+		      locked=false;
+		  }
+	    })
+	}
+	
+	
+    function ifhandwrite(elem){
+        if(elem.value=="手写")
+        {
+            document.getElementById("othercity").style.display="inline-block";
+        }
+        else{
+            document.getElementById("othercity").style.display="none";
+        }
+    }
+</script>
+</html>

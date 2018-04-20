@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>带看申请</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/btn_style.css">
+    <link rel="stylesheet" href="../../../css/clipboard.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css" />	
+    <link rel="stylesheet" type="text/css" href="../../../css/common.css" />	
+    <style>
+        html,body,#detail-context,ul,li{margin:0;padding:0;}
+    	input,button,select,div{outline:none;padding:0;}
+    	textarea{padding:0.2rem;width:100%;border:0px;font-size:0.32rem;resize:none;outline:none}
+    	.clearfix:after{content:"";display:block;height:0;clear:both;}
+        /* list */
+        .remarkcontent{display:inline-block;width:4.2rem;line-height:0.4rem;padding:0.2rem;padding-left:0;}
+        .content{width:10rem;}
+        .source{display:inline-block;width:1.3rem;}
+        .state{display:inline-block;width:1.3rem;}
+        .infor{display:inline-block;text-align:center;}
+        #edit{display:none}
+        #mobile{margin-right:0.4rem;}
+        #mobile,#tel{color:blue;}
+        #othercity{width:3.0rem;padding-left:0.3rem;}
+        
+        .remark{ min-height:0.6rem;}
+        .remark .note{vertical-align: top;}
+        .remark .detail{color:#0af;}      
+        #detail-context .bar{padding:0 0.2rem;}
+        #name{width:1.3rem;}
+        #sex{display: inline-block;margin-left:0.3rem}
+        #tel{width:2.0rem}
+              #detail-context .bar{padding:0 0.2rem;}
+        
+      .h1 {height: 1px;margin-left: 1.0rem;background: #f0f0f0;}	
+       .datetime{font-size:0.33rem;line-height:1.0rem;}
+        /* 状态条 */
+      
+        /* 设置条目 */	
+		.item {height: 1.0rem;line-height: 1.0rem;padding-left:0.3rem;background-color: #fff;margin-bottom: 0rem;}			
+		.item_arrow {float: right;width:0.3rem;margin:0.35rem 0.2rem; }	
+        .item2 {height:0.4rem;margin-bottom:0rem;display:block;}	
+        .item3 {height:0.2rem;margin-bottom:0rem;display:block;}	
+        .item4 {height:1.0rem;width:0.8rem;height:0.8rem}
+        .detailorder{margin-bottom:0.2rem;text-align:left;height:0.5rem;line-height:0.5rem;font-size:0.4rem;}	
+        .item input,.item select{text-align: right;display:inline-block;width:4.0rem;margin-right:0.3rem;font-size:0.32rem;vertical-align: middle;}
+        .item select{direction: rtl;}
+        .item input[type="date"]{width:4.8rem;}
+        .item .tap{display: inline-block;width:2.0rem;}
+        .item .right_arrow{height:0.4rem;vertical-align: middle;}
+       /*是否在现场*/
+      	.yes{height:0.5rem;border:1px black solid;font-size:0.33rem;line-height:0.5rem;margin-left:0.9rem;width:0.7rem;text-align:center;-webkit-transition:background-color 0.4s;}
+      	.no{height:0.5rem;border:1px black solid;font-size:0.33rem;line-height:0.5rem;width:0.7rem;text-align:center;-webkit-transition:background-color 0.4s;}
+      	.yes:hover{
+      		background-color: #0af;
+      	}
+      	.no:hover{
+      		background-color: #0af;
+      	}
+      	
+      	 /*底部固定栏*/ 
+        #footer{background:#fff;position:fixed;bottom:0;left:0;z-index:999999;width:100%;}
+        .photo{font-size:0.38rem;color:#000000;height:0.9rem;border-bottom:1px solid #ccc;line-height:0.9rem;background: white;}
+        .bottombar .photo{text-align:center;display:block}
+         /* 提交申请 */
+      	#submitbtn{height:0.9rem;line-height:0.9rem;font-size:0.38rem;background:#F63F3F;position:fixed;bottom:0;left:0;z-index:8;text-align:center;width:100%;color:white;}
+        /* 点击效果 */
+        .buildingname:active,.photo:active{opacity:0.8}
+        #submitbtn:active{opacity: 0.7;}
+    </style>
+</head>
+<body class="bg-gray">
+  <article id="detail-context">
+    <div class="h1"></div>
+	
+	<div class="item " tapmode="presshover">	
+			<span id="customerName"></span>				
+		</div>
+		<div class="h1"></div> 
+	<div class="item buildingname" tapmode="presshover" onclick="openwin()">	
+			<span id="buildingName"></span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow" onclick="openbuildingwin()">	
+		</div>
+		<div class="h1"></div> 
+		
+		 <div class="item " tapmode="presshover" style="margin-top:0.3rem;"onclick="quxiao()">	
+			<span class="tap">成交时间</span><span class="date"><input type="date" id="deal_time"/></span>		
+		</div> 
+		<div class="item" tapmode="presshover" onclick="quxiao()">	
+			<span class="tap">物业类型</span><select id="propertytype">
+				<option value="普通住宅">普通住宅</option>
+				<option value="公寓">公寓</option>
+				<option value="别墅">别墅</option>
+				<option value="写字楼">写字楼</option>
+				<option value="经济适用房">经济适用房</option>
+				<option value="Townhouse">Townhouse</option>
+				<option value="酒店式公寓">酒店式公寓</option>
+				<option value="商铺">商铺</option>
+				<option value="商住">商住</option>
+				<option value="建筑综合体">建筑综合体</option>
+				<option value="两限房">两限房</option>
+				<option value="自住型商品房">自住型商品房</option>
+				</select>
+				<img src="../../../image/arrow.png" alt="" class="right_arrow "  />
+		</div>
+		<div class="item " tapmode="presshover" onclick="quxiao()">	
+			<span class="tap">房间号</span><input type="text" id="roomNum" value="" placeholder="填写房间号"/><span>号</span>
+		</div>
+		<div class="item " tapmode="presshover" onclick="quxiao()">	
+			<span class="tap">成交金额</span><input type="text" id="dealMoney" value="" placeholder="单位：万元"/><span>万元</span>
+		</div>		
+		<div class="item " tapmode="presshover" onclick="quxiao()">	
+			<span class="tap">面积</span><input type="text"  id="area" value="" placeholder="单位：㎡"/><span>㎡</span>
+		</div>
+		 
+		<div style="background: #f0f0f0;height:0.3rem"></div>
+		
+		<div class="item" tapmode="presshover" id="showphoto">	
+			<img  id="buganga" src="../../../image/photo.png" alt="" class="item4" >
+		</div> 
+		
+		<div id= "beizhu" class="item " tapmode="presshover" style="margin-top:0.3rem;height:1.0rem;">	
+			<textarea id="notes" rows="3" placeholder="请填写备注"></textarea>
+		</div> 
+		
+	<div id="submitbtn"  tapmode="" onclick="deal_apply()">
+	    提交申请
+    </div>
+		
+	<footer class="footer" id="footer" tapmode="" >
+	    <div id="foter" class="bottombar"  style="display:none">
+	    
+	        <div class="photo" onclick="getpic()">从手机中选择</div>
+	     
+			<div class="photo" onclick="getcamer()">拍照</div>
+		
+			<div style="background: #f0f0f0;height:0.2rem"></div>
+			<div class="photo" onclick="quxiao()">取消</div>
+	    </div>
+    </footer>
+		 
+
+   
+  </article>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<script src="../../../script/jquery.min.js"></script>
+<!--ajax-->
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/customer/customer_info.js"></script>
+<script>
+	
+</script> 
+<script>
+flag=false;
+var roomflag=document.getElementById('roomNum');
+var moneyflag=document.getElementById('dealMoney');
+var areaflag=document.getElementById('area');
+
+
+	$(document).ready(function(){
+  		$("#beizhu").click(function(){
+	    	$("#beizhu").animate({  	
+	      	height:'2.0rem',
+	    	});
+	  	});
+	});
+	
+	$(document).ready(function(){
+  		$("#showphoto").click(function(){
+	   		$("#foter").slideDown("slow");
+	   		$("#beizhu").animate({  	
+	      	height:'1.0rem',
+	    	});
+  		});
+	});
+	
+	function quxiao(){		
+   		$("#foter").slideUp("slow");
+	}
+	
+	apiready = function(){
+	
+		clipBoard = api.require('clipBoard');
+	   
+	    api.setStatusBarStyle({
+	        style: 'light',
+	        color: '#000'
+	    });
+	    //获取数据
+	    userid=$api.getStorage("userid");
+	    customerid=api.pageParam.customerid;
+	    orderid=api.pageParam.orderid;
+	    customerName=api.pageParam.customerName;
+		buildingName=api.pageParam.buildingName;
+		//初始化数据
+		locked=false;
+	    //初始化方法
+		document.getElementById("deal_time").value=setDate();
+		document.getElementById("customerName").innerHTML=customerName;
+		document.getElementById("buildingName").innerHTML=buildingName;
+	}
+    
+    function setDate(){
+        var time=new Date();
+      	month=time.getMonth()+1;
+      	month=month<10?"0"+month:month;
+	  	date=time.getDate();
+	  	date=date<10?"0"+date:date;
+	  	return time.getFullYear()+'-'+month+"-"+date;
+  	}
+    
+    function deal_apply(){
+    if(!locked)
+    {
+    if(!(roomflag.value!=""  && moneyflag!="" && areaflag!=""))
+    api.toast({
+	    msg:'请先完整信息'
+    });
+    
+      else if(flag==false )
+    api.toast({
+	    msg:'请插入图片'
+    });
+
+    }
+    else
+    {
+		api.ajax({
+	        url:ipAddress+'/order/dealApply',
+	        method: 'post',
+	        method: 'post',
+	        timeout: 90,
+	   		dataType: 'json',
+	   		returnAll:false,
+	        data:{
+	        	values: {orderid: orderid,
+	        		deal_time:document.getElementById("deal_time").value,
+            		propertytype:document.getElementById("propertytype").value,
+            		roomNum:document.getElementById("roomNum").value,
+            		dealMoney:document.getElementById("dealMoney").value,
+            		area:document.getElementById("area").value,
+            		notes:document.getElementById("notes").value
+	        	},
+	        	files: {file: deal_apply_img}
+	        }
+	    },
+	    function(ret, err) {
+             api.toast({
+                 msg:ret.msg
+             });
+             
+             if(ret.code=="200")
+	         {
+	         	api.execScript({
+				    name: 'root',
+				    script: 'chooseframe()'
+				});
+	     		setTimeout(function (){
+	     			 api.openWin({
+	                     name: 'root',
+	                     url: '../../../index.html'
+		             });
+	     		},1500);
+	     	 }
+	     	 
+             locked=false;
+	    })
+	}
+	}
+      
+      
+    function getpic(){
+		api.getPicture({
+			sourceType: 'album',
+			encodingType: 'png',
+			mediaValue: 'pic',
+			destinationType: 'url',
+			allowEdit: true,
+			quality: 100,
+			targetWidth: 100,
+			targetHeight: 100,
+			saveToPhotoAlbum: false
+		    }, function(ret, err) {
+			    if (ret && ret.data) {
+			    console.log(JSON.stringify(ret));
+				document.getElementById("foter").style.display="none";
+				document.getElementById("buganga").src=ret.data;
+				console.log(document.getElementById("buganga").src);
+			    deal_apply_img=ret.data;
+			    flag=true;
+			} else {
+				alert("插入失败");
+			}
+		});
+
+    }
+    
+    
+    function getcamer(){
+		 api.getPicture({
+	    	sourceType: 'camera',
+	    	encodingType: 'png',
+	   	 	mediaValue: 'pic',
+	  		destinationType: 'url',
+	    	allowEdit: true,
+	    	quality: 100,
+	    	targetWidth: 100,
+	    	targetHeight: 100,
+	    	saveToPhotoAlbum: false
+		}, function(ret, err) {
+	    	if (ret && ret.data) {
+	    		console.log(JSON.stringify(ret));
+	    		document.getElementById("foter").style.display="none";
+	        	document.getElementById("buganga").src=ret.data;
+	        	watch_apply_img=ret.data;
+	        	flag=true;
+	    	} else {
+	        	alert("插入失败");
+	    	}
+		});
+	}
+
+
+
+</script>
+</body>
+</html>

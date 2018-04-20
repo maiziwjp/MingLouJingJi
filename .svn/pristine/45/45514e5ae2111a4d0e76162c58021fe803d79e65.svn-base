@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>合作楼盘</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+  <link rel="stylesheet" href="../../css/stylesheet/index.css">
+  <link rel="stylesheet" href="../../css/lhf-index.css">
+  <style>
+  /* list */
+  .item{text-align:left;padding-bottom: 0.1rem;}
+  .item .firstline{padding:0.15rem 0;}
+  .firstline strong{font-size:0.34rem;color:#333;padding-right:0.2rem;}
+  .item .firstline .price{color:#666;float: none;}
+  .item .firstline .text-orange{font-size:0.32rem;}
+  .item .secondline{padding-bottom: 0.1rem;}
+  
+  .item .img{position:relative;}
+  .item .commission{color:#fff;position:absolute;right:0.4rem;bottom:-0.75rem;display:inline-block;width:1.5rem;height:1.5rem;line-height: 0.35rem;
+  padding:0.35rem 0;border-radius: 50%;background: rgba(102,102,102,0.4);border:0.1rem solid rgba(255,255,255,0.6);text-align: center;}
+  .item .commission span{display:block;font-size:0.28rem;}
+  
+  
+  </style>
+</head>
+<body style="background: #f5f5f5">
+  
+  <article class="article" id="article">
+  </article>
+  
+<script type="text/template" id="tmp">
+	{@each objs as item,index}
+	<section class="item">
+	  <a href="javascript:void(0)" onclick="openframe(${item.id})" class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="http://www.minglou360.com${item.basePic}" src="../../image/background.png" alt="">
+	  	<p class="commission"><span>${item.commission}</span><span>佣金</span></p>
+	  </a>
+	  <div class="intro">
+		  <p class="firstline"><strong >${item.buildingName}</strong> <label class="price"><span>均价： </span><span class="text-orange">2345元/m²</span></label></p>
+		  <p class="secondline">${item.address}</p>
+	  </div>
+	</section>
+	{@/each}
+</script>
+
+ <script type="text/javascript" src="../../script/api.js"></script>
+<!-- 动画工具类 -->  
+  <script src="../../script/tween.js"></script>
+<!-- 图片懒加载 -->  
+  <script src="../../script/img.js"></script>
+  <!-- <script src="../../script/carousel.js"></script> -->
+<!--模版引擎-->  
+  <script src="../../script/juicer.js"></script>
+  <script src="../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../script/zepto.js"></script>
+
+<script src="../../script/lib/common.util.js"></script>
+<script>
+	//	触发图片懒加载
+    var imgs = new img({
+      class: 'lazyload-img', // img 样式名称
+      dataSrc: 'data-src',
+      size: '200x200', // cdn尺寸
+      sharpen: '100sh', // 锐化参数
+      q: '90q', // 图片质量,
+      lazyHeight: 0,
+      lazyWidth: 0,
+      fireEvent: 'scroll'
+    });
+    
+</script>
+<script src='' id="s1"></script> 
+<script>
+    var pagenum=0;
+    var locked=false;
+    var para="";
+    apiready = function  () {  
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	        initpagenum(para);
+	        api.refreshHeaderLoadDone();
+	    }); 
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+	        getData(keyword);        
+	    });     
+	    
+	}
+	
+	
+	function initpagenum(k){
+	    keyword=k.keyword;
+	    para=k;
+	    pagenum=0;
+	    locked=false;
+	    getData(keyword);
+	}
+	
+    function getData(keyword){
+        userid=$api.getStorage("userid");
+        if(!locked){
+            locked=true;
+            if(keyword!="")
+            {
+			  	$.ajax({
+				  type: 'GET',
+				  url:  ipAddress+'/minglou/buildingSearch/showbuilding/'+pagenum+'/'+keyword,
+				  data: '',
+				  dataType: 'json',
+				  success: function(data){
+				    var tmp = document.getElementById("tmp").innerHTML;
+				    if(data.buildingpagers.objs.length>0)
+				    {
+					  	if(userid==undefined)
+					  	{
+					  	    data.buildingpagers.objs.forEach(function(v){
+					  	        v.commission="登录后可见";
+					  	    })
+					  	}
+					  	var result = juicer(tmp, data.buildingpagers);
+					  	if(pagenum==0)
+					  	    document.getElementById("article").innerHTML=result;
+					  	else{
+					  	    document.getElementById("article").innerHTML+=result;
+					  	}
+					  	if (data.buildingpagers.pageOffset < data.buildingpagers.pageCount) {
+				        	locked=false;
+				        	pagenum ++;
+				      	} else {
+				        	locked = true;
+				      	}
+					}
+					else if(pagenum==0)
+					{
+					    document.getElementById("article").innerHTML='<p style="color:#999;text-align:center;font-size:0.43rem;">对不起，找不到与其有关的楼盘</p>';
+					}
+				  	setTimeout(function () { imgs.fireLazyload(); }, 400); 			    
+				  },
+				  error: function(xhr, type){
+				  }
+				})
+			}
+		}
+	}
+	
+	function openframe(id){
+	    api.openWin({
+	        name: 'building.detail_win',
+	        url: './building.detail_win.html',
+	        pageParam: {
+		        buildingid: id
+		    }
+        });
+	}
+	
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+.color-gray {
+  background: #e9e9e9; }
+
+.imgs-wrap img {
+  height: 5rem;
+  width: 7.5rem; }
+
+.index-detail {
+  background: #fff;
+  border: 1px solid transparent; }
+  .index-detail .intro {
+    margin: .2rem;
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: .4rem;
+    line-height: .5rem;
+    border-bottom: 1px solid #ddd; }
+    .index-detail .intro h1 {
+      font-size: .35rem;
+      font-weight: normal; }
+    .index-detail .intro .type {
+      margin-top: .1rem;
+      margin-bottom: .1rem;
+      display: inline-block;
+      line-height: .4rem;
+      height: .4rem;
+      color: #f60;
+      border: 1px solid #f60;
+      font-size: .01rem;
+      padding: 0 .09rem;
+      border-radius: .05rem; }
+      .index-detail .intro .type + .type {
+        margin-left: .25rem; }
+  .index-detail .iconfont {
+    display: inline-block;
+    text-align: left; }
+    .index-detail .iconfont .icon-xingbiexuanzhong {
+      margin-left: .6rem; }
+    .index-detail .iconfont .icon-xingbiexuanzhong {
+      color: #f60; }
+    .index-detail .iconfont .icon-xingbiexuanzhong:last-child {
+      color: #999; }
+  .index-detail .princple {
+    font-size: .3rem;
+    line-height: .6rem;
+    border-bottom: 1px solid #ddd;
+    padding: .2rem 0;
+    margin: 0  .2rem;
+    position: relative; }
+    .index-detail .princple:after {
+      position: absolute;
+      content: "";
+      display: block;
+      float: right;
+      width: .2rem;
+      height: .2rem;
+      top: .35rem;
+      right: .2rem;
+      border: 1px solid #ddd;
+      transform: rotate(45deg);
+      border-color: #ddd #ddd transparent transparent; }
+
+.floor-detail {
+  background: #fff;
+  margin-top: .2rem;
+  padding: .2rem; }
+  .floor-detail .title {
+    line-height: .8rem;
+    font-size: .3rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd; }
+  .floor-detail .call {
+    font-size: .3rem;
+    line-height: .6rem;
+    border-bottom: 1px solid #ddd;
+    padding: .2rem 0; }
+    .floor-detail .call .icon-dianhua {
+      float: right;
+      font-size: .35rem;
+      color: #96a9d9; }
+
+.box {
+  padding: .2rem;
+  font-size: .3rem;
+  background: #fff; }
+  .box .box-title {
+    font-weight: normal;
+    line-height: .5rem;
+    color: #333; }
+  .box .content {
+    color: #555;
+    font-size: .28rem;
+    line-height: .6rem; }
+
+/*# sourceMappingURL=index.detail.css.map */

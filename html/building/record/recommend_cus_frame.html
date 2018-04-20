@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>添加客户</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/icon1.css">
+    <link rel="stylesheet" href="../../../css/btn_style.css">
+    <style>
+        body{margin:none;}
+        input,button,select,textarea{outline:none;margin:0px;padding: 0;}
+        textarea{resize:none;}  
+        p,div,label{padding: 0;margin: 0;}
+        div{font-size: 0.31rem;}
+        .clearfix:after{content:"";display:block;height:0;clear:both;}
+        /* 总体 */
+        .bule{color:#0af;}
+        textarea{font-size:0.31rem;}
+        /* 头部  */
+        .header{margin-top:0.25rem;}
+		/* list */
+		.remark{width:100%;background: white;padding:0.22rem;margin:0.25rem 0;}
+		.add_btn{display: block;width:6.7rem;margin:auto;background: #0af;color:white;height:1.1rem;line-height: 1.1rem;border-radius: 0.1rem;margin-bottom: 0.40rem;}
+		.red{color:red;}
+		/* my_item 布局 */
+		.my_item{background: white;padding:0 0.3rem;border-bottom:1px solid #cccccc;height:0.9rem;line-height:0.9rem;clear:both;}
+		.my_item > *{line-height:0.9rem;}
+		.my_item .leftpart{color:#000000;float:left;}
+		.my_item .rightpart{color:#9B9C9C;float:right;font-size: 0.26rem;}
+        .my_item label{padding-right:0.2rem;}
+        .my_item input,.item select{width:4.5rem;}
+		.my_item .source{width:1.2rem;}
+		.my_item .item_arrow {height: 0.24rem;vertical-align: middle;}	
+		/* building */
+		.buildinglist{margin-bottom:0.9rem;}
+		.building{height:1.1rem;padding:0.1rem 0.3rem;}
+		.building .name{height:0.45rem;line-height:0.45rem;font-size:0.3rem;font-weight: 600;}
+		.building .info{height:0.45rem;line-height:0.45rem;font-size:0.30rem;}
+		.building .commission{color:#0af;vertical-align: middle;}
+		.building .info:before{content:'佣';background:#0af;color:white;font-size:0.25rem;height:0.28rem;padding:0 0.03rem;margin-right:0.2rem;}
+		.building .type{vertical-align: middle;display:inline-block;padding:0 0.09rem;border:1px solid #f60;color:#f60;line-height:0.28rem;font-size:0.21rem;font-weight:700;vertical-align: middle;}
+		/* 选择按钮 */
+		.selectbtn{height:0.9rem;margin-top: -2px;}
+		.deletebtn{width:0.35rem;}
+		/* 点击效果 */
+		footer:active{opacity: 0.7}
+		/* 尾部 */
+		footer{height:0.9rem;line-height:0.9rem;color:white;background:#0af;text-align: center;position: fixed;bottom:0;width:100%;font-size:0.33rem;}
+    </style>
+    <link rel="stylesheet" href="../../../css/select_btn.css">
+</head>
+<body class="bg-gray">
+  <div class="header">
+  </div> 
+  <div class="my_item clearfix" onclick="opencuslist()" ><div class="leftpart">添加客户信息</div><div class="rightpart">从客户列表中选择<img src="../../../image/arrow.png" alt="" class="item_arrow"></div></div>
+  <div class="my_item clearfix" onclick="opencotacts()" ><div class="leftpart">添加客户信息</div><div class="rightpart">从通讯录中选择<img src="../../../image/arrow.png" alt="" class="item_arrow"></div></div>
+  <div class="my_item"><input  id="name" value="" placeholder="请输入客户姓名" class="leftpart"/>
+  	<div class="rightpart selectbtn"><label><input name="sex" value="男" type="radio" checked /><span>先生</span></label><label><input name="sex" type="radio" value="女" /><span>女士</span></label></div>
+  </div>
+  <div class="my_item"><label class="bule">+86</label><input id="mobile" value="" placeholder="请输入客户手机号码" oninput="clearbuilding()"/></div>
+  <textarea rows="3" cols="50" placeholder="请输入备注信息" class="remark" id="remark"></textarea>
+  <!-- <div class="remark">
+  	      <div contenteditable="true" name="remark" id="remark"></div>
+  	  </div> -->
+  <div class="my_item clearfix" onclick="openbuildinglist()" ><div class="leftpart">添加楼盘</div><div class="rightpart"><img src="../../../image/arrow.png" alt="" class="item_arrow"></div></div>
+  <div class="buildinglist" id="article">
+      <div class="my_item clearfix building"  >
+      	<div class="leftpart">
+      		<div class="name" id="buildingName"></div>
+      		<div class="info"><span class="commission" id="commission"></span></div>
+        </div>
+        <input type="hidden"  id="buildingid"/>
+        <input type="hidden"  id="watchGuideDate"/>
+        <div class="rightpart"><img src="../../../icon/delete.png" alt=""  class="deletebtn oldbuilding" onclick="deletebuilding(this,1)" />
+      	</div>
+      </div>
+  </div>
+  <footer onclick="submit()">提交</footer>
+  <script type="text/template" id="tmp">
+	{@each bulidingList as item,index}
+	<div class="my_item clearfix building"  >
+	  	<div class="leftpart">
+	  		<div class="name">${item.buildingname}</div>
+	  		<div class="info"><span class="commission">${item.commission}</span></div>
+	    </div>
+	    <input type="hidden" value="${item.id}"/>
+	    <input type="hidden" value="${item.watchGuideDate}"/>
+	    <div class="rightpart "><img src="../../../icon/delete.png" alt="" class="deletebtn newbuilding" onclick="deletebuilding(this,2)">
+	  	</div>
+	</div>
+	{@/each}
+  </script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/zepto.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		bulidingIdArr=[];
+	    buildingnameArr=[];
+	    recordbuildingList=[];
+	 	recordbuildingname=[];
+        api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+        /* 初始化参数 */
+        article=document.getElementById("article");
+        contacts = api.require('contacts');
+        locked=false;
+        //报备锁
+        reclocked=false;
+        tagid=$api.getStorage("areaid");
+	    userid=$api.getStorage("userid")*1;
+  	    companyid=$api.getStorage("companyid")*1;
+  	    storeid=$api.getStorage("storeid")*1;
+  	    cityid=$api.getStorage("cityid");
+  	    ifNewCustomer=false;
+  	    customerid=0;
+  	    /* 初始化页面 */
+  	    document.getElementById("buildingid").value=api.pageParam.id;
+  	    document.getElementById("commission").innerHTML=api.pageParam.commission;
+  	    //document.getElementById("propertyType").innerHTML=types[api.pageParam.propertyType-1];
+  	    document.getElementById("watchGuideDate").value=api.pageParam.watchGuideDate;
+  	    document.getElementById("buildingName").innerHTML=api.pageParam.name;
+	};
+	
+	function opencuslist(){
+	
+	if(recordbuildingList.length!=0)
+		{
+			api.toast({
+	            msg:'选择用户后，请重新报备楼盘',
+	            location:'top'
+            });
+            setTimeout(function (){
+            if(document.getElementById("buildingid"))
+	 			var buildingid=document.getElementById("buildingid").value||"";
+			else
+				buildingid=0;
+		
+			while(recordbuildingList.length!=0)
+			{	
+				deletebuilding(document.getElementsByClassName("newbuilding")[recordbuildingList.length-1],2);
+			}
+			api.openWin({
+	       		name: 'customer_list_win',
+	        	url: './customer_list_win.html',
+	          	pageParam: {
+		        	buildingid:buildingid
+		        },
+	        	reload:true
+        	});
+           },1500);
+          }
+          else
+          {
+          	 if(document.getElementById("buildingid"))
+	 			var buildingid=document.getElementById("buildingid").value||"";
+			else
+				buildingid=0;
+		
+			while(recordbuildingList.length!=0)
+			{	
+				deletebuilding(document.getElementsByClassName("newbuilding")[recordbuildingList.length-1],2);
+			}
+			api.openWin({
+	       		name: 'customer_list_win',
+	        	url: './customer_list_win.html',
+	          	pageParam: {
+		        	buildingid:buildingid
+		        },
+	        	reload:true
+        	});
+          }
+		
+	}
+	
+	function clearbuilding(){
+		if(recordbuildingList.length!=0)
+		{
+			api.toast({
+	            msg:'修改手机号后请重新报备楼盘',
+	            location:'top'
+            });
+            setTimeout(function (){
+            while(recordbuildingList.length!=0)
+				{	
+					deletebuilding(document.getElementsByClassName("newbuilding")[recordbuildingList.length-1],2);
+				}
+            },1500);
+       }
+       else{
+			while(recordbuildingList.length!=0)
+			{	
+				deletebuilding(document.getElementsByClassName("newbuilding")[recordbuildingList.length-1],2);
+			}
+		}
+	}
+	
+	
+	function openbuildinglist(){
+		if(document.getElementById("mobile").value=="")
+		{
+			api.toast({
+	            msg:'请先选择或添加用户后再添加楼盘',
+	            location:'top'
+            });
+		}
+		else
+		{
+			buildingcount=recordbuildingList.length;
+			if(document.getElementById("buildingid"))
+			buildingcount++;
+			if(buildingcount>=3)
+			{
+				api.toast({
+		            msg:'最多报备三个楼盘',
+		            location:'top'
+	            });
+		    }
+			else
+			{	
+				checkmobile(false);	
+	        }
+        }
+	}
+	
+	function opencotacts(){
+		if(recordbuildingList.length!=0)
+		{
+			api.toast({
+	            msg:'选择用户后，请重新报备楼盘',
+	            location:'top'
+            });
+             setTimeout(function(){
+             while(recordbuildingList.length!=0)
+				{	
+					deletebuilding(document.getElementsByClassName("newbuilding")[recordbuildingList.length-1],2);
+				}		
+			api.openContacts(function(ret, err){
+	          if(ret.status){
+	               document.getElementById("name").value=ret.name||ret.fullName||"";
+			       document.getElementById("mobile").value=ret.phone||"";
+			       ifNewCustomer=true;
+	               //document.getElementById("tel").value=ret.phones[1]&&ret.phones[1].phone||"";
+	          }else{
+				   //api.alert({msg:'用户取消'});
+	          }
+       		});
+       		},1500);
+          }
+		else{
+			while(recordbuildingList.length!=0)
+				{	
+					deletebuilding(document.getElementsByClassName("newbuilding")[recordbuildingList.length-1],2);
+				}		
+			api.openContacts(function(ret, err){
+	          if(ret.status){
+	               document.getElementById("name").value=ret.name||ret.fullName||"";
+			       document.getElementById("mobile").value=ret.phone||"";
+			       ifNewCustomer=true;
+	               //document.getElementById("tel").value=ret.phones[1]&&ret.phones[1].phone||"";
+	          }else{
+				   //api.alert({msg:'用户取消'});
+	          }
+       		});
+       }
+	}
+	
+	function getCusInfo(id,name,mobile,sex,remark){
+		customerid=id;
+		document.getElementById("name").value=name;
+		document.getElementById("mobile").value=mobile;
+		document.getElementById("remark").value=remark;
+		var radio=document.getElementsByName("sex");
+		console.log(sex);
+		if(sex=="男")
+		{
+			radio[0].checked=true;
+			radio[1].checked=false;
+		}
+		else
+		{
+			radio[1].checked=true;
+			radio[0].checked=false;
+		}
+	}
+	
+	function getBuilInfo(param,buildingname){
+		recordbuildingList=param;
+		recordbuildingname=buildingname;
+			$.ajax({
+			  type: 'POST',
+			  url:  ipAddress+'/recommendCustomer/bulidingList',
+			  data: {buildingIdArr:param},
+			  traditional:true,
+			  success: function(data){
+			    xuanran(data);
+			    recordbuildingList=document.getElementsByClassName("newbuilding")||[];
+			  },
+			  error: function(xhr, type){
+			  }
+		 })
+		
+	}
+
+	function xuanran(data){
+		var tmp = document.getElementById("tmp").innerHTML;
+		juicer.register('topropertyType',topropertyType);
+	  	var result = juicer(tmp, data);
+		article.innerHTML += result;
+	} 
+	
+	var types = ['普通住宅', '公寓', '别墅', '写字楼', '经济适用房', 'Townhouse', '酒店式公寓', '商铺', '商住', '建筑综合体', '两限房', '自住型商品房'];
+	function topropertyType(index){
+		return types[index-1];
+	}
+	
+	function deletebuilding(elem,n){
+		
+		var childNode=elem.parentNode.parentNode;
+		childNode.parentNode.removeChild(childNode);
+		if(n==2){
+			recordbuildingList.length--;
+		}
+		
+	}
+	
+	
+	function submit(){
+	    getdata();
+	    username=document.getElementById("mobile").value;
+	    storeid=$api.getStorage("storeid");
+	    userid=$api.getStorage("userid");
+	    buildingList=document.getElementsByClassName("building");
+	    if(buildingList.length+recordbuildingList.length == 0)
+	    {
+	    	api.toast({
+	            msg:'请选择楼盘，必须至少有一个楼盘',
+	            location:'top'
+            });
+	    }
+	    else if(buildingList.length +recordbuildingList.length> 3 )
+	    {
+	    	api.toast({
+	            msg:'请删除部分楼盘，最多只能报备三个本地楼盘',
+	            location:'top'
+            });
+	    }
+	    else if(username=="")
+	    {
+	        document.getElementById("name").focus();
+	        api.toast({
+	            msg:'请填写姓名',
+	            location:'top'
+            });
+	    }
+	    else  if(mobile=="")
+	    {
+	        document.getElementById("mobile").focus();
+	        api.toast({
+	            msg:'请填写手机号码',
+	            location:'top'
+            });
+	    }
+	    else if(!(/^[0-1]\d{0,15}$/.test(username)))
+	    {
+	        api.toast({
+	            msg:'手机格式不正确',
+	            location:'top'
+            });
+            document.getElementById("mobile").focus();
+	    }
+	    else 
+	    {
+			checkmobile(true);
+    	}
+	}
+	
+	function count(){
+		var buildingList=document.getElementsByClassName("building");
+	    $.ajax({
+		  type: 'GET',
+		  url:  ipAddress+'/record/localBuildingCount/'+customerid+'/'+userid,
+		  data: '',
+		  dataType: 'json',
+		  success: function(data){
+		    num=data.count;
+		    if(num > 3)
+		    {
+		    	api.toast({
+                    msg:'最多可报备三个楼盘，您已经报备了'+num+'个楼盘,还可报备'+(3-num)+'个楼盘',
+                    location:'top'
+                });
+		    }
+		    else
+		    {
+		    	record();
+		    }
+		  },
+		  error: function(xhr, type){
+		  }
+		})
+	}
+	
+	function checkmobile(ifRecord){
+		if(!locked)
+		{
+			locked=true;
+		    if(document.getElementById("buildingid"))
+	 			var buildingid=document.getElementById("buildingid").value||"";
+			else
+				buildingid=0;
+			storeid=$api.getStorage("storeid");
+		    userid=$api.getStorage("userid");
+		    username=document.getElementById("mobile").value;
+			$.ajax({
+				type: 'post',
+				url: ipAddress+'/recommendCustomer/checkmobile',
+				async: false, 
+				data:{storeid:storeid,mobile:username,buildingid:buildingid,userid:userid},
+				success: function(data){
+					customerid=data.customerid;
+		            if(data.code==-1)
+				    {
+				        document.getElementById("mobile").focus();
+				        api.toast({
+		                    msg:data.msg,
+		                    location:'top'
+	                    });
+				    }
+				    else if(data.code==-2)
+				    {
+				        document.getElementById("mobile").focus();
+				        api.toast({
+		                    msg:data.msg,
+		                    location:'top'
+	                    });
+				    }
+				    else if(data.code==1)
+				    {
+				    	ifNewCustomer=true;
+	                  	if(ifRecord)
+	                  	{
+	                  		count();
+	                  		api.toast({
+			                    msg:data.msg,
+			                    location:'top'
+		                  	});
+	                  	}
+	                  	else
+	                  	{
+	                  		api.openWin({
+						        name: 'building_list_win',
+						        url: './building_list_win.html',
+								pageParam : {
+				                  customerid:customerid
+				                },
+						        reload:true
+					        });
+	                  	}
+				    }
+				    else if(data.code==2)
+				    {
+				    	ifNewCustomer=false;
+	                  	if(ifRecord)
+	                  	{
+	                  		api.toast({
+			                    msg:data.msg,
+			                    location:'top'
+		                  	});
+	                  		count();
+	                  	}
+	                  	else
+	                  	{
+	                  		api.openWin({
+						        name: 'building_list_win',
+						        url: './building_list_win.html',
+								pageParam : {
+				                  customerid:customerid
+				                },
+						        reload:true
+					        });
+	                  	}
+				    }
+				    else
+				    {
+						ifNewCustomer=true;
+				    	api.toast({
+		                    msg:'发生错误',
+		                    location:'top'
+	                  });		    	
+				    }
+				    locked=false;
+				  },
+				  error: function(xhr, type){
+				  	locked=false;
+				  }
+			})
+		}
+	}
+	
+	function record(){
+		if(!reclocked)	
+		{
+			reclocked=true;
+		    var username=document.getElementById("mobile").value;
+		    var buildingList=document.getElementsByClassName("building");
+		    var realname=document.getElementById("name").value;
+		    var notes=document.getElementById("remark").value;
+		    if(buildingList.length!=0)
+		    {
+		    	buildingnameArr.push(document.getElementById("buildingName").innerHTML);
+		    	bulidingIdArr.push(document.getElementById("buildingid").value);
+		    }
+		    for(var i=0;i<recordbuildingList.length;i++)
+		    {
+		    	bulidingIdArr.push(recordbuildingList[i]);
+		    	buildingnameArr.push(recordbuildingname[i]);
+		    }
+			var reqloc;
+			if(tagid=1)
+				reqloc="杭州";
+			else if(tagid=2)
+				reqloc="海南";
+			else
+				reqloc="其他";
+			$.ajax({            
+		         type: "post",
+		         url: ipAddress+"/recommendCustomer/insertRecord",
+		         dataType: "json",
+		         traditional:true,
+		         data: {
+		                ifNewCustomer:ifNewCustomer,
+		                puserid:companyid,
+		                dealinfo:"",
+		                tagid:tagid, 
+		                customerid:customerid,
+		                storeid:storeid, 
+		                username:username, 
+		                telphone:"",
+		                realname:realname, 
+		                gender:sex,
+		                notes:notes, 
+		                source:"来电", 
+		                perfer:"求购", 
+		                reqloc:reqloc, 
+		                type:1, 
+		                userid:userid,
+		                buildingIdArr:bulidingIdArr, 
+		                buildingname:buildingnameArr,
+	             },                              
+		         success: function(data){             
+	                 api.toast({
+	                     msg:'报备成功!',
+	                     location:'top'
+	                 });
+		             setTimeout(function(){
+		             	api.closeWin();
+		             	reclocked=false;
+		             },2000); 
+		         },
+		         error:function(){
+		         	alert("数据异常");
+		         	reclocked=false;
+		         }
+		    });
+	    }
+	}
+	
+	function getdata(){
+	    realname=document.getElementById("name").value;
+	    var radio=document.getElementsByName("sex");
+        for(var i=0;i<radio.length;i++){
+            if(radio[i].checked) {
+            	sex=radio[i].value;
+            }
+        }
+	    usernema=document.getElementById("mobile").value;
+	    remark=document.getElementById("remark").value;
+	    requiredArea = cityid == 1 ? "杭州":"海南";
+	    tradeType="求购";
+	    customerState=1;
+	    source="来电";
+	}
+</script>
+</html>

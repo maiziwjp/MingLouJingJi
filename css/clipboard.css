@@ -1,0 +1,5 @@
+.clipboard{text-align:center;display:inline-block;position:absolute;display:none;}
+.clipboard .btngroup{border-radius:  0.1rem;padding:0.01rem 0;background: #0af;}
+.clipboard button{width:1.5rem;height:0.7rem;line-height: 0.7rem;color:white;}
+.clipboard .split{width:1px;height:0.4rem;display: inline-block;background: white;vertical-align: middle;}
+.clipboard label{display:inline-block;width:0;height:0;border:0.2rem solid #0af;border-color:#0af transparent transparent;margin-top:-1px;}

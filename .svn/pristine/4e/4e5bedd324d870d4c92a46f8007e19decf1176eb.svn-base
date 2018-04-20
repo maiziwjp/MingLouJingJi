@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+      html,body{height:100%;margin:0px;background: #f5f5f5;}
+      input,button{outline:none;}	
+      .fr{float:right;margin-top:0.24rem;}
+      .article{font-size:0.29rem;margin:0;padding:0;}
+      /* info */
+	  .info{padding:0 0.4rem;height: 0.8rem;line-height: 0.8rem;font-size:0.34rem;color:#666;}
+      /* list */
+	  .lazyload-img{height:4.0rem;}
+	  .items{padding:0 0.3rem;background:white;display: -webkit-box;display: -webkit-flex;-webkit-flex-flow: row;height:2.4rem;border-bottom: 1px solid #ccc;}
+	  .items .img{-webkit-box-flex:8.0;-webkit-flex:8;margin:0.2rem 0;}
+	  .img img{width:100%;height:2.0rem;}
+	  .items .intro{-webkit-box-flex:9.0;-webkit-flex:9;margin:0.3rem;color:#666	;}
+	  .items .checkbox{-webkit-box-flex:1.0;-webkit-flex:1;padding:0.8rem 0}
+	  .hidden{display: none;}
+	  p{overflow: auto;white-space:nowrap;}
+    </style>
+</head>
+<body>
+<article class="article" id="article">
+	<!-- <section class="items">
+	  <a href="javascript:void(0)" class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="http://121.41.102.100:8080/minglou/resources/uploadFile/img/building/${item.basePic}" src="http://121.42.190.140:8080/minglou/resources/uploadFile/img/building/${item.basePic}" alt="">
+	  </a>
+	  <div class="intro"><strong>${item.name}</strong><p class="price">均价： <span class="text-orange">${item.priceAvg}元/m²</span></p>
+	  		  <p>${item.name}</p>
+	  		  <span class="label-black">佣金：${item.commission}</span>
+	  </div> -->
+</article>
+  <!--定义juicer模板 -->
+<script type="text/template" id="tmp">
+	<div class="info">已备案区域</div>
+	{@each datalist as item,index}
+	<section class="items">
+	  <a href="javascript:void(0)" class="img">
+	    <img class="lazyload-img" data-cdn="no" data-src="${item.img}" src="" alt="">
+	  </a>
+	  <div class="intro"><strong>${item.tagname}</strong>
+	  </div>
+	</section>
+	{@/each}
+</script> 
+ 
+ <script type="text/javascript" src="../../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+  <script src="../../../script/img.js"></script>
+<!--模版引擎-->  
+  <script src="../../../script/juicer.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../../script/zepto.js"></script>
+<script>
+	//	触发图片懒加载
+    var imgs = new img({
+      class: 'lazyload-img', // img 样式名称
+      dataSrc: 'data-src',
+      size: '200x200', // cdn尺寸
+      sharpen: '100sh', // 锐化参数
+      q: '90q', // 图片质量,
+      lazyHeight: 0,
+      lazyWidth: 0,
+      fireEvent: 'scroll'
+    });
+    
+</script>
+<script type="text/javascript">
+    locked=false;
+    pageNum=1;
+    
+	apiready = function  () {
+		//获取数据
+	    userid=$api.getStorage("userid");
+	    customerid=api.pageParam.customerid;
+	    container=document.getElementById("article");
+	    //初始化方法
+	    init();
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	        locked=false;
+	        pageNum=1;
+	        init();
+	        api.refreshHeaderLoadDone();
+	    });
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+	        pageNum++;
+	        getData();        
+	    });
+	}
+    //初始化列表
+	function init(){
+		pageNum=1;
+		container.innerHTML="";
+		getData();
+	}
+	//分页获取列表
+	function getData(){
+        if(!locked){
+            locked=true;
+		  	$.ajax({
+			  type: 'post',
+			  url:  ipAddress+'/nolocalreg/getlist/'+pageNum+'/20',
+			  data: {userid:userid,customerid:customerid},
+			  dataType: 'json',
+			  success: function(data){
+				  var recordlist=data.recordlist.objs;
+				  //将图片添加到对象中
+				  for(var i=0;i<recordlist.length;i++)
+			  	  {
+			  		  recordlist[i].img=data.imglist[i];
+			  	  }
+			  	  console.log(JSON.stringify(recordlist));
+			  	  //输出提示信息
+				  if(recordlist.length==0&&pageNum==1)
+				        document.getElementById("article").innerHTML='<p style="padding:0.3rem 0;font-size:0.32rem;color:#999;text-align:center;">此处暂无报备记录，请切换到其他楼盘查看</p>';
+				  //渲染
+				  else
+				  {
+				      	xuanran(recordlist);
+			      }
+			      locked = false;
+			  },
+			  error: function(xhr, type){
+			     locked=false;
+			  }
+		    })
+		}
+	}
+	
+	//渲染页面
+	function xuanran(data){
+	    var tmp = document.getElementById("tmp").innerHTML;
+	    var dataList={datalist:data};
+	  	var result = juicer(tmp, dataList);
+		document.getElementById("article").innerHTML += result;
+		setTimeout(function () { imgs.fireLazyload(); }, 400);
+	}
+</script>
+</body>
+</html>

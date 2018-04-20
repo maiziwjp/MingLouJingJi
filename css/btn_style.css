@@ -1,0 +1,33 @@
+/* 选择按钮 */
+.selectbtn{display:inline-block;font-size:0.3rem;}
+.selectbtn label{display:inline-block;vertical-align: middle;width:0.9rem;border:1px solid #0089ff;border-right:none;text-align: center;line-height:0.5rem;position:relative;z-index:1;overflow: hidden;}
+.selectbtn label span{width:100%;height:0.51rem;line-height:0.51rem;display:inline-block;color:#0089ff;} 
+.selectbtn label input{position:absolute;top:-1.1rem;} 
+.selectbtn label:first-child{border-top-left-radius:0.1rem;border-bottom-left-radius:0.1rem;} 
+.selectbtn label:not(:first-child){border-left:none;}
+.selectbtn label:last-child{border-top-right-radius:0.1rem;border-bottom-right-radius:0.1rem;border-right:1px solid #0089ff;} 
+.selectbtn input:checked ~span{background: #0089ff;color:white;}
+/* 开关按钮 */
+.switchbtn{margin-left:0.3rem;font-size:0.3rem;z-index:1;background:#0089ff; position:relative;overflow: hidden;display:inline-block;width:1.1rem;border:1.4px solid black;height:0.5rem;border-radius: 0.5rem;vertical-align: middle}
+.switchbtn input{position: absolute;left:-1.1rem;top:-1.1rem;} 
+.switchbtn span{display:inline-block;width:0.5rem;height: 0.5rem;border-radius: 50%;background: #fff}
+.switchbtn input:checked ~span{margin-left:0.6rem;}
+/* 清除文字按钮 */
+.erasable{position: relative;display: inline-block;height:100%;}
+.erasable:after{content:'';display:inline-block;height:100%;width:0px;vertical-align: middle;}
+.erasable input{padding-right:0.4rem;}
+.erasable .clearbtn{position:absolute;height:0.4rem;top:50%;right:0.25rem;margin-top:-0.2rem;display:none;}
+/* 选中图片按钮  有文字 */
+.checkbtn{position:relative;overflow: hidden;display:inline-block;height:0.5rem;vertical-align: text-bottom;}
+.checkbtn input{position: absolute;left:-0.4rem;top:-0.4rem;} 
+.checkbtn label{padding-left:0.5rem;background:url(../icon/unchecked2.png) no-repeat top left ;background-size:0.4rem 0.4rem;display: inline-block;width:2.0rem;height:0.5rem;color: #999;}
+.checkbtn input:checked +  label{background:url(../icon/checked2.png) no-repeat top left;background-size:0.4rem 0.4rem;color:#f63f3f; }
+/* 状态进度条 */
+.status_bar .status{display:inline-block;}
+.status_bar .status:not(:first-child):before{content:'';display:inline-block;height:0.08rem;margin-bottom:0.06rem;width:1.5rem;background:#ccc;}
+.status_bar .active:not(:first-child):before{content:'';display:inline-block;height:0.08rem;margin-bottom:0.06rem;width:1.5rem;background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#09f), to(#0af));}
+.status_bar .circle{width:0.2rem;height:0.2rem;border-radius: 50%;border:2px solid #ccc;display: inline-block;}
+.status_bar .active .circle{border-color: #0af;}
+.status_name{position:relative;}
+.status_name .name{position:absolute;display: inline-block;color:#ccc;width:1.7rem;text-align:center;word-wrap:break-word;}
+.status_name .active{color:#0af;}

@@ -1,0 +1,25 @@
+#zixun-detail {
+  text-align: center;
+  line-height: .96rem;
+  background: #fff;
+  height: .96rem;
+  padding: 0 .2rem;
+  font-size: .28rem;
+  border-bottom: 1px solid #e9e9e9; }
+  #zixun-detail .icon {
+    font-size: .32rem;
+    color: #0af; }
+
+#zixun-detail-context {
+  font-size: .25rem;
+  padding: 0.3rem 0.3rem;
+  line-height: .5rem; }
+  #zixun-detail-context .date {
+    left: 2rem;
+    color: #666;
+    font-size: 0.22rem;
+    padding-right: .3rem; }
+  #zixun-detail-context .timer {
+    float: right; }
+
+/*# sourceMappingURL=zixun.detail.css.map */

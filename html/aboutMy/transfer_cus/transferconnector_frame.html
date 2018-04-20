@@ -1,0 +1,229 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <title>客源管理</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/customer/customer_info.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/input_style.css">
+    <link rel="stylesheet" href="../../../css/btn_style.css">
+    <style>
+    input,button{outline:none;}
+    ul li{margin:0;padding:0px;}
+    /* 搜索栏 */
+    #connector-remark #chooseall{font-family:YouYuan;background-color:#0af;border-radius:0.15rem;color:white;text-align:center;width:0.9rem;}
+    header#connector-remark{position: fixed;width:100%;top:0px;border-top:1px solid #CCCCCC;}
+    #connector-remark .right{text-align:center;color:#0af;width:0.9rem;}
+    #connector-remark input#search {width: 5.3rem;}
+    /* list */
+    .user-part .right{width:4.6rem;vertical-align: middle;}
+    .checkbtn{width:0.6rem;}
+   
+    .connector-info span{margin:0 0.1rem;}
+    #connector-context{margin-top:0.96rem;margin-bottom:0.96rem;}
+    #search{border:1px solid #CCCCCC}
+    .icon-search{color:#ccc}
+    /* footer */
+	footer{position: fixed;bottom:0;width:100%;color:white;font-size: 0.4rem;font-weight:600;height:0.96rem;line-height: 0.96rem;background: #F63F3F;}
+	footer button{width:100%;text-align: center;}
+    </style>
+</head>
+<body class="bg-gray">
+  <header id="connector-remark">
+  	<div class="erasable"><input placeholder="搜索 姓名、电话" id="search" class="search_input" oninput="search(this)"/><img src="../../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div>
+    <button  onclick="select_all()" id="chooseall">全选</button>
+  </header>
+  
+  <article id="connector-context">
+   	</article>
+   	 
+    <footer>
+	 	<button onclick="openwin()" class="right">转移</button>
+	</footer>
+    <script type="text/template" id="sort">
+    {@each dataList as item}
+   	 <div class="user-part" >
+   	     <input type="hidden" class="mobile" value="${item.username}">
+         <div class="left">
+          {@if item.gender === '女' }
+            {@if item.type==0 || item.type == 3} 
+            <img class="pic" src="../../../image/default_nv_gray.png" alt="" >
+            {@else}
+            <img class="pic" src="../../../image/default.nv.png" alt="" >
+             {@/if}
+          {@else}
+            {@if item.type==0 || item.type == 3} 
+            <img class="pic" src="../../../image/default_gray.png" alt="" >
+            {@else}
+            <img class="pic" src="../../../image/default.png" alt="" >
+             {@/if}
+           {@/if}
+          <div class="number">${item.custseq|tostring}</div>
+         </div>
+         <div class="right" onclick="openDetail(${item.userid})">
+           <p class="firstline"><label class="info realname name" >${item.realname}</label><label class="tel" >${item.reqloc}</label></p>
+           <p class="secondline"><span class="notes">${item.notes}</span></p>
+           <p class="thirdline"><span class="hint">录入时间</span><span class="content">${item.createtime|totime}</span></p>
+         </div>
+         <div class="checkbtn checkbox">
+		  	<input type="checkbox" value="${item.mycustomerid}" name="id" id="${item.mycustomerid}"/><label class="text" for="${item.mycustomerid}"></label>
+		 </div>
+ 	  </div>
+      {@/each}
+    
+    </script>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<!--ajax-->
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/btn.js"></script>
+<script src="../../../script/customer/customer_info.js"></script>
+<script>
+   
+    all=false;
+	function select_all(){
+	    var inputs = document.getElementsByTagName('input');
+	    if(!all)
+	    {  
+			for(var i=0;i<inputs.length;i++)   
+			{   
+			   if(inputs[i].getAttribute('type')=='checkbox')   
+			   {   
+			  	 inputs[i].checked = true;   
+			   }   
+			}
+			document.getElementById("chooseall").style.width="1.3rem";
+			document.getElementById("chooseall").innerHTML="取消全选";
+	    }
+		else
+		{
+		    for(var i=0;i<inputs.length;i++)   
+			{   
+			   if(inputs[i].getAttribute('type')=='checkbox')   
+			   {   
+			  	 inputs[i].checked = false;   
+			   }   
+			}
+			document.getElementById("chooseall").style.width="0.9rem";
+			document.getElementById("chooseall").innerHTML="全选";
+		}
+		all=!all;
+	} 
+	
+	function openwin(){
+	    var customeridarr=document.getElementsByName('id');
+	    var customeridArray = [];
+	    for(k in customeridarr){
+	        if(customeridarr[k].checked)
+	        {
+	            customeridArray.push(customeridarr[k].value);
+	        }
+	    }
+	    api.openWin({
+	        name: 'transfer_colleague_list_win',
+	        url: './transfer_colleague_list_win.html',
+	        pageParam:{
+	            customeridArray:customeridArray
+	        }
+        });
+	}
+	
+	apiready = function(){
+       userid=$api.getStorage("userid");
+       api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	    	initial();
+	        api.refreshHeaderLoadDone();
+	    });
+	    /* 初始值 */
+	    oWrapper = document.getElementById('connector-context');
+	    pageNum=1;
+	    pageSize=20;
+	    orderBy=1;
+	    ifAsc=0;
+	    orderlist=[0,1,1,1];
+	    
+	    /* 初始化方法 */
+        getlist(true);
+        api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+        	pageNum++;
+	        getlist(false);       
+	    });  
+	};
+	locked=false;
+	
+	function initial(){
+		pageNum=1;
+    	oWrapper.innerHTML="";
+    	getlist(false);
+	}
+	
+    function getlist(asyn){
+    	
+        var keyword=document.getElementById("search").value;
+        if($api.getStorage("userid"))
+        {   	
+	        $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/mycustomer/customerList/'+pageNum+'/'+pageSize,
+				  async: asyn,
+				  data:  {userid:userid,keyword:keyword},
+				  success: function(data){
+				  	 console.log(JSON.stringify(data));
+				     arrlist=data.customerlist.objs;
+				     if(data.customerlist.pageCount==0)
+				  	 	oWrapper.innerHTML='<p style="height:0.8rem;line-height:0.8rem;text-align: center;background:white;">暂无数据</p>';
+				  	 else{
+				  	 	xuanran(arrlist);
+				  	 }
+				  },
+				  error: function(xhr, type){
+				  }
+			})
+	    }
+    }
+    
+    
+    function openremark(){
+        var jsfun = 'openremark();';
+		api.execScript({
+		    name: 'root',
+		    script: jsfun
+		});
+    }
+    
+    function openDetail(customerid){
+       api.openWin({
+	      name: 'connector.detail_win',
+	      url: '../../customer/connector.detail_win.html',
+	      allowEdit:true,
+		  pageParam: {
+		      customerid:customerid,
+		  },
+      });
+    } 
+    
+     function xuanran(arrlist){
+        var temp=document.getElementById("sort");
+	    var resultData ={dataList: arrlist};
+	    //alert(JSON.stringify(resultData));
+        juicer.register('totime',totime);
+        juicer.register('ctocusType',ctocusType);
+        juicer.register('tostring',tostring);
+	    var result = juicer(temp.innerHTML, resultData);
+	    oWrapper.innerHTML += result;
+    }
+    
+  </script>
+</body>
+</html>

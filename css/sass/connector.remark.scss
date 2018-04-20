@@ -1,0 +1,92 @@
+#connector-remark {
+  text-align: center;
+  line-height: .96rem;
+  background: #fff;
+  height: .96rem;
+  padding: 0 .2rem;
+  font-size: .3rem;
+  box-shadow: 0 0 .1rem #aaa;
+  position: relative;
+  z-index: 2;
+  .icon {
+    font-size: .32rem;
+    color: #0af;
+  }
+  button {
+    height: .5rem;
+    width: .6rem;
+    line-height: .5rem;
+    margin-right: .2rem;
+    outline: none;
+  }
+  input {
+    width: 3.5rem;
+    line-height: .5rem;
+    font-size: .22rem;
+    padding: 0 .25rem;
+    border-radius: .25rem;
+    border: 1px solid #333;
+    margin-right: .2rem;
+    &:focus {
+      outline: none;
+    }
+  }
+  span {
+    margin-right: .2rem;
+    display: inline-block;
+    height: .5rem;
+    line-height: .5rem;
+    width: .4rem;
+  }
+}
+#connector-remark-context {
+  width: 7.5rem;
+  margin: 0 auto;
+  border: 1px solid transparent;
+  .user-part .connector-info p{
+    font-size: 0.28rem;
+    line-height: 0.45rem;
+    color: #333; 
+  }
+  .user-part .connector-info .fr{
+    color: #888;
+    font-size: 0.2rem; 
+  }
+  .user-part {
+    border-bottom:1px solid #CCCCCC
+  }
+  .info {
+    width:4rem;
+    display:inline-block;
+  }
+  .title {
+    padding-left: .26rem;
+    line-height: 1.8;
+    font-size: .22rem;
+  }
+  .user-part {
+    background: #fff; 
+    padding:  .23rem .2rem;
+    .pic {
+      width: .7rem;
+      height: .7rem;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+    .connector-info {
+      display: inline-block;
+      width: 5.9rem;
+      vertical-align: middle;
+      margin-left: .3rem;
+      p:first-child {
+        font-size: .28rem;
+        line-height: .45rem;
+        color: #333;
+      }
+      p {
+        color: #888;
+        font-size: .2rem;
+      }
+    }
+  }
+}

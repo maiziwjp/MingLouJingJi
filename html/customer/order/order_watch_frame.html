@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>带看申请</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/btn_style.css">
+    <link rel="stylesheet" href="../../../css/clipboard.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css" />	
+    <link rel="stylesheet" type="text/css" href="../../../css/common.css" />	
+    <style>
+        html,body,#detail-context,ul,li{margin:0;padding:0;}
+    	input,button,select,div{outline:none;padding:0;}
+    	textarea{padding:0.2rem;width:100%;border:0px;font-size:0.32rem;resize:none;outline:none}
+    	.clearfix:after{content:"";display:block;height:0;clear:both;}
+ 		.fr{float:right;}
+ 
+        .h1 {height: 1px;margin-left: 1.0rem;background: #f0f0f0;}	
+        .datetime{font-size:0.33rem;line-height:1.0rem;margin-left:0.9rem}
+        /* 状态条 */
+      
+        /* 设置条目 */	
+		.item {height: 1.0rem;line-height: 1.0rem;padding-left:0.3rem;background-color: #fff;margin-bottom: 0rem;}			
+		.item_arrow {float: right;width:0.3rem;margin:0.35rem 0.2rem; }	
+        .detailorder{margin-bottom:0.2rem;text-align:left;height:0.5rem;line-height:0.5rem;font-size:0.4rem;}	
+        .item .selectbtn{margin-right:0.5rem;}
+        
+        .item input,.item select{text-align: right;display:inline-block;width:4.0rem;margin-right:0.3rem;font-size:0.32rem;vertical-align: middle;}
+        .item select{direction: rtl;}
+        .item input[type="date"]{width:4.8rem;}
+        .item .tap{display: inline-block;width:2.0rem;}
+        .item .right_arrow{height:0.4rem;vertical-align: middle;}
+      	
+      	#buganga{width:0.8rem;height:0.8rem;}
+      	 /* 提交申请 */
+      	#submitbtn{height:0.9rem;line-height:0.9rem;font-size:0.38rem;background:#F63F3F;position:fixed;bottom:0;left:0;z-index:8;text-align:center;width:100%;color:white;}
+      	 /*底部固定栏*/ 
+        #footer{background:#fff;position:fixed;bottom:0;left:0;z-index:9;width:100%;}
+        .photo{font-size:0.38rem;color:#000000;height:0.9rem;line-height:0.9rem;}
+        .bottombar .photo{text-align:center;display:block}
+        /* 点击效果  */
+        #submitbtn:active{opacity: 0.7;}
+    </style>
+</head>
+<body class="bg-gray">
+  <article id="detail-context">
+    <div class="h1"></div>
+	
+	<div class="item " tapmode="presshover">	
+			<span id="customerName"></span>				
+	</div>
+	<div class="h1"></div> 
+	<div class="item" tapmode="presshover" onclick="openwin()">	
+		<span id="buildingName"></span>	
+		<img src="../../../image/arrow.png" alt="" class="item_arrow" onclick="openbuildingwin()">	
+	</div>
+	<div class="h1"></div> 
+	
+	 <div class="item " tapmode="presshover" style="margin-top:0.3rem;"onclick="quxiao()">	
+		<span class="tap">带看时间</span><input type="date"  id="watch_time" />
+	</div> 
+	<div class="item " tapmode="presshover" >	
+	<span class="tap">是否在现场</span>	<div class="selectbtn fr" >
+		<label><input name="ontheSpot" value="是" type="radio" checked /><span>是</span></label><label><input name="ontheSpot" type="radio" value="否" /><span>否</span></label></div>
+	</div>
+	<div class="item " tapmode="presshover" >	
+		<span class="tap">置业顾问</span><input type="text"  value=""placeholder="请填写姓名" id="consultant"/>
+	</div>	
+	
+	<div style="background: #f0f0f0;height:0.3rem"></div>
+
+	<div class="item" tapmode="presshover" id="showphoto">	
+		<img id="buganga" src="../../../image/photo.png" alt="" class="item4" >
+	</div> 
+	
+	 <div id= "beizhu" class="item " tapmode="presshover" style="margin-top:0.3rem;height:1.0rem;">	
+		<textarea class="" rows="3" placeholder="请填写备注" id="notes"></textarea>
+	</div> 
+	
+	
+	<div id="submitbtn" onclick="watch_apply()">
+	    提交申请
+    </div>
+    
+    
+	<footer class="footer" id="footer" tapmode="" >
+	    <div id="foter" class="bottombar"  style="display:none">
+	    
+	        <div class="photo" onclick="getpic()">从手机中选择</div>
+	     
+			<div class="photo" onclick="getcamer()">拍照</div>
+		
+			<div style="background: #f0f0f0;height:0.2rem"></div>
+			<div class="photo" onclick="quxiao()">取消</div>
+	    </div>
+    </footer>
+		 
+
+   
+  </article>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<script src="../../../script/jquery.min.js"></script>
+<!--ajax-->
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/customer/customer_info.js"></script>
+<script>
+	
+</script> 
+<script>
+flag=false;
+var con=document.getElementById('consultant');
+	$(document).ready(function(){
+		$("#beizhu").click(function(){
+		$("#beizhu").animate({  	
+	  	height:'2.0rem',
+		});
+	});
+	});
+	
+	$(document).ready(function(){
+		$("#showphoto").click(function(){
+		$("#foter").slideDown("slow");
+		$("#beizhu").animate({  	
+	  	height:'1.0rem',
+		});
+		});
+	});
+	
+
+        apiready = function(){
+		//获取数据
+		userid=$api.getStorage("userid");
+		customerid=api.pageParam.customerid;
+		orderid=api.pageParam.orderid;
+		customerName=api.pageParam.customerName;
+		buildingName=api.pageParam.buildingName;
+		//初始化数据
+		locked=false;
+		//初始化方法
+		document.getElementById("customerName").innerHTML=customerName;
+		document.getElementById("buildingName").innerHTML=buildingName;
+		document.getElementById("watch_time").value=setDate();
+		console.log(document.getElementById("watch_time").value);
+	 }
+	      
+     function setDate(){
+        var time=new Date();
+      	month=time.getMonth()+1;
+      	month=month<10?"0"+month:month;
+	  	date=time.getDate();
+	  	date=date<10?"0"+date:date;
+	  	return time.getFullYear()+'-'+month+"-"+date;
+  	}
+	  
+	function watch_apply(){
+		if(!locked)
+		{
+		if(flag==false && con.value=="")
+		api.toast({
+	        msg:'请填写信息并插入图片'
+        });
+        else if(flag==true && con.value=="")
+		
+		api.toast({
+	        msg:'请填写信息'
+        });
+		
+		else if(flag==false && con.value!="")
+		api.toast({
+	        msg:'请插入图片'
+        });
+        if(flag==true && con.value!="")
+        locked=true;
+        else 
+        locked=false;
+		}
+		else
+		{
+			
+			api.ajax({
+		        url:ipAddress+'/order/watchApply',
+		        method: 'post',
+		        data:{
+		        	values: {orderid: orderid,
+		        	watch_time:document.getElementById("watch_time").value,
+		        	ontheSpot:document.getElementsByName("ontheSpot")[0].checked?"是":"否",
+		        	consultant:document.getElementById("consultant").value,
+		        	notes:document.getElementById("notes").value
+		        	},
+		        	files: {file: watch_apply_img}
+		        },
+		    }, function(ret, err) {
+	             api.toast({
+	                 msg:ret.msg
+                 });
+                 
+                 if(ret.code=="200")
+                 {
+                 	api.execScript({
+					    name: 'root',
+					    script: 'chooseframe()'
+					});
+             		setTimeout(function (){
+             			 api.openWin({
+		                     name: 'root',
+		                     url: '../../../index.html'
+			             });
+             		},1500);
+             	 }
+                 locked=false;
+	        })
+		  
+	    }
+	}
+	//上传照片
+	function getpic(){
+	      api.getPicture({
+	    	sourceType: 'album',
+	    	encodingType: 'png',
+	   	 	mediaValue: 'pic',
+	  		destinationType: 'url',
+	    	allowEdit: true,
+	    	quality: 100,
+	    	//targetWidth: 100,
+	    	//targetHeight: 100,
+	    	saveToPhotoAlbum: false
+		}, function(ret, err) {
+	    	if (ret && ret.data) {
+	    		console.log(JSON.stringify(ret));
+	    		document.getElementById("foter").style.display="none";
+	        	document.getElementById("buganga").src=ret.data;
+	        	watch_apply_img=ret.data;
+	        	flag=true;
+	    	} else {
+	        	alert("插入失败");
+	    	}
+		});
+	
+	}
+	
+	function getcamer(){
+		 api.getPicture({
+	    	sourceType: 'camera',
+	    	encodingType: 'png',
+	   	 	mediaValue: 'pic',
+	  		destinationType: 'url',
+	    	allowEdit: true,
+	    	quality: 100,
+	    	//targetWidth: 100,
+	    	//targetHeight: 100,
+	    	saveToPhotoAlbum: false
+		}, function(ret, err) {
+	    	if (ret && ret.data) {
+	    		console.log(JSON.stringify(ret));
+	    		document.getElementById("foter").style.display="none";
+	        	document.getElementById("buganga").src=ret.data;
+	        	watch_apply_img=ret.data;
+	        	flag=true;
+	    	} else {
+	        	alert("插入失败");
+	    	}
+		});
+	}
+	
+	
+	function quxiao(){		
+		$("#foter").slideUp("slow");
+	}
+	
+
+
+</script>
+</body>
+</html>

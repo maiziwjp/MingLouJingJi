@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <title>修改密码</title>
+    <link rel="stylesheet" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet"  href="../../../css/btn_style.css">
+    <style>
+    	body{
+    		background: #e9e9e9;margin:0px;
+    	}
+    	.fl{float: left;}
+    	input,button{outline:none;}
+    	section{font-size:0.32rem}
+    	button{font-size:0.38rem}
+    	/*  */
+    	.my_item{margin-top: 0.2rem;}
+    	/* 输入 */
+    	.btngroup{background: white;height:1.0rem;line-height: 1.0rem;border-bottom:1px solid #ccc;padding:0 0.2rem;}
+    	.btngroup label{width:1.3rem;display: inline-block;color:#333;}
+    	.btngroup input{border:none;width:3.5rem;display:inline-block;height:0.6rem;line-height:0.6rem;}
+    	.btngroup .btn{width:1.8rem;display:inline-block;color:#f63f3f;text-align: right;font-size: 0.28rem;}
+    	.icon{width:0.5rem;height:0.5rem;vertical-align: middle;}
+    	
+    	.submitbtn{width:7.0rem;height:1.0rem;line-height: 1.0rem;background: #ccc;margin:auto;margin-top:0.4rem;display:block;border:none;border-radius:0.2rem;color:white;}
+        .info{height:0.8rem;line-height: 0.8rem;padding-left:0.3rem}
+    </style>
+</head>
+<body>
+	<section class="my_item">
+	    <div class="btngroup">
+	        <label>校验码</label><div class="erasable"><input  class="erasable" placeholder="请输入手机验证码" id="vcode" oninput="showclear(this)"/><img src="../../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div><button class="btn" onclick="sendvcode()" id="vcodebtn">发送验证码</button>
+	    </div>
+	    <div class="btngroup">
+	        <label>新密码</label><div class="erasable"><input class="erasable" placeholder="密码应为6-16位" oninput="checkpw(this)" id="password" type="password"/><img src="../../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div><label class="btn"><img class="display icon hide" id="display" src="../../../icon/invisible.png" onclick="changeDisplay()"/></label></div>
+	    </div>
+	    <button class="submitbtn" id="btn" onclick="checkvcode()">确定</button> 
+	</section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/btn.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		userid=$api.getStorage("userid");
+		username=$api.getStorage("username");
+		api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+	};
+	
+	pwok=false;
+	locked=false;
+	vcodebtn=document.getElementById("vcodebtn");
+	
+	//注册新账号
+    function update(){
+    	if(!locked)
+    	{
+    		locked=true;
+	        var pw=document.getElementById("password").value;
+		    $.ajax({
+			  type: 'POST',
+			  url: ipAddress+'/account/modifyps',
+			  data:  {username:username,passwd:pw},
+			  dataType: 'json',
+			  success: function(data){
+			      if(data.code="200")
+			          setTimeout("api.closeWin()",500);
+				  api.toast({
+	                  msg:data.msg
+                  });
+			  },
+			  error: function(xhr, type){
+			    locked=false;
+			  }
+			})
+		}
+    }
+	
+	//发送验证码
+    function sendvcode(){
+	     $.ajax({
+			  type: 'post',
+			  url: ipAddress+'/verifyCode/sendSMS',
+			  data: {mobile:username,type:2},
+			  success: function(data){
+			  	  //发送验证码后
+			  	  if(data.code=="200")
+			  	  {
+			  	  	$api.setStorage("mobile",username);
+			        $api.setStorage("verifycode",data.verifycode);
+			        countTime();
+			      }
+			      else
+			      	api.toast({
+	                      msg:data.msg
+	                });
+			  },
+			  error: function(xhr, type){
+			  }
+	    })
+    }
+	
+	function checkpw(elem){
+		showclear(elem);
+	    var pw=document.getElementById("password").value;
+	    if(pw.length>=6&&pw.length<=16)
+	    {
+	        pwok=true;
+	    }
+	    else
+	    {
+	        pwok=false;
+	    }
+	    if(pwok)
+	    {
+	        document.getElementById("btn").disabled=false;
+	        document.getElementById("btn").style.background="#f63f3f";
+	    }
+	    else
+	    {
+	        document.getElementById("btn").disabled=true;
+	        document.getElementById("btn").style.background="#ccc";
+	    }
+	}
+	
+	//验证手机  验证码
+    function checkvcode(){
+        console.log($api.getStorage("verifycode"));
+    	if(document.getElementById("vcode").value==$api.getStorage("verifycode"))
+    	{
+    		update();
+    	}
+    	else
+    	{
+    		documnet.getElementById("vcode").focus();
+    		api.toast({
+	            msg:'验证码错误，请重新输入!'
+            });
+        }
+    }
+	
+	function timeout() {
+		vcodebtn.disabled=false;
+		clearInterval(a);
+		vcodebtn.innerHTML="获取验证码";
+		vcodebtn.style.color="#f63f3f";
+	} 
+	
+	function countTime(){
+		console.log();
+		time=59;
+		vcodebtn.disabled=true;
+		vcodebtn.innerHTML="1分钟后重试";
+		vcodebtn.style.color="orange";
+	    a=setInterval(function(){
+	          vcodebtn.innerHTML=time+"秒后重试";
+	          time--;},1000);
+		setTimeout("timeout()", 60000);
+	}
+	
+	
+	function changeDisplay(){
+		var elem=document.getElementById("display");
+		var pselem=document.getElementById("password");
+		if(elem.className=="display icon hide")
+		{
+			elem.src="../../../icon/visible.png";
+			elem.className="display icon show";
+			pselem.type="text";
+		}
+		else if(elem.className=="display icon show")
+		{
+			elem.src="../../../icon/invisible.png";
+			elem.className="display icon hide";
+			pselem.type="password";
+		}
+	}
+</script>
+</html>

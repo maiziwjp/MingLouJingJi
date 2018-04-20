@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <title>协议</title>
+    <style>
+    	html, body {min-height: 100%;background: #f0f0f0;margin:0;background: white;}
+       .intro{padding:0 0.4rem 0.4rem;}
+       .title{font-weight:700;font-size:0.38rem}
+       .para{text-indent: 2em;font-size:0.32rem}
+       .fl{float:left}
+    </style>
+</head>
+<body>
+  <div class="intro">
+    <p class="title"> 一、总则</p>
+    <p class="para">名楼（包括手机客户端和网站）的所有权和运营权归杭州名楼网络科技有限公司所有。用户在使用名楼的服务之前，应当仔细阅读本协议，并同意遵守本协议后方可成为名楼用户，一旦用户注册成功，则用户与名楼之间自动形成协议关系，用户应当受本协议的约束。</p>
+	<p class="para">本协议的修改权归杭州名楼网络科技有限公司所有，对用户不承担通知义务。用户应当随时关注本协议的修改，并决定是否继续使用名楼提供的各项服务。</p>
+	<p class="title">二、服务内容</p>
+	<p class="para">名楼服务的具体内容由名楼根据实际情况提供，例如名楼经纪APP等。除非本使用协议另有其它明确规定，增加或强化目前本服务的任何新功能，包括所推出的新产品，均受到本使用协议之规范。</p>
+	<p class="para">您了解并同意，本服务仅依其当前所呈现的状况提供，对于任何用户信息或个人化设定之时效、删除、传递错误、未予储存或其它任何问题，名楼均不承担任何责任。名楼保留不经事先通知为维修保养、升级或其它目的暂停本服务任何部分的权利。</p>
+	<p class="title">三、遵守法律</p>
+	<p class="para">您同意遵守中华人民共和国相关法律法规的所有规定，并对以任何方式使用您的密码和您的账号使用本服务的任何行为及其结果承担全部责任。如您的行为违反国家法律和法规的任何规定，有可能构成犯罪的，将被追究刑事责任，并由您承担全部法律责任。如果名楼有理由认为您的任何行为
+	，包括但不限于您的任何言论和其它行为违反或可能违反国家法律和法规的任何规定，名楼可在任何时候不经任何事先通知终止向您提供服务。</p>
+	<p class="title">四、您的注册义务</p>
+	<p class="para">为了能使用本服务，您同意以下事项：依本服务注册提示填写正确的手机号码和密码。若您提供任何违法、不道德或名楼认为不适合在名楼上展示的资料；或者名楼有理由怀疑你的资料属于程序或恶意操作，名楼有权暂停或终止您的账号，并拒绝您于现在和未来使用本服务之全部或任何部分。</p>
+	<p class="para">名楼无须对任何用户的任何登记资料承担任何责任，包括但不限于鉴别、核实任何登记资料的真实性、正确性、完整性、适用性及是否为最新资料的责任。</p>
+	<p class="title">五、隐私保护</p>
+	<p class="para">名楼不对外公开或向第三方提供单个用户的注册资料及用户在使用网络服务时存储在名楼的非公开内容，但下列情况除外：</p>
+	<p class="para">（1）事先获得用户的明确授权；</p>
+	<p class="para">（2）根据有关的法律法规要求；</p>
+	<p class="para">（3）按照相关政府主管部门的要求；</p>
+	<p class="para">（4）该第三方同意承担与名楼同等的保护用户隐私的责任；</p>
+	<p class="title">六、附则</p>
+	<p class="para">本协议的订立、执行和解释及争议的解决均应适用中华人民共和国法律。</p>
+	<p class="para">如本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，本协议的其余条款仍应有效并且有约束力。</p>
+	<p class="para">本协议解释权及修订权归杭州名楼网络科技有限公司所有。</p>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+	};
+	function call(){
+	    api.call({
+            type: 'tel_prompt',
+            number: '400-005-0571'
+        });
+	}
+	
+	function confirm(){
+	    api.confirm({
+	    title: '客服电话',
+	    msg: '拨打客服电话400-005-0571',
+	    buttons: ['拨打', '取消']
+		}, function(ret, err){
+		    if(ret.buttonIndex==1)
+		        call();
+		});
+	}
+</script>
+</html>

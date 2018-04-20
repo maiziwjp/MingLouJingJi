@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>客源管理</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../css/input_style.css">
+     <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+     <link rel="stylesheet" type="text/css" href="../../css/customer/customer_info.css">
+    <link rel="stylesheet" href="../../css/lhf-index.css">
+    <style>
+    input,button{outline: none;}
+    /* header */
+    #connector-remark{position: fixed;width:100%;top:0;padding-left:0.3rem;text-align: left;}
+    #connector-remark button{width:0.8rem;padding:0;margin:0;}
+    #connector-remark img{width:0.2rem;}
+    #time{color:#0089ff;font-weight:600;font-size: 0.36rem;}
+    .order{margin-right:0.2rem;}
+    .remark{background: #0af;color:white;width:1.0rem;border-radius:0.05rem;}
+    .remark:active{opacity:0.3}
+    /* 排序 */
+    #sortmethod{height:0.7rem;line-height: 0.7rem;position:fixed;width:100%;background: white;top:0;font-size: 0.32rem;}
+    #sortmethod img{margin-left:0.1rem;height:0.2rem;vertical-align: bottom;}
+    .sort button{width:24%;display:inline-block;height:0.7rem;line-height: 0.3rem;padding:0.2rem 0;}
+    .sort .active{border-bottom: 2px solid #0089FF;color:#0089ff;}
+    /* item */
+    #article{margin-top:0.95rem;width:100%;}
+    #article .user-part{padding:0;padding-left:0.3rem;}
+    /*  */
+    .customer-order{margin-bottom:0.2rem;}
+    /* 用户部分 */
+    .user-part{background: white;height:1.3rem;}
+    .user-part .left{width:1.2rem;}
+    .user-part .right{width:4.0rem;}
+    .user-part .pic{height:0.7rem;width:1.0rem;padding:0 0.1rem;}
+    .user-part .order-num{display:inline-block;width:1.7rem;padding:0.2rem 0;vertical-align: top;}
+    .order-num .num{height:0.5rem;}
+    .order-num p{border-left:1px solid #ccc;text-align: center;}
+    /* 订单部分 */
+    .order-part{background: rgba(255,255,255,0.7);height:0.9rem;border-bottom:1px solid #ccc;color:#000;padding:0 0.3rem;}
+    .order-part .left{display:inline-block;width:4.3rem;height:0.9rem;line-height:0.9rem;vertical-align:middle;}
+    .order-part .right{text-align:right;padding:0.05rem 0;display:inline-block;width:2.4rem;height:0.9rem;line-height:0.9rem;vertical-align:middle;}
+    .order-part .right .firstline{height:0.4rem;line-height:0.4rem;}
+    .order-part .right .secondline{height:0.4rem;line-height:0.4rem;}
+    .order-part .state{color:rgb(238,87,0);}
+    
+    .bottom{height:0.75rem;line-height: 0.75rem;background: #fff;font-size: 0.3rem;margin-bottom: 0.2rem;border-bottom: 1px solid #ececec;}
+    .record{display:inline-block;text-align: center;box-sizing: border-box;width:48%;}
+    .record:first-child{border-right:1px solid #ececec;}
+    /*  */
+   
+    .info{margin-right:0.2rem;}
+    </style>
+</head>
+<body class="bg-gray">
+  <!-- <header id="connector-remark">
+    <button  id="time" data-sort="true" onclick="timeorder()" >降序</button><img class="order" id="orderImg" src="../../icon/desc.png" />
+    <input class="search_input" placeholder="请输入所需要搜索的备注或跟进" id="search" value="" oninput="search()"/>
+  </header> -->
+  <div class="sort" id="sortmethod">
+        <button class="active" onclick="choose(1)">界定中</button>
+		<button  onclick="choose(2)">已界定</button>
+		<button  onclick="choose(3)">已带看</button>	     
+		<button  onclick="choose(4)">已成交</button>	     
+   </div>
+   
+  <article id="article">
+  	  <!-- <section class="customer-order">
+  	  	  	  <div class="user-part" onclick="">
+  	  	        <div class="left">
+  	  	          <img class="pic" src="../../image/default_nv_gray.png" alt="" >
+  	  	        </div>
+  	  	        <div class="right" >
+  	  	          <p class="firstline"><label class="info name" >${items.realname}</label></p>
+  	  	          <p class="secondline"><span class="info mobile">${items.realname}</span></p>
+  	  	        </div>
+  	  	        <div class="order-num" >
+  	  	          <p class="num">0</p>
+  	  	          <p >订单</p>
+  	  	        </div>
+  	  		  </div>
+  	  		  {@each items.list as item }
+  	  		  <div class="order-part">
+  	  	          <div class="left">
+  	  	         	 <div class="buildingname">${item.buildingname}</div>
+  	  		      </div>
+  	  		      <div class="right" >
+  	  		          <div class="firstline time">${item.createtime}</div>
+  	  		          <div class="secondline state">${item.state}</div>
+  	  		      </div>
+  	  		  </div>
+  	  		  {@/each}
+  	  	  </section> -->
+  </article>
+   <!--定义juicer模板 -->
+    <script type="text/template" id="sort">
+      {@each datalist as items }
+      <section class="customer-order">
+	  	  <div class="user-part" onclick="">
+	        <div class="left">
+	          {@if items.gender === '女' }
+	            <img class="pic" src="../../image/default.nv.png" alt="" >
+	          {@else}
+	            <img class="pic" src="../../image/default.png" alt="" >
+	          {@/if}
+	          <div class="number">${items.custseq|tostring}</div>
+	        </div>
+	        <div class="right" onclick="openCusDetail(${items.mycustomerid})">
+	          <p class="firstline"><label class="info name" >${items.realname}</label></p>
+	          <p class="secondline"><span class="info mobile">${items.mobile}</span></p>
+	        </div>
+	        <div class="order-num" onclick="openorderlist(this,${items.customerid},${items.mycustomerid})">
+	          <p class="num">${items.count}</p>
+	          <p >订单</p>
+	        </div>
+		  </div>
+		  {@each items.list as item }
+		  <div class="order-part" onclick="openorder(this,${item.orderid},${item.state},${item.buildingid},${item.mycustomerid})">
+	          <div class="left">
+	         	 <div class="buildingname">${item.buildingname}</div>
+		      </div>
+		      <div class="right" >
+		          <div class="firstline time">${item.createtime|gettime}</div>
+		          <div class="secondline state">${item.state|tostate}</div>
+		      </div>
+		  </div>
+		  {@/each}
+	  </section>
+      {@/each}
+    </script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../../script/juicer.js"></script>
+<script src="../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../script/zepto.js"></script>
+<!-- 拼音转字母组件 -->
+<script src="../../script/lib/pinyin.util.js"></script> 
+  <script>
+    apiready = function(){
+        api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+            initorder();
+	        api.refreshHeaderLoadDone();
+	    });
+	    /* 获取数据 */
+	    userid=$api.getStorage("userid");
+	    /* 初始化数据 */
+	    container = document.getElementById('article');
+	    pageNum=1;
+	    pageSize=20;
+	    locked=false;
+	    state=1;
+	    btngroup=document.getElementById("sortmethod").getElementsByTagName("button");
+	    /* 初始化方法 */
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+        	pageNum++;
+	        getData(true);        
+	    });
+	    
+        choose(1);
+	};
+	
+	function choose(index){
+		for(var i=0;i<btngroup.length;i++)
+		{
+			btngroup[i].className="";
+		}
+		btngroup[index-1].className="active";
+		container.innerHTML="";
+		pageNum=1;
+		state=index;
+		getData(true);
+	}
+	
+	function initorder(){
+		container.innerHTML="";
+		pageNum=1;
+		getData(true);
+	}
+	//获取分页列表
+    function getData(asyn){
+        //var keyword=document.getElementById("search").value;
+        //var ordernum=document.getElementById("time").innerHTML=="降序"?0:1;
+        if($api.getStorage("userid"))
+        {
+        userid=$api.getStorage("userid");
+        	if(!locked)
+        	{
+        		locked=true;
+		        $.ajax({
+					  type: 'post',
+					  async: asyn,
+					  url: ipAddress+'/orderList/getList/'+pageNum+'/20',
+					  data: {userid:userid,state:state},
+					  success: function(data){
+					     if(data.code=="200")
+					     {
+					   
+						  	 if(data.customerOrderList.length>0 || pageNum>1)
+						  	 {
+							     customerOrderList=data.customerOrderList;
+							     var dataList=format(customerOrderList);
+							     xuanran(dataList);
+						     }
+						     else
+						     {
+						     	container.innerHTML='<p style="height:0.8rem;line-height:0.8rem;text-align: center;color:#666;font-size:0.32rem;">暂无数据</p>';
+						     }
+					     }
+					     else if(pageNum==1)
+					     {
+					     	container.innerHTML='<p style="height:0.8rem;line-height:0.8rem;text-align: center;color:#666;font-size:0.32rem;">暂无数据</p>';
+					     }
+					     locked=false;
+					  },
+					  error: function(xhr, type){
+					  	 locked=false;
+					  }
+				})
+			}
+		}
+    }
+    
+    function format(datalist){
+		var j=-1;
+		var oldkey=0;
+		var aimObj={};
+	    datalist.forEach(function (v,i) {
+	        key=v.mycustomerid;
+	        if(key!=oldkey)
+	        {
+	            j++;
+	            oldkey=key;
+	        }
+	        if(aimObj[j])
+	            aimObj[j].push(v);
+	        else
+	        {
+	            aimObj[j]=[];
+	            aimObj[j].push(v);
+	        }
+	    })
+	    var arr = [];
+	    for (var key in aimObj) {
+	      if (aimObj.hasOwnProperty(key)) {
+	        var obj = {
+	          mycustomerid: aimObj[key][0].mycustomerid,
+	          customerid:  aimObj[key][0].customerid,
+	          realname:aimObj[key][0].realname,
+	          mobile:aimObj[key][0].username,
+	          count:aimObj[key].length,
+	          custseq:aimObj[key][0].custseq,
+	          list: aimObj[key]
+	        };
+	        arr.push(obj);
+	      }
+	    }
+	    console.log(JSON.stringify(arr));
+	    return {datalist:arr};
+	}
+	
+    //渲染页面
+    function xuanran(datalist){
+        var temp = document.getElementById('sort');
+        juicer.register('gettime', gettime);
+        juicer.register('tostring',tostring);
+        juicer.register('tostate',tostate);
+	    var result = juicer(temp.innerHTML, datalist);
+	    document.getElementById("article").innerHTML += result;
+    }
+    //渲染时方法
+    function gettime(data){
+	    var date=new Date(data);
+	    return date.getFullYear()+"-"+parseInt(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+	}
+    //渲染时方法
+    function tostring(data){
+    	var s=data+'';
+    	if(s.length==1)
+    		s="000"+s;
+    	else if(s.length==2)
+    		s="00"+s;
+    	else if(s.length==3)
+    		s="0"+s;
+    	return s;
+    }
+    //渲染时方法
+    var statelist=["未报备","","系统判重客","界定中","重客","已界定","已带看","带看确认申请","带看确认审核不通过","带看确认申请通过"
+    ,"认筹","下定金","签约","成交确认申请","成交确认失败","成交确认审核通过"];
+    function tostate(data){
+    	return statelist[data];
+    }
+    
+    function search(){
+	    if(userid)
+	    {
+	        if(!locked)
+	        {
+	            locked=true;
+	            oWrapper.innerHTML="";
+	        	pageNum=0;
+	            setTimeout("getData(true)",200);
+		    }
+	    }
+	    else
+		{
+		    alert("请先登录");
+		}
+    }
+  
+	function timeorder(){  
+	    if(userid)
+	    {
+	        var elem=document.getElementById("time");
+	        var img=document.getElementById("orderImg");
+	        if(!locked){
+	            locked=true;
+	            console.log(elem.innerHTML);
+		        if(elem.innerHTML=="升序")
+		        {
+		        	ordernum=0;
+				    elem.innerHTML="降序";
+				    img.src="../../icon/desc.png";
+		        }
+		        else{
+		        	ordernum=1;
+				    elem.innerHTML="升序";
+				    img.src="../../icon/asc.png";
+		        }
+		        
+		        oWrapper.innerHTML="";
+	       		pageNum=0;
+		        getData(true);
+		    }
+		}
+		else
+		{
+		    alert("请先登录");
+		}
+    }
+    
+     //打开其他页面
+     function openrecord(elem,cusType,cusState){
+        if($api.getStorage("storeSn"))
+        {
+        	var parentnode=elem.parentNode.previousElementSibling;
+        	console.log(elem.parentNode.previousElementSibling.tagName);
+	        var realname=parentnode.getElementsByClassName("info")[0].innerHTML;
+	        var mobile=parentnode.getElementsByClassName("info")[1].innerHTML;
+	        var isvaild= cusType==0 || cusState==3;
+	        api.openWin({
+		        name: 'building_list_win',
+		        url: './building/building_list_win.html',
+		        pageParam: {
+			      realname:realname,mobile:mobile,isValid:isvaild
+			    },
+	        });
+	    }
+	    else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../../aboutMy/personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+    }
+    
+    function openrecordlist(elem){
+        if($api.getStorage("storeSn"))
+        {
+	        var mobile=elem.parentNode.previousElementSibling.getElementsByClassName("info")[1].innerHTML;
+	        api.openWin({
+		        name: 'recordlist_win',
+		        url: './report/recordlist_win.html',
+		        pageParam: {
+			      mobile:mobile
+			    },
+	        });
+	    }
+	    else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../../aboutMy/personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+    }
+    
+     function openDetail(customerid){
+       api.openWin({
+	      name: 'follower_win',
+	      url: './follower_win.html',
+	      pageParam: {
+	        customerid:customerid,
+	      },
+      });
+      
+    } 
+    
+    function openadd(){
+        if(userid)
+        {
+	        api.openWin({
+		      name: 'addCustomer_win',
+		      url: './addCustomer_win.html',
+	        });
+	    }
+	    else
+		{
+		    alert("请先登录");
+		}
+    }
+    
+    function openinfo(){
+        var jsfun = 'openinfo();';
+		api.execScript({
+		    name: 'root',
+		    script: jsfun
+		});
+    }
+    
+    function openCusDetail(mycustomerid){
+    	api.openWin({
+	      name: 'connector.detail_win',
+	      url: './connector.detail_win.html',
+	      pageParam: {
+	        mycustomerid:mycustomerid,
+	      },
+        });
+    }
+    
+    function openorder(elem,orderid,state,buildingid,mycustomerid){
+        var customerName=elem.parentNode.getElementsByClassName("name")[0].innerHTML;
+        var buildingName=elem.getElementsByClassName("buildingname")[0].innerHTML;
+    	api.openWin({
+	      name: 'order_detail_win',
+	      url: './order/order_detail_win.html',
+	      pageParam: {
+	        orderid: orderid,
+	        state:state,
+	        buildingid:buildingid,
+	        buildingName:buildingName,
+	        customerName:customerName,
+	        mycustomerid:mycustomerid
+	      },
+        });
+    }
+    
+    function openorderlist(elem,customerid,mycustomerid){
+    	customerName= elem.parentNode.getElementsByClassName("name")[0].innerHTML;
+    	api.openWin({
+	      name: 'orderlist_win',
+	      url: './report/orderlist_win.html',
+	      pageParam: {
+	        customerid: customerid,
+	        mycustomerid:mycustomerid,
+	        customerName:customerName,
+	      },
+        });
+    }
+  </script>
+</body>
+</html>

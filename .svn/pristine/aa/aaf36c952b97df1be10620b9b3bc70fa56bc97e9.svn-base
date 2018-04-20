@@ -1,0 +1,361 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>客源管理</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/customer/customer_info.css">
+    <link rel="stylesheet" type="text/css" href="../../css/input_style.css">
+    <link rel="stylesheet" href="../../css/btn_style.css">
+    <link rel="stylesheet" href="../../css/lhf-index.css">
+    
+    <style>
+    body{font-size: 0.29rem;}
+    input,button{outline:none;}
+    ul li,p{margin:0;padding:0px;}
+    /* 头部查询 */
+    #connector-remark{position: fixed;width:100%;top:0; border-top: 0;height:0.85rem;line-height:0.85rem;}
+    #connector-remark input#search {width: 5.0rem; }
+    #checkinputbtn{height:0.4rem;weight:0.4rem;float:right;margin-top:0.2rem;}
+    #connector-remark.remark{background: #0089ff;color:white;width:1.0rem;border-radius:0.05rem;}
+    .remark:active{opacity:0.3}
+    /* 排序 */
+     #sortmethod{height:0.7rem;line-height: 0.7rem;position:fixed;width:100%;background: white;top:0.85rem;font-size: 0.32rem;}
+     #sortmethod img{margin-left:0.1rem;height:0.2rem;vertical-align: bottom;}
+     .sort button{width:32%;display:inline-block;height:0.7rem;line-height: 0.3rem;padding:0.2rem 0;}
+     /* 客户列表 */
+     #connector-context{margin-top:1.56rem;margin-bottom: 0.96rem;}
+    .record{ width: 32%; border-left: 2px; }
+    #bb{ border-left: 1px solid #E8E8E8;}
+     /* 底部固定栏 */
+    footer{position: fixed;width:100%;bottom: 0;height: 0.95rem;line-height: 0.95rem;font-size:0.3rem;text-align: center;z-index: 555;padding:0 0.2rem;background: white;}
+    footer p{display:inline-block;}
+    footer span{color:#c70;}
+    #fontsizenum{
+     height: 20px;
+     overflow: hidden;
+     white-space: nowrap;
+     text-overflow: ellipsis;
+     }
+    </style>
+</head>
+<body class="bg-gray">
+  <header id="connector-remark">
+    <div class="erasable"><input placeholder="搜索 姓名、电话" id="search" class="search_input"/><img src="../../icon/unchecked2.png" id="checkinputbtn" onclick="checkinput()"/><img src="../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)"   />
+</div>
+  </header>
+  <div class="sort" id="sortmethod">
+        <button onclick="order(1,this)" class="sortType" style="color:#0089ff;">录入时间<img src="../../icon/desc.png"/></button><button onclick="order(2,this)" class="sortType" >跟进时间<img src="" style="display:none;"/></button>
+        <button onclick="order(3,this)" class="sortType">客户质量<img src="" style="display:none;"/></button></button>
+   </div>
+  <article id="connector-context">
+      <!-- <div class="user-part" onclick="openDetail(${item.mycustomerid})">
+         <div class="left">
+            <img class="pic" src="../../image/default_nv_gray.png" alt="" >
+            
+           <div class="number">${ite}</div>
+         </div><div class="right" >
+           <p class="firstline"><label class="info realname name" >${item.realname}</label><label class="reqloc" >${item.reqloc}</label><label class="time">${item.createtime|totime}</label><label class="customerType">${ite</label></p>
+           <p class="secondline"><span>备注：</span><span class="notes">${item.notes}</span></p>
+           <p class="thirdline"><span>跟进：</span><span class="comment">hhhhh</span></p>
+         </div>
+       	  </div>
+       	  <div class="bottom">
+           <button class="record" onclick="openrecord(this,${item.customerid})">一键备案</button>
+           <button class="record" onclick="openrecordlist(this,${item.customerid},${item.mycustomerid})">查看备案详情</button>
+       </div> -->
+  </article>
+  <footer>
+      <p class="fl">客户总量：<span id="customer">0</span></p>
+      <p>今日新增：<span id="newcustomer">0</span></p>
+      <p class="fr">今日跟进：<span id="newrecord">0</span></p>
+  </footer>
+    
+    <script type="text/template" id="sort">
+     {@each dataList as item}
+   	 <div class="user-part" onclick="openDetail(${item.mycustomerid},${item.customerid})">
+         <div class="left">
+          {@if item.gender === '女' }
+            {@if item.type==0} 
+            <img class="pic" src="../../image/default_nv_gray.png" alt="" >
+            {@else}
+            <img class="pic" src="../../image/default.nv.png" alt="" >
+             {@/if}
+          {@else}
+            {@if item.type==0} 
+            <img class="pic" src="../../image/default_gray.png" alt="" >
+            {@else}
+            <img class="pic" src="../../image/default.png" alt="" >
+             {@/if}
+           {@/if}
+           <div class="number">${item.custseq|tostring}</div>
+         </div><div class="right" >
+           <p class="firstline"><label class="info realname name" >${item.realname}</label><label class="reqloc" >${item.reqloc}</label><label class="time">${item.createtime|totime}</label><label class="customerType">${item.type|ctocusType}</label></p>
+           <p class="secondline"><span>备注：</span><span class="notes">${item.notes}</span></p>
+           <p class="thirdline"><span>跟进：</span><span class="comment" id="fontsizenum" title="">${item.comment|tocomment}</span></p>
+         </div>
+ 	  </div>
+ 	  <div class="bottom">
+           <button class="record" onclick="openrecord(this,${item.customerid})">一键备案</button>
+           <button class="record" onclick="openrecordlist(this,${item.customerid},${item.mycustomerid})">备案详情</button>
+           <button class="record" id="bb" onclick="openWrite(${item.mycustomerid},${item.customerid})">写跟进</button>
+       </div>
+      {@/each}
+    </script> 
+<script type="text/javascript" src="../../script/api.js"></script>
+<script src="../../script/global_variables.js"></script>
+<!--模版引擎-->  
+<script src="../../script/juicer.js"></script>
+<!--ajax-->
+<script src="../../script/zepto.js"></script>
+<script src="../../script/btn.js"></script>
+<script src="../../script/customer/customer_info.js"></script>
+  <script>
+    apiready = function(){
+       userid=$api.getStorage("userid");		
+       /*事件监听*/
+       //下拉刷新	
+       api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',	
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true												
+	    }, function(ret, err){
+	    	init();
+	        api.refreshHeaderLoadDone();
+	    });
+	    //下拉加载		
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){	
+        	pageNum++;
+	        getlist(true);       
+	    }); 
+	    
+	    
+	    /* 初始值 */
+	    oWrapper = document.getElementById('connector-context');
+	    pageNum=1;
+	    pageSize=2000;
+	    orderBy=1;
+	    ifAsc=0;
+	    orderlist=[0,1,1,1];
+	    
+	    /* 初始化方法 */
+        init();
+	    document.getElementById("clearbtn").addEventListener("click",init); 
+	    
+	};
+	
+	locked=false;
+	flag=0;
+	
+	//初始化获取页面元素的方法
+	function init(){
+		pageNum=1;
+		oWrapper.innerHTML="";
+        getlist(false);
+	}
+	
+	 //判断有没有确认
+	function checkinput(){	
+	var keyword1=document.getElementById("search").value;		
+	k=parseInt(keyword1);
+	if(k>=0&&k<=99999999999){
+		var len=k.toString().length;
+		if(len<4){
+			alert("请至少输入4位电话号码");
+		}
+		else
+		{		   
+	 	    alert("请稍等片刻");
+	 	    init();
+	 	   // getlist(true);	
+	 	   
+		}
+	 	       
+		}
+	else //if(keyword1!="")
+	    {	      
+		    alert("请稍等片刻");
+		    init();
+	 	   // getlist(true);		    
+	  }
+	}   
+	//获取分页列表数据
+    function getlist(asyn){
+        //p++;
+        var keyword=document.getElementById("search").value;
+        userid=$api.getStorage("userid");
+        if($api.getStorage("userid"))
+        {
+        	$.ajax({
+			  type: 'post',
+			  url: ipAddress+'/mycustomer/getList/'+pageNum+'/'+pageSize,
+			  data:  {userid:userid,keyword:keyword,orderBy:orderBy,ifAsc:ifAsc},
+			  async: asyn,
+			  success: function(data){
+			  	 console.log(JSON.stringify(data));
+			     if(data.mycustomerlist.pageCount==0)
+			  	 	oWrapper.innerHTML='<p style="margin-top:0.2rem;text-align: center;color:#999;font-size:0.3rem;">对不起，找不到相关数据</p>';
+			  	 else if(data.mycustomerlist.objs.length>0)
+			  	 	xuanran("sort",data.mycustomerlist.objs);
+			  	 
+			  	 document.getElementById("customer").innerHTML=data.mycustomerlist.pageCount;
+		  	
+			  },
+			  error: function(xhr, type){
+			  	alert("网络或服务器出错!");
+			  }
+			  
+			})
+	        $.ajax({
+				  type: 'get',
+				  url: ipAddress+'/mycustomer/count/'+userid,
+				  async: asyn,
+				  data:  '',
+				  success: function(data){
+				     document.getElementById("newcustomer").innerHTML=data.customercount;
+			    	 document.getElementById("newrecord").innerHTML=data.remarkcount;
+				  },
+				  error: function(xhr, type){
+				  }
+			})
+	    }
+	    else{
+	        document.getElementById('connector-context').innerHTML="";
+	        document.getElementById('customer').innerHTML=0;
+	        document.getElementById('newcustomer').innerHTML=0;
+	        document.getElementById('newrecord').innerHTML=0;
+	    }
+    }
+    
+    
+    //排序
+    function order(k,elem){
+        if(userid)
+        {
+            var sortlist=document.getElementsByClassName("sortType");
+            for(var i=0;i<sortlist.length;i++)
+            {
+                sortlist[i].getElementsByTagName("img")[0].style.display="none";
+                sortlist[i].style.color="#000";
+            }
+            
+            elem.style.color="#0089ff";
+	        if(orderlist[k-1]==0)
+            {
+            	elem.getElementsByTagName("img")[0].src="../../icon/asc.png";
+            	elem.getElementsByTagName("img")[0].style.verticalAlign="top";
+            	ifAsc=orderlist[k-1]=1;
+            }
+            else if(orderlist[k-1]==1)
+            {
+            	elem.getElementsByTagName("img")[0].src="../../icon/desc.png";
+            	elem.getElementsByTagName("img")[0].style.verticalAlign="bottom";
+            	ifAsc=orderlist[k-1]=0;
+            }
+            elem.getElementsByTagName("img")[0].style.display="inline-block";
+            orderBy=k;
+            
+            pageNum=1;
+    		oWrapper.innerHTML="";
+            getlist(true);
+	    }
+	    else
+	    {
+	        alert("请先登录！");
+	    }
+    }
+    
+    
+   
+	
+	
+    //打开其他页面
+    function openrecord(elem,customerid){
+        if($api.getStorage("storeid"))
+        {
+        	var parentnode=elem.parentNode.previousElementSibling;
+	        var realname=parentnode.getElementsByClassName("realname")[0].innerHTML;
+	        var isvaild= parentnode.getElementsByClassName("customerType")[0].innerHTML=="无效客户";
+	        api.openWin({
+		        name: 'building_list_win',
+		        url: './building/building_list_win.html',
+		        pageParam: {
+			      customerid:customerid,isValid:isvaild
+			    },
+	        });
+	    }
+	    else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../aboutMy/personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+    }
+    
+    function openrecordlist(elem,customerid,mycustomerid){
+        if($api.getStorage("storeid"))
+        {
+	        var customerName=elem.parentNode.previousElementSibling.getElementsByClassName("realname")[0].innerHTML;
+	        api.openWin({
+		        name: 'recordlist_win',
+		        url: './report/recordlist_win.html',
+		        pageParam: {
+			      customerid:customerid,
+			      customerName:customerName,
+			      mycustomerid:mycustomerid
+			    },
+	        });
+        }
+        else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../aboutMy/personal_info/personalinformation_win.html'
+                    });
+		 });
+	  }
+    }
+    
+    function openDetail(mycustomerid,customerid){
+       api.openWin({
+	      name: 'connector.detail_win',
+	      url: './connector.detail_win.html',
+	      allowEdit:true,
+		  pageParam: {
+		      mycustomerid:mycustomerid,
+		      customerid:customerid
+		  },
+      });
+    } 
+    
+    function openWrite(mycustomerid,customerid){
+       api.openWin({
+	      name: 'connector.detail_win',
+	      url: './connector.write_win.html',
+	      allowEdit:true,
+		  pageParam: {
+		      mycustomerid:mycustomerid,
+		      customerid:customerid
+		  },
+      });
+    } 
+    
+  </script>
+</body>
+</html>

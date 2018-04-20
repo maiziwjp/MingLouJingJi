@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" class="root">
+<head>
+  <meta charset="UTF-8">
+  <title>跟进纪录</title>
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../css/stylesheet/icon1.css">
+    <link rel="stylesheet" href="../../css/clipboard.css">
+    <style>
+    .clearfix:after{content:"";display:block;height:0;clear:both;}
+    #follower-context .dates .date{color:#999;}
+    #follower-context .dates .date-item .title{color:#f63f3f;}
+    #follower-context .dates .date-item .title:before{background: #f63f3f;}
+    .content{font-size: 0.28rem;}
+    .content label{color:#333;margin-right:0.2rem;}
+    .content span{color:#666;margin-right:0.2rem;}
+    .content p{margin-right:0.5rem;}
+    .remark{word-break: break-all;}
+    /* 自己写的样式 */
+    #follower { 
+      height: 1.26rem;
+      padding-top: 0.3rem;
+    }
+    button,div{outline:none;}
+     /* 弹窗 */
+    .pop-up{ display:none; position:fixed;bottom:0;z-index:999;width:100%;background: white;font-size:0.32rem;border:1px solid #ccc;}
+    .pop-up .body{padding:0.3rem;}
+    .pop-up textarea{outline:none;width:100%;font-size: 0.28rem;}
+    .pop-up label{font-size:0.4rem;margin-bottom: 0.2rem;display: inline-block;}
+    .pop-up button{height:0.9rem;line-height: 0.9rem;}
+    .pop-up .footer{border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;}
+    .pop-up .leftbtn{display: inline-block;width:48%;border-right: 1px solid #ccc;text-align: center;color:#999;}
+    .pop-up .rightbtn{display: inline-block;width:48%;text-align: center;color:#f63f3f;}
+     #remark{outline:none;-webkit-user-select:text;word-break: break-all;}
+     
+     
+    </style>
+</head>
+<body class="bg-gray full">
+  <article id="follower-context">
+  	<!-- <section class="dates">
+  	        <div class="date"><strong>10</strong>1234/56</div>
+  	        <div class="date-list">
+  	        <div class="date-item">
+  	          <div class="time">34:56</div>
+  	          <div class="title">跟进客户</div>
+  	          <div class="content">
+  	            <label>方式</label><span>gg</span>
+  	            <span>等级：${item.customerRank}星</span>
+  	            <label>方式</label><span>ttt</span> 
+  	            <label>方式</label><p ><span class="remark">hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</span></p>
+  	          </div>
+  	        </div>
+  	        </div>
+  	      </section>  -->
+  </article> 
+  
+  
+  <div class="clipboard" id="clipboard">
+	   <div class="btngroup"><button class="firstbtn">复制</button></div>
+	   <div><label></label></div>
+  </div>
+  
+  <div class="pop-up clearfix">
+       <div class="body">
+           <label>写跟进</label>
+           <textarea name="remark" id="follow" placeholder="请输入跟进内容" rows="5" ></textarea> 
+           <!-- <div contenteditable="true" name="remark" id="follow"></div> -->
+       </div>
+       <div class="footer"><button class="leftbtn" id="cancel">取消</button><button class="rightbtn" id="submit">提交</button></div>
+  </div>
+  
+   <script  id="date" type="text/template">
+      {@each dataList as itemList,index}
+      <section class="dates">
+        <div class="date"><strong>${itemList.key|getday}</strong>${itemList.key|getym}</div>
+        <div class="date-list">
+        {@each itemList.list as item,i}
+        <div class="date-item">
+          <div class="time">${item.createtime|gettime}</div>
+          <div class="title">跟进客户</div>
+          <div class="content">
+            <label>方式</label><span>${item.method}</span>
+            <label>跟进用户</label><span>${item.type|totype}</span> 
+            <p ><label>内容</label><span class="remark">$${item.comment}</span></p>
+          </div>
+        </div>
+        {@/each}
+        </div>
+      </section> 
+      {@/each}
+   </script>   
+<script type="text/javascript" src="../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../../script/juicer.js"></script>
+<script src="../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../script/zepto.js"></script>
+<script src="../../script/clipboard.js"></script>
+ <script>
+ apiready = function(){
+ 	 //状态栏
+     api.setStatusBarStyle({
+         style: 'light',
+         color: '#000'
+     });
+     //获取数据
+     clipBoard = api.require('clipBoard');
+     userid=$api.getStorage("userid");
+     mycustomerid=api.pageParam.mycustomerid;
+     cfollow=document.getElementById("follow");
+     oWrapper = document.getElementById('follower-context');
+     pageNum=1;
+     pageSize=7;
+     locked=false;
+     //初始化方法
+     init();
+     //下拉加载
+     api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+    	pageNum++;
+        getlist(mycustomerid);       
+     });
+     //弹窗
+     popUp=document.getElementsByClassName("pop-up")[0];
+     document.onclick=function(){popUp.style.display="none";};
+     popUp.onclick=function(e){
+    	 e.stopPropagation();
+     };
+    
+     document.getElementById("cancel").onclick=function(){popUp.style.display="none";}
+    
+     document.getElementById("submit").onclick=function(e){
+     	 e.stopPropagation();
+     	 addcustomer();
+     };
+ };
+ 
+ function showpopup(){
+ 	popUp.style.display="block";
+ }
+
+function init(){
+	pageNum=1;
+	oWrapper.innerHTML="";
+	getlist(mycustomerid);
+}
+
+function getlist(mycustomerid){
+  $.ajax({
+      type: 'post',
+      url: ipAddress+'/mycustrec/getList/'+pageNum+'/'+pageSize,
+      data:  {mycustomerid:mycustomerid},
+      success: function(data){
+      	 console.log(JSON.stringify(data));
+         if(data.mycustrecList.objs.length>0)
+           xuanran(data.mycustrecList.objs);
+      },
+      error: function(xhr, type){
+        }
+    })
+}
+
+function format(mycustrecList) {
+    var aimObj = {};
+    var oldkey="";
+    var i=0;
+    mycustrecList.forEach(function (v,i) {
+        var date =new Date(v.createtime);
+        key=date.getFullYear()+'/'+parseInt(date.getMonth()+1)+'-'+date.getDate();
+        if(key!=oldkey)
+        {
+            i++;
+            oldkey=key;
+        }
+        if(aimObj[i])
+            aimObj[i].push(v);
+        else
+        {
+            aimObj[i]=[];
+            aimObj[i].push(v);
+        }
+   })
+   var arr = [];
+   for (var key in aimObj) {
+     if (aimObj.hasOwnProperty(key)) {
+       var date =new Date(aimObj[key][0].createtime);
+       var k=date.getFullYear()+'/'+parseInt(date.getMonth()+1)+'-'+date.getDate();
+       var obj = {
+         key: k,
+         list: aimObj[key]
+       };
+       arr.push(obj);
+     }
+   }
+   console.log(JSON.stringify(arr));
+   return {
+     dataList: arr 
+   };
+}
+
+function xuanran(mycustrecList){
+    var temp = document.getElementById('date');
+    // 转换数据
+    var resultData = format(mycustrecList);
+    // 整合juicer模版
+    juicer.register('totype', totype);
+    juicer.register('getym', getym);
+    juicer.register('getday', getday);
+    juicer.register('gettime', gettime);
+    var result = juicer(temp.innerHTML, resultData);
+    var oWrapper = document.getElementById('follower-context');
+    oWrapper.innerHTML += result;
+    
+    var remarklist=document.getElementsByClassName("remark");
+	for(var i=0;i<remarklist.length;i++)
+	{
+	     console.log(remarklist[i]);
+	     addClipboardListener(remarklist[i]);
+	}
+	 
+	popUp=document.getElementsByClassName("pop-up")[0];
+    document.onclick=function(){popUp.style.display="none";};
+    
+    popUp.onclick=function(e){
+    	e.stopPropagation();
+    };
+    
+    document.getElementById("cancel").onclick=function(){popUp.style.display="none";}
+    
+    document.getElementById("submit").onclick=function(e){
+    	e.stopPropagation();
+    	addcustomer();
+    };
+    cfollow=document.getElementById("follow");
+}
+
+
+ //写跟进
+function addcustomer(){
+	if(!locked)
+	{
+		locked=true;
+	    var remark=cfollow.value;
+	    if(remark.length<6)
+	    {
+	        cfollow.focus();
+	        api.toast({
+	            msg:'字数不能少于6个',
+	            location:'top'
+	        });
+	        locked=false;
+	    }
+	    else
+	    {
+		    $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/mycustrec/add',
+				  data:{
+				         mycustomerid:mycustomerid,userid:userid,comment:remark,type:0
+				       },
+				  success: function(data){
+				     init();			     
+				     api.toast({
+		                 msg:'成功跟进记录！'
+	                 });
+	                 popUp.style.display="none";
+	                 cfollow.innerHTML="";
+	                 locked=false;
+				  },
+				  error: function(xhr, type){
+				    if(xhr.status==200)
+				    {
+				        getlist(mycustomerid);
+				    	popUp.style.display="none";
+				        api.toast({
+			                 msg:'成功跟进记录！'
+		                 });
+		                 popUp.style.display="none";
+	                 	 cfollow.innerHTML="";
+				    }
+				    else
+				    {
+				        api.toast({
+	                        msg:'发生错误:'+xhr.statusText+'，请重试'
+	                    });
+				    }
+				    locked=false;
+				 }
+			})
+	    }
+    }
+}
+
+/* 渲染函数  */
+function totype(data){
+	return data==0?"经纪人":(data==4?"渠道管家":"店长");
+}
+function getym(data){
+    return data.split('-')[0];
+}
+function getday(data){
+    return data.split('-')[1];
+}
+function gettime(data){
+    var date=new Date(data);
+    return date.getHours()+":"+date.getMinutes();
+}
+
+</script>
+</body>
+</html>

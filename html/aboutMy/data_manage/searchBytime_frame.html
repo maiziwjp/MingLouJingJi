@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>添加客户</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/customer/customer_info.css">
+    <style>
+    	/* 清除样式 */
+    	button,input,select{outline:none;}
+        /* 整体样式 */
+        body{background: #f5f5f5;}
+        /* 头部 */
+        header{position:fixed;top:0;width:100%;background:white;}
+        header input{height:0.4rem;}
+        .my_block{position: relative;height:0.9rem;line-height: 0.9rem;background: #fff;border-bottom: 1px solid #ccc;text-align: center;}
+        .leftpart{position: absolute;left:0.3rem;}
+        .leftpart select{ padding-right:20px;background: url(../../../icon/drop_down.png) no-repeat right;background-size:15px; }
+        .midpart{width:100%;display: inline-block;}
+        .rightpart{position:absolute;height:0.9rem;bottom:0;right:0.3rem;vertical-align: middle;}
+        /* 排序 */
+	     #sortmethod{color:#333;height:0.9rem;line-height: 0.9rem;position:fixed;width:100%;background: white;font-size: 0.32rem;}
+	     #sortmethod img,#topdivorder img{margin-left:0.1rem;height:0.2rem;vertical-align: middle;}
+	     .sort button{width:32%;display:inline-block;height:0.9rem;line-height: 0.3rem;padding:0.3rem 0;}
+        /* 底部 */
+        footer{position:fixed;background:white;width:100%;height:0.8rem;line-height:0.8rem;bottom:0;text-align: center;}
+        #total{color:#c70;}
+        /* 第二行btn */
+        .pop-up-menu{background: white;position: absolute;display:none;}
+        .pop-up-menu button{color:#0af;display:block;width:2.3rem;height:0.7rem;font-size:0.28rem;border-bottom:1px solid #ccc;}
+        .pop-up-menu button:first-child{background:#0af;color:white;}
+        /* input */
+        .inputgroup{padding:0 0.2rem;height:0.9rem;border:1px solid #CCCCCC;background: white;width:100%;}
+        .inputgroup label{width:0.7rem;display:inline-block;text-align: center;}
+        .inputgroup button{height:0.85rem;line-height:0.85rem;width:1.0rem;margin-left:0.5rem;vertical-align: middle}
+        input{border:1px solid black;display:inline-block;width:2.0rem;vertical-align: middle}
+        .search:active{background: rgba(0,0,0,0.1)}
+        /* 列表 */
+       #connector-context{margin-bottom:0.8rem;}
+       .hh{display:none}
+       .srotType{width:49%}
+    </style>
+</head>
+<body>
+    <header>
+    	<div class="my_block" ><div class="leftpart"><div id="time">全部</div></div><input type="date" id="start" value="2016-01-01"/><label>-</label> <input type="date" placeholder="选择结束时间" id="end" /> <div class="rightpart" onclick="init(true)">确定</div></div>
+		<div class="sort" id="sortmethod">
+	        <button class="sortType order" style="color:#0089ff;" id="order">录入时间<img src="../../../icon/desc.png" class="desc"/></button>
+	        <button class="sortType hh" id="tradeStage"><img src="" style="display:none;"/></button><button class="sortType" id="customerType">客户质量<img src="" style="display:none;"/></button>
+	    </div>
+		<div id = "topdivjy" class="pop-up-menu">
+			<!-- <button>全部</button><button>匹配中</button><button>到访</button><button>认筹</button><button>下定</button>
+			<button>签订购房合同</button><button >银行贷款</button><button>佣金已结算</button> -->
+	    </div>
+	    <div id = "topdivkh" class="pop-up-menu">
+			<button>全部</button><button>无效客户</button><button>一般客户</button><button>优质客户</button>
+			<button>水客</button><button >黑客</button>
+		</div>
+		<div id = "topdivorder" class="pop-up-menu">
+			<button >录入时间<img src="../../../icon/desc.png" class="desc"/></button>
+			<button >录入时间<img src="../../../icon/asc.png" class="asc"/></button>
+			<button >跟进时间<img src="../../../icon/desc.png" class="desc"/></button>
+			<button >跟进时间<img src="../../../icon/asc.png" class="asc"/></button>
+		</div>
+		<div id = "topdivtime" class="pop-up-menu">
+			<button>全部</button><button>最近一周</button><button>最近一个月</button><button>最近三个月</button>
+		</div>
+	</header>
+	<article id="connector-context">
+	        
+	</article>
+	<footer>
+	       共有<span id="total"></span>位联系人
+	</footer>
+	<script type="text/template" id="sort">
+		{@each dataList as item}
+   	 <div class="user-part" onclick="openDetail(${item.mycustomerid})">
+   	     <input type="hidden" class="mobile" value="${item.telphone}">
+         <div class="left">
+          {@if item.gender === '女' }
+            {@if item.type==0 || item.state == 3} 
+            <img class="pic" src="../../../image/default_nv_gray.png" alt="" >
+            {@else}
+            <img class="pic" src="../../../image/default.nv.png" alt="" >
+             {@/if}
+          {@else}
+            {@if item.type==0 || item.state == 3} 
+            <img class="pic" src="../../../image/default_gray.png" alt="" >
+            {@else}
+            <img class="pic" src="../../../image/default.png" alt="" >
+             {@/if}
+           {@/if}
+           <div class="number">${item.custseq|tostring}</div>
+       </div><div class="right" >
+           <p class="firstline"><label class="info realname name" >${item.realname}</label><label class="tel" >${item.reqloc}</label><label class="customerType">${item.type|ctocusType}</label></p>
+           <p class="secondline"><span class="notes">${item.notes}</span></p>
+           <p class="thirdline"><span class="hint">录入时间</span><span class="content">${item.createtime|totime}</span></p>
+         </div>
+ 	  </div>
+ 	 
+      {@/each}
+	</script>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/juicer.js"></script>
+<script src="../../../script/btn.js"></script>
+<script src="../../../script/customer/customer_info.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+	    userid=$api.getStorage("userid");
+	    pageSize=10;
+	    orderNum=1;
+	    var pageNum=1;
+	    startTimebtn.value='2016-01-01';
+	    endtime=new Date();
+	    endtime.setDate(today.getDate()+1);
+		endTimebtn.value=endtime.format('yyyy-MM-dd');
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	    	init(false);
+	        api.refreshHeaderLoadDone();
+	    });
+	     api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+        	pageNum++;
+	        getList(true);       
+	    });
+	    init(true);
+	};
+	oWrapper=document.getElementById("connector-context");
+	var locked=false;
+	var startinput=document.getElementById("start");
+	var endinput=document.getElementById("end");
+	var btngroup2_1=document.getElementById("topdivjy");
+	var btngroup2_2=document.getElementById("topdivkh");
+	var btngroup2_3=document.getElementById("topdivorder");
+	var menulist=document.getElementsByClassName("pop-up-menu");
+	var startTimebtn=document.getElementById("start");
+	var endTimebtn=document.getElementById("end");
+	var choiseNumArr=[-1,-1];
+	var today = new Date();
+	
+	Date.prototype.format = function(format){ 
+		var o = { 
+		"M+" : this.getMonth()+1, //month 
+		"d+" : this.getDate(), //day 
+		"h+" : this.getHours(), //hour 
+		"m+" : this.getMinutes(), //minute 
+		"s+" : this.getSeconds(), //second 
+		"q+" : Math.floor((this.getMonth()+3)/3), //quarter 
+		"S" : this.getMilliseconds() //millisecond 
+		} 
+		
+		if(/(y+)/.test(format)) { 
+			format = format.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+		} 
+		
+		for(var k in o) { 
+			if(new RegExp("("+ k +")").test(format)) { 
+			format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length)); 
+			} 
+		} 
+		return format; 
+	} 
+	
+	function init(asyn){
+		pageNum=1;
+		oWrapper.innerHTML="";
+        getList(asyn);
+	}
+	
+	function getList(asyn){	
+		oWrapper.innerHTML='';
+	 	if(!locked)
+     	{
+		      locked=true;
+		      startTime=document.getElementById("start").value;
+		      endTime=document.getElementById("end").value;
+		      $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/customerManange/getListBySearch/'+pageNum+'/'+pageSize,
+				  dataType: "json",
+				  async: asyn,
+		          traditional: true,
+				  data:  {userid:userid,startTime:startTime,endTime:endTime,orderNum:orderNum,
+				  			choiseNumArr:choiseNumArr},
+				  success: function(data){				  	
+				     arrlist=data.customerlist.objs;
+				     //alert(JSON.stringify(arrlist));
+				     document.getElementById("total").innerHTML=data.customerlist.pageCount;
+				     if(data.customerlist.pageCount==0)
+				  	 	oWrapper.innerHTML='<p style="margin-top:0.2rem;text-align: center;color:#999;font-size:0.3rem;">对不起，找不到相关数据</p>';
+				  	 else
+				  	 	xuanran("sort",arrlist);
+				     locked=false;  
+				  },
+				  error: function(xhr, type){
+				  	locked=false;
+				  }
+			  })
+	     }
+	}
+	 
+	 function showMenu(arrIndex,elem){
+	 	for(var x=0;x<menulist.length;x++)
+				menulist[x].style.display="none";
+	 	menulist[arrIndex].style.display="block";
+    	menulist[arrIndex].style.top=elem.parentNode.offsetTop+elem.parentNode.offsetHeight+"px";
+    	menulist[arrIndex].style.left=elem.offsetLeft+"px";
+     }
+	
+	function addlistener(){
+		var tradeStagebtn=document.getElementById("tradeStage");
+		var customerTypebtn=document.getElementById("customerType");
+		var orderbtn=document.getElementById("order");
+		var timebtn=document.getElementById("time");
+		/* 监听菜单隐藏事件 */
+		document.addEventListener("click",function(e){
+			for(var x=0;x<menulist.length;x++)
+				menulist[x].style.display="none";
+		});
+		/* 监听菜单弹出事件 */
+		tradeStagebtn.addEventListener('click',function(e){showMenu(0,this);e.stopPropagation();});
+		customerTypebtn.addEventListener('click',function(e){showMenu(1,this);e.stopPropagation();});
+		orderbtn.addEventListener('click',function(e){showMenu(2,this);e.stopPropagation();});
+		timebtn.addEventListener('click',function(e){showMenu(3,this);e.stopPropagation();});
+		/* 监听时间选择按钮的点击事件监听  */
+		var btnlist4=document.getElementById("topdivtime").getElementsByTagName("button");
+		console.log(btnlist4);
+		for(var x=0;x<btnlist4.length;x++)
+		{
+			btnlist4[x].index=x;
+			btnlist4[x].addEventListener("click",function(e){
+				for(var y=0;y<btnlist4.length;y++)
+				{
+				    btnlist4[y].style.background="#fff";
+				    btnlist4[y].style.color="#0af";
+				}
+				this.style.background="#0af";
+				this.style.color="#fff";
+				timebtn.innerHTML=this.innerHTML;
+				var starttime= new Date();
+				var endtime= new Date();
+				if(this.index==0)
+				{
+					startTime='2016-01-01';
+				}
+				else if(this.index==1)
+				{
+					starttime.setDate(today.getDate()-7);
+					startTime=starttime.format('yyyy-MM-dd');
+				}
+				else if(this.index==2)
+				{
+					starttime.setMonth(today.getMonth()-1);
+					startTime=starttime.format('yyyy-MM-dd');
+				}
+				else if(this.index==3)
+				{
+					starttime.setMonth(today.getMonth()-3);
+					startTime=starttime.format('yyyy-MM-dd');
+				}
+				endtime.setDate(today.getDate()+1);
+				endTime=endtime.format('yyyy-MM-dd');
+				startTimebtn.value=startTime;
+				endTimebtn.value=endTime;
+			});
+		}
+		/* 监听排序按钮的点击事件监听  */
+		var btnlist3=document.getElementById("topdivorder").getElementsByTagName("button");
+		console.log(btnlist3);
+		for(var x=0;x<btnlist3.length;x++)
+		{
+			btnlist3[x].index=x;
+			btnlist3[x].addEventListener("click",function(e){
+				for(var y=0;y<btnlist3.length;y++)
+				{
+				    btnlist3[y].style.background="#fff";
+				    btnlist3[y].style.color="#0af";
+				}
+				this.style.background="#0af";
+				this.style.color="#fff";
+				orderbtn.innerHTML=this.innerHTML;
+				orderNum=this.index+1;
+				getList(true);
+				console.log(orderNum);
+			});
+		}
+		/* 监听筛选按钮的菜单选择事件监听 */
+		/* 交易阶段 */
+//		var btnlist1=document.getElementById("topdivjy").getElementsByTagName("button");
+//		for(var y=0;y<btnlist1.length;y++)
+//		{
+//			btnlist1[y].index=y;
+//			btnlist1[y].addEventListener("click",function(e){
+//				for(var y=0;y<btnlist1.length;y++)
+//				{
+//				    btnlist1[y].style.background="#fff";
+//				    btnlist1[y].style.color="#0af";
+//				}
+//				this.style.background="#0af";
+//				this.style.color="#fff";
+//				btngroup2_1.style.display="none";
+//				if(this.index)
+//					tradeStagebtn.innerHTML=tradeStagelist[this.index-1];
+//				else
+//					tradeStagebtn.innerHTML="交易阶段";	
+//				choiseNumArr[0]=this.index-1;
+//			});
+//		}
+		/* 客户质量 */
+		var btnlist2=document.getElementById("topdivkh").getElementsByTagName("button");
+		for(var x=0;x<btnlist2.length;x++)
+		{
+			btnlist2[x].index=x;
+			btnlist2[x].addEventListener("click",function(){
+				for(var x=0;x<btnlist2.length;x++)
+				{
+				    btnlist2[x].style.background="#fff";
+				    btnlist2[x].style.color="#0af";
+				}
+				this.style.background="#0af";
+				this.style.color="#fff";
+				btngroup2_2.style.display="none";
+				if(this.index)
+					customerTypebtn.innerHTML=cusTypelist[this.index-1];
+				else
+					customerTypebtn.innerHTML="客户质量";
+				choiseNumArr[1]=this.index-1;
+				getList(true);
+			});
+		}
+		
+	}
+	addlistener();
+    
+     function openrecord(elem){
+        if($api.getStorage("storeSn"))
+        {
+	        var realname=elem.parentNode.parentNode.parentNode.getElementsByClassName("realname")[0].innerHTML;
+	        var mobile=elem.parentNode.parentNode.parentNode.getElementsByClassName("mobile")[0].value;
+	        api.openWin({
+		        name: 'building_list_win',
+		        url: '../../customer/building/building_list_win.html',
+		        pageParam: {
+			      realname:realname,mobile:mobile
+			    },
+	        });
+	    }
+	    else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+    }
+    
+    function openrecordlist(elem){
+        if($api.getStorage("storeSn"))
+        {
+	        var mobile=elem.parentNode.parentNode.parentNode.getElementsByClassName("mobile")[0].value;
+	        api.openWin({
+		        name: 'recordlist_win',
+		        url: '../../customer/report/recordlist_win.html',
+		        pageParam: {
+			      mobile:mobile
+			    },
+	        });
+        }
+        else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+    }
+    
+    function openDetail(customerid){
+       api.openWin({
+	      name: 'connector.detail_win',
+	      url: '../../customer/connector.detail_win.html',
+		  pageParam: {
+		      customerid:customerid,
+		  },
+      });
+      
+    } 
+    
+</script>
+</html>

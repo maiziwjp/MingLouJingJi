@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" href="../../../css/stylesheet/iconfont.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/icon1.css">
+    <style>
+    	html,body{
+    		background:#000;height:100%;
+    	}
+    	.body{background:white;height:100%;}
+    	.fr {float: right;}	
+		.fl{float:left;}
+		
+		.body{height:100%;background:#f0f0f0;position:fixed;top:25px;width:100%;}
+    	header{height:40px;line-height: 40px;background: white;}
+		#connector{text-align: center;}
+		span{font-size:1.1rem;}
+        .icon{color:#0af;font-size:1.1rem;padding-left:0.5rem;}
+		
+    </style>
+</head>
+<body>
+    <div class="body" id="header">
+	<header id="connector">
+		<span class="icon icon-back fl" onclick="api.closeWin();"></span>
+	                         <span>答案详情</span>
+    </header>
+    </div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		/* 状态栏高度获取 */
+		var headerHeight; 
+	    var header=document.getElementById("header");
+	    var systemType = api.systemType;
+	    var height=document.getElementById("connector").offsetHeight;
+		if(systemType == "ios")
+		{
+		    header.style.top="20px";
+		    headerHeight=20;
+		}
+		else
+		{
+			header.style.top="25px";
+		    headerHeight=25;
+		}
+		
+	    n=api.pageParam.num;
+		api.openFrame({
+	        name: 'answer'+n,
+	        url: './answer'+n+'.html',
+	        rect: {
+		        x:0,
+		        y:headerHeight+height,
+	        },
+	        vScrollBarEnabled:false,
+	        reload:true
+        });
+	};
+</script>
+</html>

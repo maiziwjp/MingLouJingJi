@@ -1,0 +1,210 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>客源管理</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/input_style.css">
+    <link rel="stylesheet" href="../../../css/btn_style.css">
+    <style>
+    input,button{outline:none;}
+    ul li{margin:0;padding:0;}
+    /* 搜索栏 */
+    header#connector-remark{position: fixed;width:100%;top:0px;border-top:1px solid #ccc;}
+    #connector-remark #search{width: 4.5rem;}
+    /* list */
+    #connector-context{margin-top:0.96rem;}
+    .user-part{border-bottom: 1px solid #CCCCCC}
+    .lhf_item{display: -webkit-box;display: -webkit-flex;-webkit-flex-flow:row;}
+    .lhf_item img{-webkit-box-flex:1.0;-webkit-flex:1;}
+    .lhf_item .left{-webkit-box-flex:6.0;-webkit-flex:6;}
+    .lhf_item .right{-webkit-box-flex:3.0;-webkit-flex:3;text-align: right;}
+    .lhf_item:active{opacity:0.5}
+    .connector-info span{margin:0 0.1rem;}
+    .record{color:#0af;}
+   
+    
+    </style>
+</head>
+<body class="bg-gray">
+  <header id="connector-remark">
+  	<div class="erasable"><input placeholder="请输入搜索的内容" id="search" class="search_input" oninput="showclear(this)"/><img src="../../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div>
+  </header>
+  
+  <article id="connector-context">
+  
+  </article>
+    
+    <script type="text/template" id="sort">
+  
+      {@each dataList as item}
+      <section>
+      <ul class="user-part" onclick="transfer(${item.userid})">
+        <li class="lhf_item">
+            <img class="pic" src="../../../image/default.png" alt="" >
+          <div class="connector-info left">
+            {@if item.username==""}
+            <p><span class="realname">店长</span></p>
+            {@else}
+            <p><span class="realname">${item.realname}</span></p>
+            {@/if}
+            <p><span>${item.username}</span></p>
+          </div>
+          <div class="connector-info right">
+            <p><span>${item.username}</span></p>
+          </div>
+        </li>
+      </ul>
+          </section>
+      {@/each} 
+    </script>
+    
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<!--ajax-->
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/btn.js"></script>
+<script src="../../../script/customer/customer_info.js"></script>
+  <script>
+    apiready = function(){
+         storeid=$api.getStorage("storeid");
+         customeridArray=api.pageParam.customeridArray;
+         getlist();
+        
+	};
+	
+	locked=false;
+	 var pageNum=1;
+     var pageSize=10;
+    function getlist(){
+    	
+        userid=$api.getStorage("userid");
+        if($api.getStorage("userid"))
+        {
+	        $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/transfercustomer/getColleagueList/'+pageNum+'/'+pageSize,
+				  data:  {userid:userid,storeid:storeid},
+				  success: function(data){
+				     arrlist=data.agentlist.objs;
+				     datas=data;
+				     if(data.agentlist.length!=0)
+				  	     xuanran(arrlist);
+				  	 else
+				  	     document.getElementById('connector-context').innerHTML='<p style="padding:10px 20px;height:45px;line-height:45px;">您暂无其他同事</p>';
+				  },
+				  error: function(xhr, type){
+				  }
+			})
+	    }
+    }
+
+    function xuanran(arrlist){
+        var temp=document.getElementById("sort");
+	    var resultData ={dataList: arrlist};
+        juicer.register('totime',totime);
+        juicer.register('ctocusType',ctocusType);
+        juicer.register('tostring',tostring);
+	    var result = juicer(temp.innerHTML, resultData);
+	    oWrapper = document.getElementById('connector-context');
+	    oWrapper.innerHTML += result;
+    }
+
+    
+    function sortlist(key){
+        var temp = document.getElementById('sort');
+        arrlist=[];
+        if(datas.userdtoList.length>0)
+        {
+	        datas.userdtoList.forEach(function (v,i) {
+		        if(v.realname.indexOf(key)!=-1)
+		        {
+		            arrlist.push(v);
+		        }
+	        })
+            xuanran();
+        }
+	    locked=false;
+    }
+    
+    function search(){
+        if(!locked)
+        {
+            locked=true;
+	        var key=document.getElementById("search").value;
+	        sortlist(key);
+	    }
+    }
+    
+    
+    all=false;
+	function select_all(){
+	    var inputs = document.getElementsByTagName('input');
+	    if(!all)
+	    {  
+			for(var i=0;i<inputs.length;i++)   
+			{   
+			   if(inputs[i].getAttribute('type')=='checkbox')   
+			   {   
+			   inputs[i].checked = true;   
+			   }   
+			}
+			document.getElementById("chooseall").style.background="#0af"; 
+	    }
+		else
+		{
+		    for(var i=0;i<inputs.length;i++)   
+			{   
+			   if(inputs[i].getAttribute('type')=='checkbox')   
+			   {   
+			   inputs[i].checked = false;   
+			   }   
+			}
+			document.getElementById("chooseall").style.background="white";
+		}
+		all=!all;
+	}
+	
+	
+	function transfer(id){
+	    if(!locked)
+	    {
+	        locked=true;
+	        if(customeridArray.length==0)
+	        {
+	        	api.toast({
+                   msg:'请先选择要转移的用户！',
+                });
+		  	    setTimeout("api.closeWin();",1000);
+	        }
+	        $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/transfercustomer/transfer',
+				  dataType: "json",
+	              traditional: true,
+				  data:  {newuserid:id,customeridarr:customeridArray},
+				  success: function(data){
+				     api.execScript({
+	                     name: 'transferconnector_win',
+					     frameName: 'transferconnector',
+	                     script : 'initial()'
+                     });
+				  	 locked=false;
+				  	 api.toast({
+	                       msg:'成功转移！',
+                      });
+				  	 setTimeout("api.closeWin();",1000);
+				  },
+				  error: function(xhr, type){
+				     locked=false;
+				  }
+			})
+	    }
+	}
+  </script>
+</body>
+</html>

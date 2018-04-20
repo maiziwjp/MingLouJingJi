@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>客户详情</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[realname="viewport"]'),h=e.querySelector('meta[realname="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("realname","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../css/stylesheet/icon1.css">
+    <link rel="stylesheet" href="../../css/clipboard.css">
+    <style>
+        html,body,#detail-context,ul,li{margin:0;padding:0;word-break: all;}
+    	input,button,select,div{outline:none;padding:0;}
+    	.clearfix:after{content:"";display:block;height:0;clear:both;}
+    	
+    	article#detail-context{margin-bottom:1.1rem;}
+        /* list */
+        #detail-context .bar .bar-lists li{font-size:0.32rem;line-height:0.8rem;}
+        #detail-context .bar .bar-lists .label{width:1.9rem;padding:0;line-height:0.8rem;}
+        #detail-context .bar .bar-lists .intro{width:5.0rem;line-height:0.8rem;}
+        .remarkcontent{display:inline-block;width:4.2rem;line-height:0.4rem;padding:0.2rem;padding-left:0;}
+        .content{width:10rem;}
+        .source{display:inline-block;width:1.3rem;}
+        .state{display:inline-block;width:1.3rem;}
+        
+        /* 1 */
+       .header{padding:0.2rem 0;font-size: 0.32rem;width:100%;}
+       .leftpart,.midpart,.rightpart,.secondpart{display: inline-block;vertical-align: top;}
+       .leftpart{width:1.1rem;margin-right: 0.15rem;}
+       .leftpart img{height:1.3rem;width:1.1rem;}
+       .midpart{width:3.5rem;}
+       #realname{max-width:2.0rem;display:inline-block;}
+       #realname::-webkit-scrollbar{width:0;height:0}
+       .midpart select{width:1.3rem;}
+       .rightpart{width:1.8rem;}
+       #type{border:1px solid #0089ff;border-radius: 0.25rem;height:0.5rem;line-height: 0.4rem;color:#0089ff;padding:0 0.1rem;}
+       .secondpart{width:5.6rem;}
+       .secondpart div,.secondpart select{height:0.6rem;}
+       .secondpart label{margin-right: 0.2rem;}
+       .secondpart input{max-width:2.1rem;height:0.6rem;line-height:0.3rem;}
+       #mobile{margin-right:0.2rem;}
+       #mobile,#tel{color:blue;}
+       /*  */
+        #edit{display:none}
+        #othercity{width:3.0rem;padding-left:0.3rem;}
+        span{line-height: 0.8rem;}
+        
+        .notes{ min-height:0.6rem;}
+        .notes .notes{vertical-align: top;word-break: break-all;}
+        .notes .detail{color:#0af;}
+        
+        #detail-context .bar{padding:0 0.2rem;}
+        /* 弹窗 */
+	    .pop-up{margin-top:-0.8rem; display:none; background: white;font-size:0.32rem;border:1px solid #ccc;margin-bottom:1.0rem;}
+	    .pop-up .body{padding:0.3rem;}
+	    .pop-up textarea{outline:none;width:100%;font-size: 0.28rem;}
+	    .pop-up label{font-size:0.4rem;margin-bottom: 0.2rem;display: inline-block;}
+	    .pop-up button{height:0.9rem;line-height: 0.9rem;}
+	    .pop-up .footer{border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;}
+	    .pop-up .leftbtn{display: inline-block;width:48%;border-right: 1px solid #ccc;text-align: center;color:#999;}
+	    .pop-up .rightbtn{display: inline-block;width:48%;text-align: center;color:#f63f3f;}
+	     #notes{outline:none;-webkit-user-select:text;word-break: break-all;}
+        /*底部固定栏*/ 
+        #footer{background:#fff;position:fixed;bottom:0;left:0;z-index:999999;width:100%;}
+        .content{font-size:0.38rem;color:#fff;height:0.9rem;line-height:0.9rem;}
+        .bottombar .content{text-align:center;}
+        .bottombar div:first-child{color:#0089FF;}
+        .bottombar div:last-child{color:#f63f3f;}
+        .bottombar{display: -webkit-box;display: -webkit-flex;-webkit-flex-flow: row;}      
+    </style>
+</head>
+<body class="bg-gray">
+  <article id="detail-context">
+    <section class="bar">
+      <ul class="bar-lists">
+          <li class="header">
+	          <label class="leftpart" for="" class="label" id="male" ><img src="../../image/default.png" id="seximg" ></label>
+	          <div class="secondpart">
+	              <div>
+			          <div class="midpart">
+			             <div><input id="realname" value=""/><select id="gender" name="gender"><option value="男">先生</option><option value="女">女士</option><option value="不详">不详</option></select></div>
+			          </div><div class="rightpart"> 
+			          	 <select  id="type" onchange="resetSelectWidth(this)">
+							<option value="0">无效客户</option><option value="1" selected="selected">一般客户</option><option value="2">优质客</option><option value="3">水客</option><option value="4">黑客</option>
+						 </select>
+			          </div>
+		          </div>
+		          <div>
+		          	<label>电话</label><span id="mobile" onclick="call(this)">12345678989</span><input id="tel" onclick="call(this)" value="12345678989"/>
+	          	  </div>
+	          </div>
+          </li>
+      </ul>
+    </section>
+    <section class="bar">
+      <ul class="bar-lists">
+          <li>
+              <label class="label">客户来源：</label>
+              <p class="source">
+                  <select id="source">
+		              <option value="来电">来电</option><option value="来访">来访</option>
+		              <option value="中介">中介</option><option value="朋友">朋友</option><option value="广告">广告</option>
+		              <option value="扫街">扫街</option><option value="网络">网络</option><option value="搜房">搜房</option>
+		              <option value="口碑">口碑</option><option value="不明">不明</option>
+				  </select>
+              </p>
+          </li>
+          <li>
+              <label class="label">交易类型：</label>
+              <p class="intro">
+                  <select id="perfer" name="perfer" >
+		              <option value="求购">求购</option><option value="求租">求租</option><option value="出租">出租</option><option value="出售">出售</option>
+				  </select>
+              </p>
+          <li>
+              <label class="label">购房区域:</label>
+              <p class="intro">
+              	 <select id="reqloc" name="gender" onchange="ifhandwrite(this)">
+	                <option value="海南">海南</option><option value="杭州">杭州</option><option value="手写">其他</option>
+	      	     </select>
+	      	     <input style="display: none;" id="othercity" placeholder="请输入所在城市" value=""/>
+              </p>
+          </li>
+      </ul>
+    </section>
+    <section class="bar">
+       <ul class="bar-lists">
+          <li class="notes" >
+              <label class="label notes">备注</label>
+              <div  class="intro notes" id="notes" ></div>
+          </li>
+          <li class="notes" onclick="openlist(1)">
+              <label class="label notes">最近跟进</label>
+              <span id="record" class="remarkcontent notes">暂无跟进信息</span><!-- <span class="detail notes" onclick="openlist(1)">详情</span> --><span class="icon icon-enter fr" ></span>
+          </li>
+        </ul>
+    </section>
+  </article>
+  <div class="clipboard" id="clipboard">
+	   <div class="btngroup"><button class="firstbtn">复制</button></div>
+	   <div><label></label></div>
+  </div>
+  
+  <div class="pop-up clearfix">
+       <div class="body">
+           <label>写跟进</label>
+           <textarea name="notes" id="comment" placeholder="请输入跟进内容" rows="5" ></textarea> 
+           <!-- <div contenteditable="true" name="notes" id="follow"></div> -->
+       </div>
+       <div class="footer"><button class="leftbtn" id="cancel">取消</button><button class="rightbtn" id="submit">提交</button></div>
+  </div>
+  
+  <footer class="footer" id="footer" tapmode="" >
+    <div class="bottombar">
+        <div class="content" id="writeremark" style="border-right:1px solid #ccc">
+			写跟进
+		</div>
+		<div class="content" onclick="openwin()">一键备案</div>
+    </div>
+  </footer>
+<script type="text/javascript" src="../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../../script/juicer.js"></script>
+<script src="../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../script/zepto.js"></script>
+<!-- 拼音转字母组件 -->
+<script src="../../script/lib/pinyin.util.js"></script> 
+<script src="../../script/clipboard.js"></script>
+
+<script>
+ var modiflag="false";
+ 
+    apiready = function(){
+    	clipBoard = api.require('clipBoard');
+        api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+        //获得数据
+        userid=$api.getStorage("userid");
+        mycustomerid=api.pageParam.mycustomerid;
+        customerid=api.pageParam.customerid;
+        //初始化方法
+        //editcustomer(1);
+        getDetail();
+        getlatestrec();
+        cfollow=document.getElementById("comment");
+        popUp=document.getElementsByClassName("pop-up")[0];
+        
+        var list=document.getElementsByClassName("intro");
+        for(var i=0;i<list.length;i++)
+		{
+		     addClipboardListener(list[i]);
+		}
+        //document.onclick=function(){popUp.style.display="none";};
+        document.getElementById("writeremark").onclick=function(e){
+            e.stopPropagation();
+        	popUp.style.display="block";
+        	document.getElementById("comment").focus();
+        }
+        
+        popUp.onclick=function(e){
+        	e.stopPropagation();
+        };
+        
+        document.getElementById("cancel").onclick=function(){popUp.style.display="none";}
+        
+        document.getElementById("submit").onclick=function(e){
+        	e.stopPropagation();
+        	addrecord();
+        };
+        comment=document.getElementById("comment");
+        
+	};
+	
+	/* 获取客户详细信息 和最近一条跟进 */
+	function getDetail(){
+	    $.ajax({
+			  type: 'get',
+			  url: ipAddress+'/mycustomer/getdetail/'+mycustomerid,
+			  data:  '',
+			  success: function(data){
+			  	 console.log(JSON.stringify(data));
+			     realname=data.mycustomer.realname;
+			     mobile=data.mycustomer.username;
+			     mycustomer=data.mycustomer;
+			     
+			  	 showdata(data);
+			  	 //改变select框的大小
+			  	 resetSelectWidth(document.getElementById("type"));
+			  },
+			  error: function(xhr, type){
+			  }
+		})
+	}
+	//最近一条跟进信息
+	function getlatestrec(){
+	console.log(ipAddress+'/mycustrec/latestrec/'+mycustomerid);
+	    $.ajax({
+			  type: 'get',
+			  url: ipAddress+'/mycustrec/latestrec/'+mycustomerid,
+			  data:  '',
+			  success: function(data){
+			  	 console.log(JSON.stringify(data));
+			  	 document.getElementById("record").innerHTML=data.mycustrec?data.mycustrec.comment||"暂无跟进信息":"暂无跟进信息";
+			  },
+			  error: function(xhr, type){
+			  }
+		})
+	}
+	
+	//显示获取到的数据
+	function showdata(data){
+	    var realname=document.getElementById("realname").value=data.mycustomer.realname;
+	    var gender=document.getElementById("gender").value=data.mycustomer.gender;
+	    var seximg=document.getElementById("seximg");
+	    if(data.mycustomer.gender=="男")
+	    {
+	        seximg.src="../../image/default.png";
+	    }
+	    else
+	    {
+	        seximg.src="../../image/default.nv.png";
+	    }
+	    document.getElementById("type").value=data.mycustomer.type;
+	    mobile=document.getElementById("mobile").innerHTML=data.mycustomer.username;
+	    document.getElementById("tel").value=data.mycustomer.telphone;
+	    document.getElementById("notes").innerHTML=data.mycustomer.notes||"暂无备注信息";
+	    source=data.mycustomer.source;
+	    document.getElementById("perfer").value=data.mycustomer.perfer;
+	    if(data.mycustomer.reqloc!="杭州"&&data.mycustomer.reqloc!="海南")
+	    {
+	        document.getElementById("reqloc").value="手写";
+	        document.getElementById("othercity").style.display="inline-block";
+	        document.getElementById("othercity").value=data.mycustomer.reqloc;
+	    }
+	    else
+	        document.getElementById("reqloc").value=data.mycustomer.reqloc;
+	    var source=data.mycustomer.source;
+	    document.getElementById("source").value=source.substring(0,source.indexOf('|'))||source;
+	}
+
+    
+   /* function editcustomer(n){
+        var selectlist=document.getElementsByTagName("select");
+        var inputlist=document.getElementsByTagName("input");
+        var remarkelem=document.getElementById("notes");
+        if(n)
+        {
+        	remarkelem.contentEditable=false;
+	        for(var i=0;i<selectlist.length;i++)
+	        {
+	            selectlist[i].disabled=true;
+	        }
+	        for(var i=0;i<inputlist.length;i++)
+	        {
+	            inputlist[i].readOnly=true;
+	        }
+	        
+        }
+        else
+        {
+        	remarkelem.contentEditable=true;
+        	for(var i=0;i<selectlist.length;i++)
+	        {
+	            selectlist[i].disabled=false;
+	        }
+	        for(var i=0;i<inputlist.length;i++)
+	        {
+	            inputlist[i].readOnly=false;
+	        }
+	        
+        }
+    }*/
+ 
+   //更新客户信息
+   function update(){
+	  
+	    mycustomer.realname=document.getElementById("realname").value;
+	    mycustomer.gender=document.getElementById("gender").value;
+	    mycustomer.mobile=document.getElementById("mobile").innerHTML;
+	    mycustomer.tel=document.getElementById("tel").value;
+	    mycustomer.perfer=document.getElementById("perfer").value;
+	    mycustomer.source=document.getElementById("source").value;
+	    mycustomer.notes=document.getElementById("notes").innerHTML=="暂无备注信息"?"":document.getElementById("notes").innerHTML;
+	    mycustomer.type=document.getElementById("type").value;
+	    if(document.getElementById("reqloc").value=="手写")
+	        mycustomer.reqloc = document.getElementById("othercity").value;
+	    else
+	        mycustomer.reqloc = document.getElementById("reqloc").value;
+	    $.ajax({
+			  type: 'post',
+			  url: ipAddress+'/mycustomer/update',
+			  data:{mycustomer:JSON.stringify(mycustomer)},
+			  success: function(data){
+
+				  api.toast({
+	                  msg:data.msg
+                  });
+			  },
+			  error: function(xhr, type){
+			  }
+	    })
+	  
+    }
+    
+    //写跟进
+    function addrecord(){
+    	if(!locked)
+		{
+			locked=true;
+	        var notes=comment.value;
+		    if(notes.length<6)
+		    {
+		        cfollow.focus();
+		        api.toast({
+		            msg:'字数不能少于6个',
+		            location:'top'
+	            });
+	            locked=false;
+		    }
+		    else
+		    {
+			    $.ajax({
+					  type: 'post',
+					  url: ipAddress+'/mycustrec/add',
+					  data:{
+					         mycustomerid:mycustomerid,userid:userid,comment:notes,type:0
+					       },
+					  success: function(data){
+					  	 if(data.code=="200")
+					  	 {
+			                 getlatestrec();
+			                 popUp.style.display="none";
+			                 cfollow.value="";
+		                 }
+		                 api.toast({
+			                 msg:data.msg
+		                 });
+		                 locked=false;
+					  },
+					  error: function(xhr, type){
+				        api.toast({
+	                        msg:'发生错误:'+xhr.statusText+'，请重试'
+                        });
+					    locked=false;
+					  }
+				})
+		    }
+		}
+	}
+	
+	//调整select框大小
+	function resetSelectWidth(obj){
+	    var tempObj=document.createElement("select");
+	    tempObj.length=1;
+	    tempObj.options[0].text=obj.options[obj.selectedIndex].text;
+	    obj.parentNode.appendChild(tempObj);
+	    tempObj.style.padding="0 0.1rem";
+	    obj.style.width=tempObj.offsetWidth+2+"px";
+	    obj.parentNode.removeChild(tempObj);
+   }
+   
+   //手写城市
+   function ifhandwrite(elem){
+        if(elem.value=="手写")
+        {
+            document.getElementById("othercity").style.display="inline-block";
+        }
+        else{
+            document.getElementById("othercity").style.display="none";
+        }
+    }
+   
+   //拨打电话
+   function call(elem){
+        telnumber=elem.innerHTML||elem.value;
+        api.call({
+            type: 'tel_prompt',
+            number: telnumber
+        });
+
+    }
+   
+   //打开其他页面  
+   function openwin(){
+      if($api.getStorage("storeid"))
+      {
+	      api.openWin({
+		      name: 'building_list_win',
+		      url: './building/building_list_win.html',
+		      pageParam: {
+			      customerid:customerid
+			  },
+	      });
+	  }
+	  else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    realname: 'personalinformation_win',
+	                    url: '../../aboutMy/personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+  }
+  
+  function openlist(i){
+        if(i==1)
+        {
+            api.openWin({
+		        name: 'follower_win',
+		        url: './follower_win.html',
+		        pageParam: {
+			        mycustomerid:mycustomerid
+			   },
+	        });
+        }
+    }
+   
+     function judgeinfo()
+    {
+     $.ajax({
+			  type: 'get',
+			  url: ipAddress+'/mycustomer/getdetail/'+mycustomerid,
+			  data:  '',
+			  success: function(data){
+			  	 console.log(JSON.stringify(data));
+			     mycustomer=data.mycustomer;
+			     realname1=mycustomer.realname;
+                 gender1=mycustomer.gender;
+		         mobile1=mycustomer.username;
+		         tel1=mycustomer.telphone;
+		         type1=mycustomer.type;
+		        reqloc1=mycustomer.reqloc;
+		         perfer1=mycustomer.perfer;
+		         source1=mycustomer.source;
+			  },
+			  error: function(xhr, type){
+			  }
+		})
+              if(realname1!=document.getElementById("realname").value || gender1!=document.getElementById("gender").value || tel1!=document.getElementById("tel").value || type1!=document.getElementById("type").value||perfer1!=document.getElementById("perfer").value ||source1!=document.getElementById("source").value || reqloc1!=document.getElementById("reqloc").value)
+              modiflag="true";
+               else 
+             modiflag="false";
+             var aa;
+              localStorage.setItem("aa",modiflag);
+              
+   
+    }
+
+</script>
+</body>
+</html>

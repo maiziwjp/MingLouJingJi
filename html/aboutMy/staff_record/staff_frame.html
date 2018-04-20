@@ -1,0 +1,228 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客源管理</title>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../css/stylesheet/icon1.css">
+    <style>
+    input,button{outline:none;}
+    ul li{margin:0;padding:0px;}
+    .user-part{border-bottom: 1px solid #CCCCCC}
+    .lhf_item{display: -webkit-box;display: -webkit-flex;-webkit-flex-flow:row;}
+    .lhf_item img{-webkit-box-flex:1.0;-webkit-flex:1;}
+    .lhf_item .left{-webkit-box-flex:6.0;-webkit-flex:6;}
+    .lhf_item .right{-webkit-box-flex:3.0;-webkit-flex:3;}
+    .connector-info span{margin:0 0.1rem;}
+    .record{color:#0af;}
+    </style>
+</head>
+<body class="bg-gray">
+  <article id="connector-context">
+        
+  </article>
+    
+    <script type="text/template" id="sort">
+      {@each dataList as item}
+      <section>
+      <ul class="user-part">
+        <li class="lhf_item">
+          {@if item.sex == 0 }
+            <img class="pic" src="../image/default.nv.png" alt="" >
+          {@else if item.sex == 1}
+            <img class="pic" src="../image/default.png" alt="" >
+          {@else}
+            <img class="pic" src="../image/secrect.png" alt="" >
+          {@/if}
+          <div class="connector-info left">
+            <p><span class="realname">${item.realname}</span><span>${item.mobile}</span></p>
+            <p><span>${item.addtime|totime}</span></p>
+            <input type="hidden" class="mobile" value="${item.mobile}">
+          </div>
+          <div class="right">
+            <p>客户数量：${item.customernum}</p>
+            <p>跟进数目：${item.recordnum}</p>
+         </div>
+        </li>
+      </ul>
+    </section>
+      {@/each}
+    </script>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../script/juicer.js"></script>
+<script src="../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../script/zepto.js"></script>
+<!-- 拼音转字母组件 -->
+<script src="../script/lib/pinyin.util.js"></script> 
+  <script>
+    apiready = function(){
+       api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+       api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	        getlist();
+	        api.refreshHeaderLoadDone();
+	    });
+        getlist();
+	};
+	datas={};
+	
+	locked=false;
+	addtimer=0;
+	customernumr=1;
+	recordnumr=0;
+	
+    function getlist(){
+        storeSn=$api.getStorage("storeSn");
+        if($api.getStorage("userid"))
+        {
+	        $.ajax({
+				  type: 'post',
+				  url:  ipAddress+'/minglou/user/getStaffList',
+				  data: {storesn:storeSn,pagenum:0,pagesize:100},
+				  success: function(data){
+				     arrlist=data.stafflist.objs;
+				     datas=data;
+				  	 xuanran();
+				  },
+				  error: function(xhr, type){
+				  }
+			})
+	    }
+	    else{
+	        document.getElementById('connector-context').innerHTML="";
+	    }
+    }
+
+    function xuanran(){
+        var temp=document.getElementById("sort");
+	    var resultData ={dataList: arrlist};
+        juicer.register('totime',totime);
+	    var result = juicer(temp.innerHTML, resultData);
+	    var oWrapper = document.getElementById('connector-context');
+	    oWrapper.innerHTML = result;
+	    if($api.getStorage("storeid")==0)
+        {
+            var recordlist=document.getElementsByClassName("record");
+            for(var i=0;i<recordlist.length;i++)
+            {
+                recordlist[i].style.display="none";
+            }
+        }
+        else
+        {
+            var recordlist=document.getElementsByClassName("record");
+            for(var i=0;i<recordlist.length;i++)
+            for(var i=0;i<recordlist.length;i++)
+            {
+                recordlist[i].style.display="block";
+            }
+        }
+    }
+
+    function sortlist(k){
+        var temp = document.getElementById('sort');
+        var key=k.keyword;
+        arrlist=[];
+        if(datas.stafflist.objs.length>0)
+        {
+	        datas.stafflist.objs.forEach(function (v,i) {
+		        if(v.realname.indexOf(key)!=-1||v.mobile.indexOf(key)!=-1||v.tel.indexOf(key)!=-1)
+		        {
+		            arrlist.push(v);
+		        }
+	        })
+            xuanran();
+        }
+	    locked=false;
+    }
+    
+    function order(key){
+        k=key.k;
+        if(arrlist.length>0)
+        {
+	        var temp = document.getElementById('sort');
+	        if(!locked){
+	            locked=true;
+	            //客户数目
+	            if(k==1)
+	            {
+			        if(customernumr==1)
+			        {
+			            arrlist.sort(function (a, b) {
+					      return a.customernum - b.customernum;
+					    });
+					    customernumr=0;
+			        }
+			        else{
+			            arrlist.sort(function (a, b) {
+					      return  b.customernum-a.customernum;
+					    })
+					    customernumr=1;
+			        }
+		        }
+		        //跟进数目
+		        else if(k==2)
+	            {
+			        if(recordnumr==1)
+			        {
+			            arrlist.sort(function (a, b) {
+					      return a.recordnum - b.recordnum;
+					    });
+					    recordnumr=0;
+			        }
+			        else{
+			            arrlist.sort(function (a, b) {
+					      return  b.recordnum-a.recordnum;
+					    })
+					    recordnumr=1;
+			        }
+		        }
+		        //注册时间
+		        else if(k==3)
+	            {
+			       if(addtimer==1)
+			        {
+			            arrlist.sort(function (a, b) {
+					      return a.addtime - b.addtime;
+					    });
+					    addtimer=0;
+			        }
+			        else{
+			            arrlist.sort(function (a, b) {
+					      return  b.addtime-a.addtime;
+					    })
+					    addtimer=1;
+			        }
+		        }
+		        xuanran();
+		        locked=false;
+		    }
+	    }
+	    else
+	    {
+	        alert("请先登录！");
+	    }
+    }
+    
+    function totime(data){
+        var time=new Date(data*1000);
+        return time.getFullYear()+"-"+parseInt(time.getMonth()+1)+"-"+time.getDate()+" "+time.getHours()+":"+time.getMinutes();
+    }
+    
+  </script>
+</body>
+</html>

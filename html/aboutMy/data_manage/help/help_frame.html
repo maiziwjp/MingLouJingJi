@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <title>帮助</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+    	html,body{background: #f5f5f5;height:100%;}
+		.h1 {height: 1px;margin-left: 0.3rem;background: #f0f0f0;}	
+		.fr {float: right;}	
+		.fl{float:left;}
+	    div{font-size:0.32rem;}
+		/* 设置条目 */	
+		.item {height: 1.0rem;line-height: 1.0rem;padding-left: 0.3rem;background-color: #fff;color:#333;font-size:0.32rem;font-weight: 600;}	
+		.item_ico {float: left;width: 0.6rem;padding: 0.2rem 0.2rem 0.2rem 0;}	
+		.item_arrow {float: right;width: 0.32rem;padding: 0.34rem 0.3rem 0.3rem 0;}	
+	
+		.presshover {background-color: #FAFAFA;}
+		.firstblock,.secondblock,.thirdblock{margin-top:0.2rem;background-color: #fff;}
+		
+    </style>
+</head>
+<body>
+	<div class="firstblock">	
+		<div class="item" tapmode="presshover" onclick="openwin(1)">	
+			<span>什么是门店编号？</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div>
+		<div class="item" tapmode="presshover" onclick="openwin(2)">		
+			<span>忘记密码怎么办？</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div>
+		<!-- <div class="item" tapmode="presshover" onclick="openwin(3)">	
+			<span>怎么更换手机号？</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div>	
+		<div class="item" tapmode="presshover" onclick="openwin(4)">		
+			<span>怎么更改门店？</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div> -->
+	</div>	
+	
+	<div class="secondblock">	
+		<div class="item" tapmode="presshover" onclick="openwin(5)">	
+			<span>怎么进行客源管理？</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow" >		
+		</div><div class="h1"></div>			
+		<div class="item" tapmode="presshover" onclick="openwin(6)">	
+			<span>怎么报备客户？</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow" >	
+		</div>	
+	</div>
+	
+	<div class="thirdblock">	
+		<div class="item" tapmode="presshover" onclick="openwin(7)">	
+			<span>本地报备相关问题</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow" >	
+		</div><div class="h1"></div>		
+		<div class="item" tapmode="presshover" onclick="openwin(8)">	
+			<span>异地报备相关问题</span>	
+			<img src="../../../image/arrow.png" alt="" class="item_arrow" >	
+		</div>	
+	</div>
+  </div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		
+	};
+	
+	function openwin(n){
+	    api.openWin({
+	        name: 'answer_win',
+	        url: './answer_win.html',
+	        pageParam:{
+	          num:n
+	        }
+        });
+	}
+</script>
+</html>

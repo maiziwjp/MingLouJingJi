@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" href="../../css/stylesheet/icon1.css">
+    <style>
+    	html, body {height: 100%;background: #000;margin:0;}
+    	.body{height:100%;background:#f0f0f0;position:fixed;top:30px;width:100%;}
+    	#connector{background: white;text-align: center;height:45px;line-height: 45px;padding:0 0.5rem}
+    	#connector img{width:25px;padding:10px 0;}
+        .fl{float:left;}
+        .fr{float: right;}
+        span{font-size:1.1rem;}
+        .icon{color:#0af;font-size:1.1rem;}
+        
+        #sub{display: none;color:#0089FF;}
+    </style>
+</head>
+<body>
+	<div class="body" id="header">
+	  <header id="connector">
+		 <span class="icon icon-back fl" onclick="api.closeWin();"></span>
+                           写跟进
+         <span class="fr" id="sub" onclick="updatecustomer()">提交</span>
+	  </header>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		/* 状态栏高度获取 */
+		var headerHeight; 
+	    var header=document.getElementById("header");
+	    var systemType = api.systemType;
+	    var height=document.getElementById("connector").offsetHeight;
+		if(systemType == "ios")
+		{
+		    header.style.top="20px";
+		    headerHeight=20;
+		}
+		else
+		{
+			header.style.top="25px";
+		    headerHeight=25;
+		}
+		//获取数据
+	    mycustomerid=api.pageParam.mycustomerid;
+	    customerid=api.pageParam.customerid;
+	    
+		api.openFrame({
+	        name: 'connector.write',
+	        url: './connector.write.html',
+	        rect: {
+		        x:0,
+		        y:headerHeight+height,
+	        },
+	        vScrollBarEnabled:false,
+	        hScrollBarEnabled:false,
+	        pageParam:{
+	        	mycustomerid:mycustomerid,
+	        	customerid:customerid
+	        },
+	        reload:true,
+	        allowEdit:true
+        });
+	};
+	
+	/*function editcustomer(){
+	   var editelem=document.getElementById("edit");
+	   var submitelem=document.getElementById("sub");
+	   if(editelem.style.display !=  "none")
+	   {
+	   	   editelem.style.display="none";
+		   submitelem.style.display="block";
+		   api.execScript({
+			    frameName: 'connector.detail',
+			    script: 'editcustomer(0)'
+			});
+		}
+		else
+		{
+			editelem.style.display="block";
+			submitelem.style.display="none";
+		    api.execScript({
+			    frameName: 'connector.detail',
+			    script: 'editcustomer(1)'
+			});
+		}
+	}
+	*/
+	function updatecustomer(){
+		api.execScript({
+		    frameName: 'connector.detail',
+		    script: 'update()'
+		});
+		editcustomer();
+	}
+</script>
+</html>

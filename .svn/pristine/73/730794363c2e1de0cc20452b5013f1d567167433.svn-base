@@ -1,0 +1,628 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));
+    </script>
+    <script>
+    window.onload=function()
+	{
+		var oR=document.getElementById('or_der');
+		var oC=document.getElementById('cu_stomer');
+		var oB=document.getElementById('bu_ding');
+		var oM=document.getElementById('my_set');
+		var oCu=document.getElementById('cu');
+		var oAc=document.getElementById('ac');
+		var oMy=document.getElementById('m');
+		oB.onclick=function()
+		{
+		   oAc.style.display='block';
+		   oCu.style.display='none;
+		   oMy.style.display='none';
+		   api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:true
+	        });
+	        api.openFrame({
+			    name: 'connector.remark',
+			    url: './html/building/building.html',
+			    rect: {
+			        x: 0, 
+	                y: headerHeight+height, 
+	                w: api.winWidth, 
+	                h: api.winHeight-140
+			    },
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			});
+		};
+		oR.onclick=function()
+		{
+		    
+		   oAc.style.display='none';
+		   oCu.style.display='block;
+		   oMy.style.display='none';
+            api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:true
+	        });
+	        api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:true
+	        });
+	        api.openFrame({
+			    name: 'connector.remark',
+			    url: './html/customer/connector.remark.html',
+			    rect: {
+			        x: 0, 
+	                y: headerHeight+height, 
+	                w: api.winWidth, 
+	                h: api.winHeight-140
+			    },
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			});
+		};
+		oC.onclick=function()
+		{
+		    oCu.style.display='block;
+		   api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:true
+	        });
+	        api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:true
+	        });
+	        api.openFrame({
+			    name: 'connector.remark',
+			    url: './html/customer/connector.html',
+			    rect: {
+			        x: 0, 
+	                y: headerHeight+height, 
+	                w: api.winWidth, 
+	                h: api.winHeight-140
+			    },
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			});
+		};
+		oM.onclick=function()
+		{
+		   oMy.style.display='block';
+		   api.openFrame({
+			    name: 'connector.remark',
+			    url: './html/aboutMY/AboutMy.html',
+			    rect: {
+			        x: 0, 
+	                y: headerHeight+height, 
+	                w: api.winWidth, 
+	                h: api.winHeight-140
+			    },
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			});
+		};
+	};
+    </script>
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/lhf-index.css"/>
+    <style>
+        html,body{background: black;}
+        #wrap{background: #f0f0f0;position:fixed;top:30px;width:100%;height:100%;}
+        header{ background-color: #fff;}
+        header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+        header ul li.active{ display: block; }
+        
+        #ads{ height:3rem}
+        #ads pre {height:2rem}
+        #footer{  background-color: #f2f2f2; position:fixed;bottom:0;z-index: 9999;width:100%;}
+        #footer ul li{  padding-top: 36px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
+        #footer ul li.active{ color: #0af; }
+        #footer ul li:nth-child(1){ background-image: url(./image/building.png);  }
+        #footer ul li:nth-child(2){ background-image: url(./image/customer.png); }
+        #footer ul li:nth-child(3){ background-image: url(./image/news.png); }
+        #footer ul li:nth-child(4){ background-image: url(./image/me.png); }
+        #footer ul li:nth-child(1).active{ background-image: url(./image/buiding_pre.png); }
+        #footer ul li:nth-child(2).active{ background-image: url(./image/customer_pre.png); }
+        #footer ul li:nth-child(3).active{ background-image: url(./image/news_pre.png); }
+        #footer ul li:nth-child(4).active{ background-image: url(./image/me_pre.png); }
+        
+        .leftpart{position: absolute;left:20px;}
+        .midpart{width:100%;display: inline-block;}
+        .rightpart{height:20px;position:absolute;right:20px;top:50%;margin-top:-10px ;}
+        
+        /*  */
+        #cityid{color:#0089FF;}
+        .leftpart select{ padding-right:20px;background: url(./icon/drop_down.png) no-repeat right;background-size:15px; }
+        .aboutmy{border-bottom: 1px solid #ccc;}
+        
+        /* select框 */
+       #connector-context{float:left;}
+    </style>
+    <link rel="stylesheet" type="text/css" href="./css/btn_style.css"/>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+    <header id="header">
+       <ul>
+            <li id="ac" class=" active" ><div class="leftpart"><article id="connector-context"></article></div>合作楼盘<!-- <img class="rightpart" src="./icon/search_blue.png" onclick="opensearch()"/> --></li>
+            <li id="cu" class="border-b" ><span class="midpart">客源管理</span><img class="rightpart" src="./icon/add.png"  onclick="openadd()"/></li>
+            <!-- <li class="border-b" >楼市资讯</li> -->
+            <li id="m" class="aboutmy" >订单详情</li>
+            <li id="m" class="aboutmy" >我的</li>
+        </ul>
+    </header>
+    <div id="ads" class="cirads">
+		<ul>
+		  <img  class="pre" data-cdn="no"  src="./image/buiding_pre.png" >
+			
+		</ul>
+    </div>
+    <div id="main" class="flex-con">
+	
+    <div id="footer" >
+        <ul class="flex-wrap" >
+            <li tapmode="hover" id="bu_ding" onclick="randomSwitchBtn( this );" class="flex-con active" >楼盘</li>
+            <li tapmode="hover" id="cu_stomer" onclick="randomSwitchBtn( this );" class="flex-con " >客源</li>
+            <!-- <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >资讯</li> -->
+			 <li tapmode="hover" id="or_der" onclick="randomSwitchBtn( this );" class="flex-con " >订单</li>
+            <li tapmode="hover" id="my_set" onclick="randomSwitchBtn( this );" class="flex-con " >我的</li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/template" id="sort">
+    <select id="cityid" onchange="choose()">
+     {@each dataList as item}
+   		<option value="${item.tagid}">${item.tagname}</option>  		
+   	 {@/each}
+   	  </select>
+</script>
+</body>
+</html>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/zepto.js"></script>
+<script src="./script/juicer.js"></script>
+<script src="./script/global_variables.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+    	/* 获取封装的接口 */
+    	fs = api.require("fs");
+    	//alert($api.getStorage("areaid"));
+        /* 状态栏高度获取 */
+        //UIActionProgress = api.require('UIActionProgress');
+        
+		headerHeight=0; 
+	    var header=document.getElementById("wrap");
+	    var systemType = api.systemType;
+	    height=document.getElementById("header").offsetHeight;
+		if(systemType == "ios")
+		{
+		    header.style.top="20px";
+		    headerHeight=20;
+		}
+		else
+		{
+			header.style.top="25px";
+		    headerHeight=25;
+		}
+        
+        //广告的轮播图
+        apiready = function(){
+		var UIScrollPicture = api.require('UIScrollPicture');
+UIScrollPicture.open({
+    rect: {
+        x: 0,
+        y: 0,
+        w: api.winWidth,
+        h: api.winHeight / 2
+    },
+    data: {
+        paths: [
+            'widget:./image/buiding_pre.png',
+            'widget:./image/customer_pre.png',
+            'widget:./image/news_pre.png',
+            'widget:./image/me_pre.png'
+        ],
+        captions: ['apicloud', 'apicloud', 'apicloud', 'apicloud']
+    },
+    styles: {
+        caption: {
+            height: 35,
+            color: '#E0FFFF',
+            size: 13,
+            bgColor: '#696969',
+            position: 'bottom'
+        },
+        indicator: {
+            align: 'center',
+            color: '#FFFFFF',
+            activeColor: '#DA70D6'
+        }
+    },
+    placeholderImg: 'widget://image/myinfo/log_c.jpg',
+    contentMode: 'scaleToFill',
+    interval: 3,
+    fixedOn: api.frameName,
+    loop: true,
+    fixed: false
+}, function(ret, err) {
+    if (ret) {
+        alert(JSON.stringify(ret));
+    } else {
+        alert(JSON.stringify(err));
+    }
+});
+	};
+        funIniGroup();
+        
+        getArea();
+        
+       // checkUpdate();
+		
+    }  
+    
+    //获取区域列表
+	function getArea(){
+
+	    oWrapper = document.getElementById('connector-context');
+		$.ajax({
+		  type: 'GET',
+		  url:  ipAddress+'/areatag/getlist',
+		  data: '',
+		  dataType: 'json',
+		  success: function(data){
+			console.log(JSON.stringify(data));
+			arrlist=data.arealist;
+			xuanran(arrlist);
+			document.getElementById("cityid").value=$api.getStorage("areaid")==0?1:$api.getStorage("areaid");
+		  },
+		  error: function(xhr, type){
+		    alert("error");
+		  }
+		})
+	}
+	//渲染区域列表
+    function xuanran(arrlist){
+    	var temp=document.getElementById("sort");
+    	var resultData ={dataList: arrlist};
+    	var result = juicer(temp.innerHTML, resultData);
+    	oWrapper.innerHTML = result;
+	} 
+    
+    function checkUpdate(){
+    	var installpath=$api.getStorage("installpath");
+		console.log(installpath);
+		if(installpath)
+		{
+			fs.remove({
+	            path: installpath
+	        },function(ret, err){
+	            if(ret.status)
+	            {
+	            	$api.setStorage("installpath","");
+	            	api.toast({
+	                    msg:'已为您删除安装包!'
+                    });
+	            }
+	        });
+        }
+        if (api.systemType == "android") {
+	    	$.ajax({
+			  type: 'GET',
+			  url: ipAddress+'/minglouapp/version/checkVersion/'+api.appVersion+'/1',
+			  data: '',
+			  success: function(data){
+			 // 	alert(JSON.stringify(data));
+			    if(!data.IfLatest)
+			    {
+				    	api.confirm({
+		                    title : '有新的版本,是否下载并安装 ',
+		                    msg : data.latestVersion.content,
+		                    buttons : ['确定', '取消']
+		                }, function(ret, err) {
+		                    if (ret.buttonIndex == 1) {
+		                        api.showProgress({
+								    style: 'default',
+								    animationType: 'fade',
+								    title: '正在下载中...',
+								    text: '请稍等',
+								    modal: false
+								});
+	                            api.download({
+	                                url : "http://www.minglou360.com:8080/apk/mingloujingji.apk",
+	                                report : true
+	                            }, function(ret, err) {
+	                                if (ret && 0 == ret.state) {/* 下载进度 */
+	                                }
+	                                if (ret && 1 == ret.state) {/* 下载完成 */
+	                                    api.hideProgress();
+	                                    var savePath = ret.savePath;
+	                                    $api.setStorage("installpath",savePath);
+	                                    api.installApp({
+	                                        appUri : savePath
+	                                    });
+	                                }
+	                            });
+		                    }
+		                });
+			    }
+			    locked=false;
+			  },
+			  error: function(xhr, type){
+			  	alert("error");
+			    locked=false;
+			  }
+			})
+		}
+		if (api.systemType == "ios") {
+			$.ajax({
+			  type: 'GET',
+			  url:  ipAddress+'/minglouapp/version/checkVersion/'+api.appVersion+'/0',
+			  data: '',
+			  dataType: 'json',
+			  success: function(data){
+			    if(!data.IfLatest)
+			    {
+				    api.alert({msg:'有新版本啦！请去appstore下载最新版本'});	
+			    }
+			  },
+			  error: function(xhr, type){
+			    locked=false;
+			  }
+		   })
+         }
+    }
+
+
+    function progressStart(){
+    	UIActionProgress.open({
+		     maskBg: 'rgba(0,0,0,0.5)',
+		     styles: {
+		         h: 108,
+		         bg: '#fff',
+		         title: {
+		             size: 13,
+		             color: '#000',
+		             marginT: 10
+		         },
+		         msg: {
+		             size: 12,
+		             color: '#000',
+		             marginT: 5
+		         },
+		         lable: {
+		             size: 12,
+		             color: '#696969',
+		             marginB: 5
+		         },
+		         progressBar: {
+		             size: 2,
+		             normal: '#000',
+		             active: '#4876FF',
+		             marginB: 35,
+		             margin: 5
+		         }
+		     },
+		     data: {
+		         title: '正在下载',
+		         value: 0
+		     }
+		 },function(ret){
+		 });
+    }
+    
+    function close(){
+        api.closeWin();
+    }
+
+    function funIniGroup(){
+        var eHeaderLis = $api.domAll('header li'),
+            frames = [];
+        //var iframe = ["building.html", "connector.html", "information.html", "AboutMy.html"];
+        var iframe = ["building/building.html", "customer/connector.html", "customer/connector.remark.html","aboutMy/AboutMy.html"];        
+        for (var i = 0,len = 4; i < len; i++) {
+                frames.push( { 
+                    name: 'frame'+i, 
+                    url: './html/'+iframe[i], 
+                    bgColor : 'rgba(0,0,0,.2)',
+                    bounces:true
+                } );
+        }
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {
+                x: 0, 
+                y: headerHeight+height,
+                h:api.winHeight-140
+            },
+            index: 0,
+            frames: frames
+        }, function (ret, err) {
+
+        });
+        
+        for (var i = 0,len = 4; i < len; i++) {
+            api.setFrameAttr({
+			    name: 'frame'+i,
+	            bounces: false,
+	            vScrollBarEnabled:false,
+			});
+        }
+    }
+
+    // 随意切换按钮
+    function randomSwitchBtn( tag ) {
+        api.setFrameGroupAttr({
+	        name: 'group',
+	        hidden:false
+        });
+        if( tag == $api.dom('#footer li.active') )return;
+        var eFootLis = $api.domAll('#footer li'),
+            eHeaderLis = $api.domAll('header li'),
+            index = 0;
+        for (var i = 0,len = eFootLis.length; i < len; i++) {
+            if( tag == eFootLis[i] ){
+                index = i;
+            }else{
+                $api.removeCls(eFootLis[i], 'active');
+                $api.removeCls(eHeaderLis[i], 'active');
+            }
+        }
+        $api.addCls( eFootLis[index], 'active');
+        $api.addCls( eHeaderLis[index], 'active');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+        if(index!=1)
+            api.closeFrame({
+	            name: 'connector.remark'
+            });
+        else
+        {
+        	var value=document.getElementsByName("frame")[0].checked?0:1;
+        	if(value)
+        	{
+        		api.setFrameGroupAttr({
+			        name: 'group',
+			        hidden:true
+		        });
+		        api.openFrame({
+				    name: 'connector.remark',
+				    url: './html/customer/connector.remark.html',
+				    rect: {
+				        x: 0, 
+		                y: headerHeight+height, 
+		                w: api.winWidth, 
+		                h: api.winHeight-140
+				    },
+				    bounces: false,
+				    bgColor: 'rgba(0,0,0,0)',
+				});
+        	}	
+        }
+    }
+    
+    function chooseframe(){
+       var value=document.getElementsByName("frame")[0].checked?0:1;
+       console.log(value);
+       if(value)
+       {
+	       api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:true
+	        });
+	        api.openFrame({
+			    name: 'connector.remark',
+			    url: './html/customer/connector.remark.html',
+			    rect: {
+			        x: 0, 
+	                y: headerHeight+height, 
+	                w: api.winWidth, 
+	                h: api.winHeight-140
+			    },
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			});
+		}
+		else
+		{
+	        api.setFrameGroupAttr({
+		        name: 'group',
+		        hidden:false
+	        });
+	        api.setFrameAttr({
+		        name: 'connector.remark',
+		        hidden:true
+	        });
+	        api.setFrameGroupIndex({
+			    name: 'group',
+			    index: 1,
+			    scroll: true
+			});
+		}
+    }
+    
+    function init(){
+        //初始化显示的楼盘
+  
+        api.execScript({
+			frameName: 'frame0',
+	        script: 'choose('+document.getElementById("cityid").value+')'
+        }); 
+        
+        var eFootLis = $api.domAll('#footer li');
+            eHeaderLis = $api.domAll('header li');
+        for (var i = 0,len = eFootLis.length; i < len; i++) {
+            $api.removeCls(eFootLis[i], 'active');
+            $api.removeCls(eHeaderLis[i], 'active');
+        }
+        $api.addCls( eFootLis[0], 'active');
+        $api.addCls( eHeaderLis[0], 'active');
+        api.setFrameGroupIndex({
+		    name: 'group',
+		    index: 0,
+		});
+    }
+    
+    function closewin(){
+        api.closeWin();
+    }
+    
+    
+    function choose(){
+		var val=document.getElementById("cityid").value;
+		api.execScript({
+			frameName: 'frame0',
+	        script: 'choose('+val+')'
+        });    	
+    }
+    
+	
+	/* 打开其他页面 */
+    //添加客户
+    function openadd(){
+        if($api.getStorage("userid"))
+        {
+        	if($api.getStorage("storeid")){
+		        api.openWin({
+			      name: 'addCustomer_win',
+			      url: './html/customer/addCustomer_win.html',
+		       });
+	       }
+	       else
+	       {
+	       	   api.confirm({
+				    title: '添加门店编号',
+				    msg: '您尚未添加门店编号，是否去填写门店编号',
+				    buttons: ['取消', '是的']
+					}, function(ret, err){
+					    if(ret.buttonIndex==2)
+					        api.openWin({
+			                    name: 'personalinformation_win',
+			                    url: './html/aboutMy/personal_info/personalinformation_win.html'
+		                    });
+			  });
+	       }
+	    }
+	    else
+		{
+		    api.toast({
+	            msg:'请先登录！'
+            });
+		}
+    }
+    //楼盘搜索
+    function opensearch(){
+	    api.openWin({
+	        name: 'building_search_win',
+	        url: './html/building/building_search_win.html'
+        });
+	}
+</script>

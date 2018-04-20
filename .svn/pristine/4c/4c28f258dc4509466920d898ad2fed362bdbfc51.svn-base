@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>添加客户</title>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../css/stylesheet/iconfont.css">
+    <link rel="stylesheet" href="../css/stylesheet/icon1.css">
+    <style>
+        body{margin:none;height:100%;background:#000;}
+        .body{background: #f0f0f0;height:100%;position: fixed;top:30px;width:100%;}
+        input,button,select,textarea{outline:none;margin:0px;padding: 0;}
+        div{padding: 0;margin: 0;font-size:0.32rem;}
+        textarea{resize:none} 
+        span{font-size:0.37rem;}
+        .icon{color:#0af;font-size:0.35rem;}
+        
+        /* 排序 */
+        #sortmethod{height:40px;line-height: 40px;width:100%;background: white;display:none;}
+        #sortmethod img{height:0.3rem;}
+        
+        .sort button{width:32%;display:inline-block;color:#0af;}
+        #connector-remark button{width:1.0rem;}
+    </style>
+</head>
+<body>
+<div class="body" id="header">
+  <header class="clearfix" id="connector">
+    <span class="icon icon-back fl" onclick="api.closeWin();"></span>
+              员工记录
+  </header>
+  
+  <div id="connector-remark">
+    <input placeholder="搜索" id="search" oninput="search()"/>
+    <span class="icon icon-search" tapmode="" onclick="search()"></span>
+    <button onclick="showordermethod()">排序</button>
+  </div>
+  
+  <div class="sort" id="sortmethod">
+        <button onclick="order(1,this)" class="sortType">客户数量<img src="../icon/down_arrow.png"/></button><button onclick="order(2,this)" class="sortType">跟进数目<img src="" style="display:none;"/></button>
+        <button onclick="order(3,this)" class="sortType">注册时间<img src="" style="display:none;"/></button>
+   </div>
+</div>   
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/zepto.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+        /* 状态栏高度获取 */
+		headerHeight=0; 
+	    var header=document.getElementById("header");
+	    var systemType = api.systemType;
+	    var height=document.getElementById("connector").offsetHeight+document.getElementById("connector-remark").offsetHeight+document.getElementById("sortmethod").offsetHeight;
+		if(systemType == "ios")
+		{
+		    header.style.top="20px";
+		    headerHeight=20;
+		}
+		else
+		{
+			header.style.top="25px";
+		    headerHeight=25;
+		}
+		
+		api.openFrame({
+	        name: 'staff_frame',
+	        url: './staff_frame.html',
+	        rect: {
+		        x:0,
+		        y:headerHeight+height,
+	        }
+        });
+		
+        locked=false;
+        sortmethod=false;
+	};
+	
+	 addtimer=false;
+	 customernumr=true;
+	 recordnumr=false;
+	 function order(k,elem){
+        if($api.getStorage("userid"))
+        {
+	        var temp = document.getElementById('sort');
+	        if(!locked){
+	            locked=true;
+	            var sortlist=document.getElementsByClassName("sortType");
+	            for(var i=0;i<sortlist.length;i++)
+	            {
+	                sortlist[i].getElementsByTagName("img")[0].style.display="none";
+	            }
+	            if(k==1)
+	            {
+	            	sortmethod=customernumr;
+	            	customernumr=!customernumr;
+	            }
+	            else if(k==2)
+	            {
+	            	sortmethod=recordnumr;
+	            	recordnumr=!recordnumr;
+	            }
+	            else if(k==3)
+	            {
+	            	sortmethod=addtimer;
+	            	addtimer=!addtimer;
+	            }
+		        if(sortmethod)
+		        {
+				    elem.getElementsByTagName("img")[0].src="../icon/up_arrow.png";
+					elem.getElementsByTagName("img")[0].style.display="inline-block";
+		        }
+		        else{
+				    elem.getElementsByTagName("img")[0].src="../icon/down_arrow.png";
+					elem.getElementsByTagName("img")[0].style.display="inline-block";
+		        }
+		        var param = { k: k};
+			    api.execScript({
+				    frameName: 'staff_frame',
+				    script: 'order('+JSON.stringify(param)+')'
+				});
+		        sortmethod=!sortmethod;
+		        locked=false;
+		    }
+	    }
+	    else
+	    {
+	        alert("请先登录！");
+	    }
+    }
+    
+    function showordermethod(){
+        var elem=document.getElementById("sortmethod");
+        var mtop;
+        if(elem.style.display=="none"||!elem.style.display)
+        {
+          elem.style.display="block";
+        }
+        else
+        {
+          elem.style.display="none";
+        }
+	    var header=document.getElementById("header");
+	    var height=document.getElementById("connector").offsetHeight+document.getElementById("connector-remark").offsetHeight+document.getElementById("sortmethod").offsetHeight;
+	    api.setFrameAttr({
+          name: 'staff_frame',
+           rect: {
+		        x: 0,
+		        y: headerHeight+height,
+		   },
+       });
+    }
+    
+    function search(){
+        keyword=document.getElementById('search').value;
+        var param = { keyword:keyword};
+	    api.execScript({
+		    frameName: 'staff_frame',
+		    script: 'sortlist('+JSON.stringify(param)+')'
+		});
+    }
+</script>
+</html>

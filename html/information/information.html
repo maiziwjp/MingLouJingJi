@@ -1,0 +1,208 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>客源管理</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../css/stylesheet/iconfont.css">
+    <link rel="stylesheet" href="../css/stylesheet/icon1.css">
+    <style>
+    .hidden_id{
+        display:none;
+    }
+    .choose{background:white;height:45px;line-height: 45px; position: fixed; top:0; z-index: 10000;width: 7.5rem; font-size: 0;}
+    .my_item{width: 33.3333%;border-right:1px solid #ccc; font-size: 0.26rem; box-sizing: border-box;text-align: center;color: #0af; display: inline-block;}
+    #zixun-context{margin-top:55px;}
+    </style>
+</head>
+<body class="lightger-gray" >
+  <div class="choose" id="tabcards">
+      <div class="my_item" onclick="choose(1)">海南</div>
+      <div class="my_item" onclick="choose(0)">杭州</div>
+      <div class="my_item" onclick="choose(2)">其他</div>
+  </div>
+  <article id="zixun-context">
+  </article>
+  <script type="text/template" id="tmp">
+    {@each dataList as itemList,index}
+    <section class="item" onclick="opendetail(${itemList.id})">
+    <img class="lazyload-img first-img" data-cdn="no" data-src="${itemList.articleTxtPhotoList}" src="../image/11.jpg" alt="">
+    <div class="content-wrapper">
+      <div class="content">
+          <span>${itemList.title}</span>
+      </div>
+      <!-- <div class="date">
+        <span class="user">${itemList.author}</span>
+      </div> -->
+    </div>
+  </section> <!-- ／an .item end -->
+    {@/each}
+  </script>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../script/juicer.js"></script>
+<script src="../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../script/zepto.js"></script>
+
+<script src="../script/lib/common.util.js"></script>
+<script>
+  var imgs = new img({
+    class: 'lazyload-img', // img 样式名称
+    dataSrc: 'data-src',
+    size: '200x200', // cdn尺寸
+    sharpen: '100sh', // 锐化参数
+    q: '90q', // 图片质量,
+    lazyHeight: 0,
+    lazyWidth: 0,
+    fireEvent: 'scroll'
+  });
+</script>
+
+<script>
+var hasMoreData = true;
+var pageIndex = 0;
+var loadingDistance = 100;
+kind=1;
+oldkind=0;
+locked=false;
+pageIndex=0;
+ apiready = function  () {  
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	        pageIndex=0;
+	        document.getElementById("zixun-context").innerHTML="";
+	        getData();
+	        api.refreshHeaderLoadDone();
+	    });
+        getData();  
+        document.getElementsByClassName("my_item")[0].style.background="#0af";
+	    document.getElementsByClassName("my_item")[0].style.color="#fff";
+	}
+function initPage() {
+    getData();
+}
+
+function bindEvent() {
+  var fn = lib.throttle(getMoreData, 1000);
+  window.addEventListener('scroll', fn, false);
+}
+
+function getMoreData() {
+  if(!hasMoreData || document.documentElement.offsetHeight < window.innerHeight || window.scrollY + window.innerHeight < document.documentElement.offsetHeight - loadingDistance){
+        return;
+    }
+  getData();
+}
+
+
+function getData() {
+  if(!locked)
+  {
+      locked=true;
+      if(oldkind!=kind)
+      {
+          pageIndex=0;
+          oldkind=kind;
+          document.getElementById("zixun-context").innerHTML = "";
+      }
+	  $.ajax({
+	    type: 'GET',
+	    url: ipAddress+'/minglou/article/getArticleList/'+pageIndex+'/5'+'/'+kind,
+	    data: {},
+	    dataType: 'json',
+	    timeout: 13000,
+	    success: function(data){
+	      var rs = result = format(data.articleList.objs);
+	      var tmp = document.getElementById("tmp").innerHTML;
+	      if (data.articleList.pageOffset < data.articleList.pageCount) {
+	        hasMoreData = true;
+	        pageIndex ++;
+	      } else {
+	        hasMoreData = false;
+	      }
+	      var result = juicer(tmp, rs);
+	      document.getElementById("zixun-context").innerHTML += result;
+	      setTimeout(function () { imgs.fireLazyload(); }, 400);
+	      bindEvent();
+	      locked=false;
+	    },
+	    error: function(xhr, type){
+	      locked=false;
+	    }
+	  })
+  }
+}
+
+function format(array) {
+  var arr = [];
+  array.forEach(function(v1){
+    var date = new Date(v1.addtime*1000);
+    var dataStr = date.getFullYear()+"-" + (date.getMonth()+1)+"-" + (date.getDate());
+    var imgPath = lib.imgHostName + v1.pathImg.substring(v1.pathImg.lastIndexOf('##') + 2);
+    arr.push({
+      "id": v1.id,
+      "azArticleId": v1.azArticleId,
+      "clickdot": v1.clickdot,
+      "time": dataStr,
+      "title": v1.title,
+      "author": v1.author,
+      "keywords": v1.keywords,
+      "description": v1.description,
+      "articleTxtList": v1.articleTxtList[0]&&v1.articleTxtList[0].contents,
+      "articleTxtPhotoList": imgPath
+    });
+  })
+   
+  return {dataList:arr};
+}
+
+ function opendetail(articleid){
+     api.openWin({
+	     name: 'information.detail',
+	     url: './information.detail.html',
+	     pageParam: {
+		     articleid:articleid,
+		  },
+     });
+ }
+ 
+function choose(k){
+    var list=document.getElementsByClassName("my_item");
+    var elem=list[k];
+    for(var i=0;i<3;i++)
+    {
+        list[i].style.background="#fff";
+        list[i].style.color="#0af";
+    }
+    if(k==1)
+    {
+	    list[0].style.background="#0af";
+	    list[0].style.color="#fff";
+	}
+	else if(k==0)
+	{
+	    list[1].style.background="#0af";
+	    list[1].style.color="#fff";
+	}
+	else{
+	    list[2].style.background="#0af";
+	    list[2].style.color="#fff";
+	}
+    pagenum=0;
+    kind=k;
+    locked=false;
+    getData();
+}
+</script>
+</body>
+</html>

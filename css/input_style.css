@@ -1,0 +1,7 @@
+/* 内嵌搜索框 */
+/* #embed-search{display: inline-block;}
+#embed-search .embed-pic{width:0.4rem;position: relative;right:-0.9rem;}
+#embed-search input{width:5.0rem;border-radius:0.5rem;background: #f1f1f1;} */
+/* 搜索框 */
+#connector-remark input#search {width: 5.3rem; height:0.6rem;line-height:normal;padding-left:0.6rem;margin:0;border:none;font-size: 0.32rem;}
+.search_input{border-radius: 0.25rem;text-align:left;padding-left:0.6rem;background:#f1f1f1 url(../icon/search_gray.png) 0.25rem center no-repeat;background-size: 0.35rem 0.35rem;}

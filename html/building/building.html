@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>合作楼盘</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+  <link rel="stylesheet" href="../../css/stylesheet/index.css">
+  <link rel="stylesheet" hreif="../../css/stylesheet/icon1.css">
+  <link rel="stylesheet" href="../../css/lhf-index.css">
+  <link rel="stylesheet" type="text/css" href="../../css/input_style.css">
+  <link rel="stylesheet" href="../../css/btn_style.css">
+  <style>
+  /* 选择搜索栏 */
+  .choose,#connector-remark{background:white;height:0.92rem;line-height: 0.92rem; position: fixed; top:0; z-index: 10000;width: 7.5rem; font-size: 0;}
+  .my_item{width: 33.33%;border-right:1px solid #ccc; border-bottom:1px solid #ccc;font-size: 0.30rem; box-sizing: border-box;text-align: center;color: #0af; display: inline-block;}
+  #connector-remark{top:0.9rem;padding: 0.1rem ;}
+  #connector-remark #search{width:5.4rem;border-radius: 0.2rem;}
+  /*轮播图*/
+   #ads{width:100%;background:#fff;margin:0; padding:0.2rem;}
+   .addWrap .swipe{overflow: hidden;visibility: hidden;position:relative;}
+   .addWrap .swipe-wrap{overflow:hidden;position:relative;}
+   .addWrap .swipe-wrap > div {float: left;width: 100%;position:relative;}
+
+  #position{ position:absolute; bottom:0; right:0; padding-right:8px; margin:0; background:#000; opacity: 0.4; width:100%; filter: alpha(opacity=50);text-align:right;}
+  .img-responsive { display: block; max-width: 100%;  height: auto;}
+
+
+  /* 广告栏 */
+  #picWrap img{max-height:2.8rem;}
+  .lazyload-img{height:4rem}
+
+  /* list */
+  .item{text-align:left;padding-bottom: 0.1rem;}
+  .item .firstline{padding:0.15rem 0;}
+  .firstline strong{font-size:0.34rem;color:#333;padding-right:0.2rem;}
+  .item .firstline .price{color:#666;float: none;}
+  .item .firstline .text-orange{font-size:0.32rem;}
+  .item .secondline{padding-bottom: 0.1rem;}
+
+  .item .img{position:relative;}
+  .item .commission{color:#fff;position:absolute;right:0.4rem;bottom:-0.75rem;display:inline-block;width:1.5rem;height:1.5rem;line-height: 0.35rem;
+  padding:0.35rem 0;border-radius: 50%;background: rgba(102,102,102,0.4);border:0.1rem solid rgba(255,255,255,0.6);text-align: center;}
+  .item .commission span{display:block;font-size:0.28rem;}
+
+  /* 楼盘列表 */
+  #article{margin-top:0.2rem;}
+  /* 搜索框 */
+  #connector-remark{position: fixed;width:100%;top:0; border-top: 0;height:3 rem;line-height:0.85rem;}
+  </style>
+</head>
+<body style="background: #f5f5f5">
+
+  <header class="header">
+    <div id="wraper">
+    </div>
+
+  </header>
+  <header id="connector-remark">
+    <div class="erasable"><input placeholder="搜索楼盘名字" id="search" class="search_input" oninput="search(this)"/><img src="../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div>
+
+  </header>
+  <div class ="addWrap">
+    <div class="swipe" id="mySwipe">
+      <div class="swipe-wrap">
+        <div><a href="javascript:;"><img class="img-responsive" src="http://www.minglou360.com:8080/mingloucct/files/systemfiles/Ad1.png"/></a></div>
+        <div><a href="javascript:;"><img class="img-responsive" src="http://www.minglou360.com:8080/mingloucct/files/systemfiles/Ad2.png"/></a></div>
+        <div><a href="javascript:;"><img class="img-responsive" src="http://www.minglou360.com:8080/mingloucct/files/systemfiles/Ad3.png"/></a></div>
+        <div><a href="javascript:;"><img class="img-responsive" src="http://www.minglou360.com:8080/mingloucct/files/systemfiles/Ad4.png"/></a></div>
+
+      </div>
+    </div>
+  <ul id="position">
+  <li class="cur"></li>
+  <li class=""></li>
+  <li class=""></li>
+  <li class=""></li>
+  </ul>
+</div>
+
+
+   <div>
+ 	<div class="nn">
+  <article class="article" id="article">
+
+  </article>
+  </div>
+  </div>
+  <!-- 定义juicer模板
+  <script type="text/template" id="piclist">
+  <section id="picWrap">
+      <div id="picList">
+          {@each objs as item,index}
+  		  <img src="${item.pic|ctopic}" />
+  		  {@/each}
+  	  </div>
+  </section>
+  <p id="picBtns">
+      {@each objs as item}
+  	  <span></span>
+  	  {@/each}
+  </p>
+  </script> -->
+<script type="text/template" id="tmp">
+
+	{@each objs as item,index}
+	<section class="item">
+	  <a href="javascript:void(0)" onclick="openframe(${item.buildingid})" class="img">
+	    <img  class="lazyload-img" data-cdn="no"  data-src="${item.picurl}" src="${item.picurl}" alt="" id="">
+	  	<p class="commission"><span>${item.commission}</span><span>佣金</span></p>
+	  </a>
+	  <div class="intro">
+		  <p class="firstline"><strong >${item.buildingname}</strong> <label class="price"><span>均价： </span><span class="text-orange">${item.avgprice}元/m²</span></label></p>
+		  <p class="secondline">${item.address}</p>
+	  </div>
+	</section>
+	{@/each}
+
+</script>
+
+ <script type="text/javascript" src="../../script/api.js"></script>
+<!-- 动画工具类 -->
+  <script src="../../script/tween.js"></script>
+<!-- 图片懒加载 -->
+<script src="../../script/img.js"></script>
+
+<script src="../../script/swipe.js"></script>
+
+<!-- <script src="../../script/carousel.js"></script> -->
+<!--模版引擎-->
+<script src="../../script/juicer.js"></script>
+<script src="../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../script/zepto.js"></script>
+<script src="../../script/btn.js"></script>
+
+<script>
+	//	触发图片懒加载
+    var imgs = new img({
+      class: 'lazyload-img', // img 样式名称
+      dataSrc: 'data-src',
+      size: '200x200', // cdn尺寸
+      sharpen: '100sh', // 锐化参数
+      q: '90q', // 图片质量,
+      lazyHeight: 0,
+      lazyWidth: 0,
+      fireEvent: 'scroll'
+    });
+
+</script>
+<script src='' id="s1"></script>
+<script>
+    var pageSize=50;
+    var keyword="";
+    var pageNum=1;
+  //  var tagid=$api.getStorage("areaid")==0?1:$api.getStorage("areaid");
+   var tagid=4;
+   // var areaId=$api.getStorage("cityid")||460000;
+    var locked=false;
+    apiready = function  () {
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	        initpageNum();
+	        getData();
+	        api.refreshHeaderLoadDone();
+	    });
+
+
+
+        getData();
+
+	    api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+	        getData();
+	    });
+
+	}
+
+
+	var imgArr= new Array(["","","",""]);
+	var local;
+
+  //广告的轮播图
+  var bullets = document.getElementById('position').getElementsByTagName('li');
+  var banner = Swipe(document.getElementById('mySwipe'), {
+	auto: 2000,
+	continuous: true,
+	disableScroll:false,
+	callback: function(pos) {
+		var i = bullets.length;
+		while (i--) {
+		  bullets[i].className = ' ';
+		}
+		bullets[pos].className = 'cur';
+	}
+});
+
+
+
+	function choose(k){
+	    tagid=k;
+	    initpageNum();
+	}
+
+	function initpageNum(){
+	    pageNum=1;
+	    locked=false;
+	    document.getElementById("article").innerHTML="";
+	    getData();
+	}
+
+	function search(elem){
+		initpageNum();
+		showclear(elem);
+	}
+
+    function getData(){
+        userid=$api.getStorage("userid");
+        pageSize=50;
+        keyword=document.getElementById("search").value;
+        //console.log("keyword"+keyword);
+        //alert(ipAddress+'/building/buildinglist/'+tagid+'/'+pageNum+'/'+pageSize);
+        if(!locked){
+            locked=true;
+		  	$.ajax({
+			  type: 'POST',
+			  url:  ipAddress+'/building/buildinglist/'+tagid+'/'+pageNum+'/'+pageSize,
+			  data: {keyword:keyword},
+			  success: function(data){
+			  	console.log(JSON.stringify(data));
+			  	var tmp = document.getElementById("tmp").innerHTML;
+
+			  	if(data.buildingList.objs.length>0){
+				  	if(userid==undefined)
+				  	{
+				  	    data.buildingList.objs.forEach(function(v){
+				  	        v.commission="登录后可见";
+				  	    })
+				  	}
+				  	juicer.register('ctopic',ctopic);
+				  	var result = juicer(tmp, data.buildingList);
+				  	if(pageNum==1)
+				  	{
+					    document.getElementById("article").innerHTML = result;
+
+					}
+					else
+					    document.getElementById("article").innerHTML += result;
+			    	}
+			    	else if(pageNum==1)
+			    	{
+			        	document.getElementById("article").innerHTML='<p style="text-align:center;font-size:0.3rem;color:#999;">该项暂未开放</p>';
+			    	}
+			  	if (data.buildingList.pageOffset < data.buildingList.pageCount) {
+		        	locked=false;
+		        	pageNum ++;
+		      	} else {
+		        	locked = true;
+		      	}
+				for(var i=0;i<data.buildingList.objs.length;i++)
+				{
+					var pic =document.getElementsByClassName("lazyload-img")[i].src="http://192.168.1.117:8080/minglouapp/resources/buildingfiles/B_"+data.buildingList.objs[i].buildingid+".png";
+				}
+
+			  	setTimeout(function () { imgs.fireLazyload(); }, 400);
+			  },
+			  error: function(xhr, type){
+			  }
+			})
+		}
+	}
+
+	function openframe(id){
+		if(tagid== $api.getStorage("areaid"))
+			ifLocal=true;
+		else
+			ifLocal=false;
+	    api.openWin({
+	        name: 'building.detail_win',
+	        url: './building.detail_win.html',
+	        delay:1000,
+	        pageParam: {
+		        buildingid:id,
+		        ifLocal:ifLocal,
+		    },
+		    reload:true
+        });
+	}
+	function openframe2(){
+	 api.openWin({
+	        name: 'building.detail_win',
+	        url: './building.advertisement_win.html',
+	        delay:1000,
+	        pageParam: {
+
+		    },
+		    reload:true
+        });
+
+}
+	function ctopic(data){
+	    pic="http://www.minglou360.com"+data;
+	    return pic;
+	}
+
+	function carousel() {
+	  var oPicList=document.getElementById("picList");
+	    var aBtns=document.getElementById("picBtns").children;
+	    var cell = 7.5;
+	    var iScroll=0;
+	    var iStartX=0;
+	    var iStartPageX=0;
+	    var iNow=0;
+	    var oTimer=0;
+	    oPicList.innerHTML+=oPicList.innerHTML;
+	    oPicList.style.width = cell * aBtns.length * 2 + "rem";
+	    function autoPlay()
+	    {
+	        oTimer=setInterval(function(){
+	            iNow++;
+	            next();
+	        },3000);
+	    }
+	    function next()
+	    {
+	        iScroll=-iNow*window.screen.width;
+	        //alert(iScroll);
+	        for(var i=0;i<aBtns.length;i++)
+	        {
+	            aBtns[i].className="";
+	        }
+	        aBtns[iNow%aBtns.length].className="active";
+	        if(iNow>=aBtns.length)
+	        {
+	            tweenMove(oPicList,{translateX:iScroll},300,"easeOut",function(){
+	                iNow=iNow%aBtns.length;
+	                iScroll=-iNow*window.screen.width;
+	                css(oPicList, "translateX", iScroll);
+	            });
+	        }
+	        else
+	        {
+	            tweenMove(oPicList,{translateX:iScroll},500,"easeOut");
+	        }
+	    }
+	    autoPlay();
+	}
+
+
+
+
+</script>
+</body>
+</html>

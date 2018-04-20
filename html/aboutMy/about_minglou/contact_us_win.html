@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" href="../../../css/stylesheet/iconfont.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/icon1.css">
+    <style>
+    	html, body {height: 100%;background: #000;margin:0;}
+    	.body{height:100%;background:#f0f0f0;position:fixed;top:30px;width:100%;}
+    	#connector{background: white;text-align: center;height:45px;line-height: 45px;border-bottom: 1px solid #ccc;}
+        .fl{float:left;}
+        span{font-size:1.1rem;}
+        .icon{color:#0af;font-size:1.1rem;padding-left:0.5rem;}
+    </style>
+</head>
+<body>
+	<div class="body" id="header">
+	  <header id="connector">
+		<span class="icon icon-back fl" onclick="api.closeWin();"></span>
+	    <span>联系我们</span>
+	  </header>
+	</div>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		/* 状态栏高度获取 */
+		var headerHeight; 
+	    var header=document.getElementById("header");
+	    var systemType = api.systemType;
+	    var height=document.getElementById("connector").offsetHeight;
+		if(systemType == "ios")
+		{
+		    header.style.top="20px";
+		    headerHeight=20;
+		}
+		else
+		{
+			header.style.top="25px";
+		    headerHeight=25;
+		}
+		
+		api.openFrame({
+	        name: 'contact_us_frame',
+	        url: './contact_us_frame.html',
+	        rect: {
+		        x:0,
+		        y:76,
+	        },
+	        vScrollBarEnabled:false,
+	        reload:true
+        });
+	};
+</script>
+</html>

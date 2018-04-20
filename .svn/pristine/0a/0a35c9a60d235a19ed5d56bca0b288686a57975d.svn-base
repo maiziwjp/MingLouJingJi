@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>楼市资讯详情</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../css/stylesheet/iconfont.css">
+    <link rel="stylesheet" href="../css/stylesheet/icon1.css">
+    <style>
+    	body {
+    		background: #fff;
+    		width: 7.5rem;
+    		overflow: hidden;
+    	}
+    	header{margin-top:30px;}
+    	.title{text-align: center;font-size:16px;line-height:30px;margin:20px 5px;}
+    </style>
+</head>
+<body>
+  <header id="zixun-detail">
+    <span class="icon icon-back fl"  onclick="api.closeWin();"></span>
+            楼市资讯详情
+  </header>
+  <article id="zixun-detail-context">
+  <!--定义juicer模板 -->
+   <!-- {@if itemList.articleTxtPhotoList}
+      <img class="lazyload-img" data-cdn="no" data-src="${itemList.articleTxtPhotoList[0]}" src="../img/11.jpg" alt="">
+      {@/if} -->
+  <script type="text/template" id="tmp">
+      <div class="title">
+        $${title}
+      </div>
+      <div class="content">
+        $${articleTxtList}
+      </div>
+      <div class="date">
+        <span class="user">${author}</span> 
+      </div>
+    </div>
+  </section> <!-- ／an .item end -->
+  </script>
+  </article>
+<!-- 图片懒加载 -->  
+<script type="text/javascript" src="../script/api.js"></script>
+
+<script src="../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../script/juicer.js"></script>
+<script src="../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../script/zepto.js"></script>
+<script src="../script/lib/common.util.js"></script>
+<script>
+  var imgs = new img({
+    class: 'lazyload-img', // img 样式名称
+    dataSrc: 'data-src',
+    size: '200x200', // cdn尺寸
+    sharpen: '100sh', // 锐化参数
+    q: '90q', // 图片质量,
+    lazyHeight: 0,
+    lazyWidth: 0,
+    fireEvent: 'scroll'
+  });
+  setTimeout(function () { imgs.fireLazyload(); }, 400);
+</script>
+
+<script>
+apiready = function () {
+        api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+        articleid=api.pageParam.articleid;
+        getdata(articleid);
+   }
+function getdata(articleid){
+	$.ajax({
+	  type: 'GET',
+	  url: ipAddress+'/minglou/article/getArticle/'+articleid,
+	  data: {},
+	  dataType: 'json',
+	  timeout: 13000,
+	  success: function(data){
+	    // console.log(data);
+	    var rs = result = format(data.article);
+	    var tmp = document.getElementById("tmp").innerHTML;
+	    var result = juicer(tmp, rs);
+	    document.getElementById("zixun-detail-context").innerHTML += result;
+	  },
+	  error: function(xhr, type){
+	  }
+	})
+}
+
+function format(v1) {
+  var date = new Date(v1.addtime);
+  var dataStr = date.getFullYear()+"-" + (date.getMonth()+1)+"-" + (date.getDate());
+  var imgPath = lib.imgHostName + v1.pathImg.substring(v1.pathImg.lastIndexOf('##') + 2);
+  return {
+    "id": v1.id,
+    "azArticleId": v1.azArticleId,
+    "clickdot": v1.clickdot,
+    "time": dataStr,
+    "title": v1.title,
+    "author": v1.author,
+    "keywords": v1.keywords,
+    "description": v1.description,
+    "articleTxtList": v1.articleTxtList[0]&&v1.articleTxtList[0].contents,
+    "articleTxtPhotoList": imgPath
+  }
+}
+</script>
+</body>
+</html>

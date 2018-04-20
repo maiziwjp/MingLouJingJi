@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+       <link rel="stylesheet" href="../../css/stylesheet/icon1.css">
+        <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+    <style>	
+    	.div1{font-size:0.3rem;display: inline-block;}
+    	html, body {height: 100%;background: #000000;margin:0; width: 100%}
+        span{font-size:0.3rem;}
+        header{margin-top:30px;}
+        .header{
+            background: white;
+            height:45px;
+        }
+        .image{
+       	    width:100%;
+       	    height:2.7rem;
+       	    background:url("../../image/back2.png");
+       	    background-repeat:repeat-x;
+		
+        }
+         .clearfix:after{
+			content:"";
+			display:none;
+			height:0;
+			clear:both;
+			margin:0;
+			padding:0;
+		}
+		.black{
+		    background:black;
+		    height:1.2rem;
+		    padding:0.3rem;
+		    padding-left:1.55rem;
+		}
+		.salemid{
+			background:white;
+			height:1.0rem;
+			width:100%;
+			border-bottom:#CCCCCC solid 1px
+			
+			}
+		.midfontl{
+			font-size:0.4rem;
+			padding-bottom:0.1rem;
+			padding-left:0.5rem;
+			padding-right:0.5rem;
+			padding-top:0.2rem;
+			font-weight:bold;
+		}
+		.midfontr{
+			font-size:0.4rem;
+			padding-bottom:0.1rem;
+			padding-left:0.5rem;
+			padding-right:0.5rem;
+			padding-top:0.2rem;
+			font-weight:bold;
+		}
+
+		.midnext{
+			background:green;
+			height:45px;
+			
+		}
+		.fsize{font-size:0.4rem;}
+		.fsizen{font-size:0.3rem;}
+		.fsizel{font-size:0.4rem;}
+		.salemidnext{
+			height:0.8rem;
+			background:white;
+			border-bottom:#CCCCCC solid 1px
+		}
+		.showsql{
+			height:6.0rem;
+			background:white;
+		}
+		.last{
+		height:0.8rem;
+		line-height:0.8rem;
+		background:white;
+		text-align:center;
+		border-top:#CCCCCC solid 1px
+		}
+		.clear{clear:both;}
+		.pl{padding:0.18rem;padding-left:0.2rem;}
+		.pr{padding:0.18rem;padding-right:0.2rem;}
+		.ml{padding-top:0.22rem;}
+		.mr{padding-top:0.22rem;padding-right:0.2rem}
+		.lastbt{
+		height:0.5rem;
+		background:white;
+		text-align:center;
+		}
+		.blue{color:blue;}
+		
+		
+		.show{
+		padding-top:0.1rem;
+		height:0.6rem;
+		position:fixed;
+		width:100%;
+		bottom:0px;
+		background-color:white;
+		text-align:center;
+		font-size:0.3rem;
+		}
+		.fontwhite{
+		color:white;
+		font-size:0.37rem;
+		
+		}
+		.pm
+		{
+		color:white;
+		font-size:0.37rem;
+		margin-left:0.2rem;
+		margin-right:0.2rem;
+		}
+
+		
+		#divlast{position:fixed;width:100%;bottom:-4.0rem;transition:1s;}
+		#divlast div{width:100%;background: white;}
+    </style>
+</head>
+<body>
+	<div>
+			<div class = "image" ></div>
+			<div class = "black">
+			<span id = "fy" class = "fontwhite">房源 0 </span>
+			<span id = "fy" class = "pm">|</span>
+			<span id = "fy" class = "fontwhite">客源 0 </span>
+			<span id = "fy" class = "pm">| </span>
+			<span id = "fy" class = "fontwhite">合作 0 </span>
+			</div>
+			
+		</div>
+		<div class = "div1 salemid">
+			<div class = "salemid div1">
+					<span id = "cs" onclick = borderbottomcs() class = "fsize midfontl fl">出售</span>
+					<span id = "cz" onclick = borderbottomcz() class = "fsize midfontl fl">出租</span>
+					<span id = "qz" onclick = borderbottomqz() class = "fsize midfontr fr">求租</span>
+					<span id = "qg" onclick = borderbottomqg() class = "fsize midfontr fr">求购</span>
+			</div>
+		</div>
+		<div class="salemidnext">
+			<span class =  "fl fsizen pl blue">全部更新</span>
+			<img  onclick = test() class = "ml" src="../../image/shuaxin.png">
+			<img class = "mr fr " src="../../image/liebiao.png">
+			<span class =  "fr fsizen pr blue">筛选</span>
+			
+			<div class="clear"></div>
+		</div>
+		<div class = "show" onclick="show()">
+		<img class = "fl" src="../../image/top.png">
+			点击展开菜单
+		<img  class = "fr"  src="../../image/top.png">
+		</div>
+		<div class = "showsql"> 
+		<div  id="divlast" class="clear atlast">
+			<div  id = "chushou" onclick ="chushouhref()" class = "last">
+				<span class= "fsizel ">出售</span>
+			</div>
+			<div  id = "chuzu"  onclick = chuzuhref() class = "last">
+				<span class= "fsizel">出租</span>
+			</div>
+			<div id = "qiugou" onclick = qiugouhref() class = "last">
+				<span class= "fsizel">求购</span>
+			</div>
+			<div id = "qiuzu" onclick=qiuzuhref() class = "last" >
+				<span class= "fsizel">求租</span>
+			</div>
+			<div class = "last " onclick="hide()">
+				<span class= "fsizel">取消</span>
+			</div>
+		</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+	
+	apiready = function(){
+		api.addEventListener({
+    	name:'swipeup'
+		}, function(ret, err){        
+   		show();
+		});
+		api.addEventListener({
+    		name:'swipedown'
+		}, function(ret, err){        
+   			divlast.style.bottom = "-4.0rem";
+		});
+	};
+	
+	
+	function show(){
+		var divlast = document.getElementById("divlast");
+		divlast.style.bottom= "0";	
+	};
+	
+	function hide(){
+		var divlast = document.getElementById("divlast");
+		divlast.style.bottom = "-4.0rem";
+	};
+	
+	function chushouhref(){
+		api.openWin({
+            name: 'onsale_win',
+            url: './onsale_win.html',
+            reload:true,
+        });
+	};
+	
+	function qiuzuhref(){
+		 api.openWin({
+            name: 'wantrent_win',
+            url: './wantrent_win.html',
+            reload:true
+        });
+	};
+	
+	function qiugouhref(){
+		 api.openWin({
+		            name: 'wantpurchase_win',
+		            url: './wantpurchase_win.html',
+		            reload:true
+	            });
+	
+	};
+	
+	function chuzuhref(){
+		 api.openWin({
+		            name: 'onrent_win',
+		            url: './onrent_win.html',
+		            reload:true
+	            });
+	};
+
+	function test(){
+		api.toast({
+	        msg:'正在刷新',
+	        location:'bottom'
+        });
+	};
+	
+	function borderbottomcs(){
+		var cs = document.getElementById("cs");	
+		cs.style.borderBottom = "solid 6px rgb(153,217,234)";
+		cz.style.borderBottom = "none";
+		qg.style.borderBottom = "none";
+		qz.style.borderBottom = "none";
+		
+		
+	};
+	
+	function borderbottomcz(){
+		var cz = document.getElementById("cz");	
+		cz.style.borderBottom = "solid 6px rgb(153,217,234)";
+		cs.style.borderBottom = "none";
+		qg.style.borderBottom = "none";
+		qz.style.borderBottom = "none";
+		
+	};
+	
+	function borderbottomqg(){
+		var qg = document.getElementById("qg");	
+		qg.style.borderBottom = "solid 6px rgb(153,217,234)";
+		cs.style.borderBottom = "none";
+		cz.style.borderBottom = "none";
+		qz.style.borderBottom = "none";
+	};
+	
+	function borderbottomqz(){
+		var qz = document.getElementById("qz");	
+		qz.style.borderBottom = "solid 6px rgb(153,217,234)";
+		cs.style.borderBottom = "none";
+		cz.style.borderBottom = "none";
+		qg.style.borderBottom = "none";
+		
+	};
+	
+</script>
+</html>

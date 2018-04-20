@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+   <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+       <link rel="stylesheet" href="../../css/stylesheet/iconfont.css">
+       <link rel="stylesheet" href="../../css/stylesheet/icon1.css">
+        <link rel="stylesheet" type="text/css" href="../../css/stylesheet/index.css">
+    <style>
+    	input,button,select,textarea{outline:none;margin:0px;padding: 0;}
+        input,label,select{font-size: 14px;}
+        button{font-size: 16px;}
+        div{padding: 0;margin: 0;}
+    	html, body {height: 100%;background: white;margin:0;}
+     .header{
+            background: white;
+            height:45px;
+            font-size:0.4rem;
+        }
+         .my_item{
+            background: white;
+            padding:10px 15px;
+            border-bottom: 1px solid #cccccc;
+            height:40px;
+        }
+  
+  	 .blue{color:blue;}
+  	   .add_btn{
+		   display: block;
+		   width:300px;
+		   margin:auto;
+		   background: #0af;
+		   color:white;
+		   height:50px;
+		   line-height: 50px;
+		   border-radius: 10px;
+		   margin-bottom: 20px;
+		}
+		textarea{
+		  height:300px;
+		}
+		.remark{
+		    height:300px;
+		}
+    </style>
+</head>
+<body class="bg-gray">
+   <div class="division"> 客户信息 打 <span class = "blue">*</span>  信息均为必填项</div>
+   <div class="my_item"><label>客户姓名 ： </label><input  id="rentname" value="" placeholder="填写姓名"/></div>
+   <div class="item">
+      <div class="my_item"><label>性别：</label>
+      <select id="sex" onChange="" class="source">
+              <option value="男">男</option>
+              <option value="女">女</option>
+		    </select>
+	  </div>
+	  <div class="my_item"><label><span class = "blue">+86</span>  </label><input  id="rentnumb" value="" placeholder="填写电话号码"/></div>
+	  <div class="my_item"><label>意向区域：</label>
+      <select id="rentquyu" onChange="" class="source">
+              <option value="区域A">区域A</option>
+              <option value="区域B">区域B</option>
+              <option value="区域C">区域C</option>
+              <option value="区域D">区域D</option>
+              <option value="区域E">区域E</option>
+              <option value="区域F">区域F</option>
+              <option value="区域G">区域G</option>
+		    </select>
+	  </div>
+	  <div class="my_item"><label>租金预算 ： </label><input  id="rentyusuan" value="" placeholder="填写租金预算"/></div>
+	  <div class="my_item"><label>意向面积 ( m²）： </label><input  id="rentarea" value="" placeholder="填写租房面积"/></div>
+	  <div class="my_item"><label>意向户型：</label>
+      <select id="renthuxing" onChange="" class="source">
+              <option value="户型A">户型A</option>
+              <option value="户型B">户型B</option>
+              <option value="户型C">户型C</option>
+              <option value="户型D">户型D</option>
+              <option value="户型E">户型E</option>
+              <option value="户型F">户型F</option>
+              <option value="户型G">户型G</option>
+              <option value="户型H">户型H</option>
+             
+		    </select>
+	  </div>
+	  <div class="my_item"><label>意向居室：</label>
+	  <select id="rentjushi" onChange="" class="source">
+              <option value="1厅1室1厕">1厅1室1厕</option>
+              <option value="1厅2室1厕">1厅2室1厕</option>
+              <option value="1厅3室1厕">1厅3室1厕</option>
+		    </select>
+		</div>
+		 <div class="division"> 房源信息</div>
+		<div class="my_item"><label>签约人选择：</label>
+	  <select id="rentqianyue" onChange="" class="source">
+              <option value="签约人A">签约人A</option>
+              <option value="签约人B">签约人B</option>
+              <option value="签约人C">签约人C</option>
+              <option value="签约人D">签约人D</option>
+              <option value="签约人E">签约人E</option>
+              <option value="签约人F">签约人F</option>
+              <option value="签约人G">签约人G</option>
+            
+		    </select>
+		</div>
+		<div class="my_item"><label>房源标签：</label>
+	  <select id="rentfangyuan" onChange="" class="source">
+              <option value="房源A">房源A</option>
+              <option value="房源B">房源B</option>
+              <option value="房源C">房源C</option>
+              <option value="房源D">房源D</option>
+              <option value="房源E">房源E</option>
+              <option value="房源F">房源F</option>
+		    </select>
+		</div>
+		<div class="item">
+      <div class="my_item remark"><textarea name="remark" value=" " id="remark" placeholder="请在这里填写备注"></textarea></div>
+  </div>
+  <div>
+      <button class="add_btn"  type="button">提交</button>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		
+	};
+</script>
+</html>

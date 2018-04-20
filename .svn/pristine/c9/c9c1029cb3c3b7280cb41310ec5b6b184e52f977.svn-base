@@ -1,0 +1,68 @@
+.lightger-gray {
+  background: #f0f0f0; }
+
+#zixun {
+  text-align: center;
+  line-height: .96rem;
+  background: #fff;
+  height: .96rem;
+  padding: 0 .2rem;
+  font-size: .3rem;
+  border-bottom: 1px solid #e9e9e9; }
+  #zixun .icon {
+    font-size: .32rem;
+    color: #0af; }
+
+.zixun-body {
+  padding-bottom: 1.5rem; }
+
+.tab {
+  margin: 0 .2rem;
+  overflow: auto; }
+  .tab .tab-content {
+    font-size: 0rem; }
+    .tab .tab-content span {
+      display: inline-block;
+      font-size: .25rem;
+      line-height: .7rem;
+      padding: 0 .25rem;
+      border-bottom: 1px solid #e9e9e9; }
+      .tab .tab-content span.active {
+        color: #0af;
+        border-bottom: 1px solid #0af; }
+
+#zixun-context {
+  margin: .2rem .3rem;
+  background: #fff;
+  box-shadow: 0 0 .05rem #f1f1f1;
+  border-radius: 0.05rem; }
+  #zixun-context .item {
+    line-height: .4rem;
+    border-bottom: 1px solid #e9e9e9;
+    margin: 0;
+    padding-bottom: .3rem;
+    padding: .15rem .3rem;
+    position: relative; }
+  #zixun-context .first-img {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle; }
+  #zixun-context .content-wrapper {
+    display: inline-block;
+    width: 4.5rem;
+    vertical-align: middle; }
+  #zixun-context .user {
+    margin-right: .1rem; }
+  #zixun-context .content {
+    font-size: .3rem;
+    padding: 0 0.3rem;
+    line-height: .5rem;
+    overflow: hidden;
+    height: 1.0rem; }
+  #zixun-context .date {
+    left: 2rem;
+    color: #666;
+    font-size: 0.27rem;
+    padding-left: .3rem; }
+
+/*# sourceMappingURL=zixun.all.css.map */

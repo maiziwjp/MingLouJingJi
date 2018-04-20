@@ -1,0 +1,238 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>客源管理</title>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../../css/lhf-index.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/customer/customer_info.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/input_style.css">
+    <link rel="stylesheet" href="../../../css/btn_style.css">
+    <style>
+    body{font-size: 0.29rem;}
+    input,button{outline:none;}
+    ul li,p{margin:0;padding:0px;}
+    /* 头部查询 */
+    #connector-remark{position: fixed;width:100%;top:0; border-top: 0}
+    #connector-remark input#search {width: 5.0rem; }
+    #connector-remark button{width:0.8rem;font-size:0.3rem;}
+    #connector-remark img{height:0.4rem;padding-left:0.2rem;}
+    .remark:active{opacity:0.3}
+    /* 列表 */
+    #connector-context{margin-top:0.96rem}
+    .user-part{border-bottom: 1px solid #CCCCCC}
+    .lhf_item:active{opacity:0.5}
+    .lhf_item .number{display:inline-block;width:0.6rem;vertical-align: middle;}
+    .lhf_item img{display:inline-block;vertical-align: middle;}
+    #connector-context .user-part{padding:0 0.1rem;}
+    .user-part .right{width:4.5rem;vertical-align: middle;}
+    .recordbtn{width:1.2rem;display:inline-block;color:#0af;vertical-align: middle;}
+    .user-part .secondline span{}
+    /* .realname{width:1.0rem;overflow: auto;white-space: nowrap;display:inline-block;} */
+    .cblue{color:#0af}
+    .sort button{width:24.5%;display:inline-block;color:#0af;}
+     
+    </style>
+</head>
+<body class="bg-gray">
+  <header id="connector-remark">
+    <div class="erasable"><input placeholder="搜索" id="search" class="search_input" oninput="search(this)"/><img src="../../../icon/clearbtn.png" class="clearbtn" onclick="clearinfo(this)" /></div>
+  </header>
+  <article id="connector-context">
+  	 <!-- <div class="user-part" onclick="openDetail(${item.id})">
+  	   	     <input type="hidden" class="mobile" value="${item.mobile}">
+  	         <div class="left">
+  	            <img class="pic" src="../../../image/default.nv.png" alt="" >
+  	           <div class="number">${ite</div>
+  	         </div><div class="right" >
+  	           <p class="firstline"><label class="info realname name" >${item.customerName}</label><label class="tel" >${item.requiredArea}</label></p><p class="secondline">
+  	           <span class="customerState">${item.cu}</span><span>${ite}</span>}<span class="cblue" >${ctorecord}</span></p><p class="thirdline">
+  	           <span class="hint">录入时间</span><span class="content">${itee}</span></p>
+  	         </div><div class="recordbtn" onclick="openrecordlist(this)">
+  	   		  	 <button>备案详情</button>
+  	 	  </div>
+  	   		 </div>  -->
+ 
+  </article>
+    <script type="text/template" id="sort">
+     {@each dataList as item}
+   	 <div class="user-part">
+   	     	 <input type="hidden" class="customerid" value="${item.mycustomerid}">
+       	     <input type="hidden" class="mobile" value="${item.username}">
+       	     <input type="hidden" class="sex" value="${item.gender}"/> 
+         <input type="hidden" class="remark" value="${item.remark}"/>
+         <div class="left">
+          {@if item.gender === '女' }
+            <img class="pic" src="../../../image/default.nv.png" alt="" >
+          {@else}
+            <img class="pic" src="../../../image/default.png" alt="" >
+           {@/if}
+           <div class="number">${item.custseq|tostring}</div>
+         </div><div class="right" onclick="openrecommend(this)">
+           <p class="firstline"><label class="info realname name" >${item.realname}</label><label class="tel" >${item.reqloc}</label><label class="customerType">${item.type|ctocusType}</label></p>
+           <p class="secondline"><span class="notes">${item.notes}</span></p>
+           <p class="thirdline"><span class="hint">录入时间</span><span class="content">${item.createtime|totime}</span></p>
+         </div>
+ 	  </div>
+ 	
+      {@/each}
+      
+    </script> 
+    
+<script type="text/javascript" src="../../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../../../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<!--ajax-->
+<script src="../../../script/global_variables.js"></script>
+<script src="../../../script/zepto.js"></script>
+<!-- 拼音转字母组件 -->
+<script src="../../../script/lib/pinyin.util.js"></script> 
+<script src="../../../script/customer/customer_info.js"></script>
+  <script>
+    apiready = function(){
+       userid=$api.getStorage("userid");
+       buildingid= api.pageParam.buildingid;
+       //alert(JSON.stringify(buildingid));
+       api.setRefreshHeaderInfo({
+	        visible: true,
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err){
+	    	init();
+	        api.refreshHeaderLoadDone();
+	    });
+	    /* 初始值 */
+	    oWrapper = document.getElementById('connector-context');
+	    pageNum=1;
+	    pageSize=10;
+	    orderBy=1;
+	    ifAsc=0;
+	    orderlist=[0,1,1,1];
+	    
+	    /* 初始化方法 */
+        getlist(true);
+        api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+        	pageNum++;
+	        getlist(true);       
+	    });  
+	};
+	locked=false;
+	
+	function openrecommend(elem){
+		var customerid=elem.parentNode.getElementsByClassName("customerid")[0].value;
+		var sex=elem.parentNode.getElementsByClassName("sex")[0].value;
+		var name=elem.getElementsByClassName("realname")[0].innerHTML;
+		var mobile=elem.parentNode.getElementsByClassName("mobile")[0].value;
+		var remark=elem.parentNode.getElementsByClassName("remark")[0].value;
+		var method='getCusInfo("'+customerid+'","'+name+'","'+mobile+'","'+sex+'","'+remark+'")';
+		api.execScript({
+            name : 'recommend_cus_win',
+            frameName : 'recommend_cus_frame',
+            script : method
+        });
+        api.closeWin();
+	}
+	
+	function init(){
+	
+		pageNum=1;
+		oWrapper.innerHTML="";
+        getlist(false);
+	}
+	
+    function getlist(asyn){
+        var keyword=document.getElementById("search").value;     
+        userid=$api.getStorage("userid");
+  		
+	        $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/recommendCustomer/customerList/'+pageNum+'/'+pageSize,
+				  async: asyn,
+				  data:  {userid:userid,buildingid:buildingid,keyword:keyword},
+				  success: function(data){
+				  	console.log(JSON.stringify(data));
+				     if(data.customerlist.pageCount==0)
+				  	 	oWrapper.innerHTML='<p style="height:0.8rem;line-height:0.8rem;text-align: center;background:white;">暂无数据</p>';
+				  	 else
+				  	 	xuanran("sort",data.customerlist.objs);
+				  },
+				  error: function(xhr, type){
+				  }
+			})
+	    
+	    
+    }
+   
+    
+    function hunt(){
+   		var key=document.getElementById("search").value;
+        pageNum=1;
+    	oWrapper.innerHTML="";
+        getlist(false);
+    }
+     
+    
+    function search(){
+        if(userid)
+        {
+	        if(!locked)
+	        {
+	            locked=true;
+	            setTimeout("hunt()",200);
+	            locked=false;
+		    }
+	    }
+	     else
+	    {
+	        alert("请先登录！");
+	    }
+    }
+    
+    
+    function openrecordlist(elem){
+        if($api.getStorage("storeid"))
+        {
+	        var username=elem.parentNode.getElementsByClassName("username")[0].value;
+	        //alert(username);
+	        api.openWin({
+		        name: 'recordlist_win',
+		        url: '../../customer/report/recordlist_win.html',
+		        pageParam: {
+			      username:username
+			    },
+			    reload:true
+	        });
+        }
+        else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../../aboutMy/personal_info/personalinformation_win.html'
+                    });
+		  });
+	  }
+    }
+    function xuanran(idname,arrlist){
+        var temp=document.getElementById(sort);
+	    var resultData ={dataList:arrlist};
+        juicer.register('totime',totime);
+        juicer.register('ctocusType',ctocusType);
+        juicer.register('tostring',tostring);
+	    var result = juicer(sort.innerHTML, resultData);
+	    oWrapper.innerHTML += result;
+    }
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>	
+<html>	
+<head>	
+	<meta charset="utf-8">		
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>	
+	<script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />	
+    <link rel="stylesheet" type="text/css" href="../../css/common.css" />	
+	
+      <style>	
+    	 html, body {width: 100%;min-height: 100%;background: #f5f5f5;}	
+    	 button{outline:none;}
+    	 div,button{font-size:0.34rem;}
+		.h1 {height: 1px;margin-left: 1.0rem;background: #f0f0f0;}	
+		.fr {float: right;}	
+	
+		.firstblock, .secondblock, .thirdblock {background-color: #fff;}	
+		/* 头部登陆 */	
+		.login {background:#fff;height:3.5rem;text-align: center;margin-bottom:0.4rem;}		
+		.personal_logo{display: inline-block; width:1.8rem; height:1.8rem;padding-top:0.4rem;padding-bottom: 0.3rem;}
+		.userinfo {font-size: 0.42rem;padding-bottom:0.4rem;color:#333;text-align: center}	
+		.logbtn{font-size: 0.42rem;color:#0588ff;font-weight:700;}
+        .logbtn:active{}
+		
+        .title:active{color: rgba(0,0,0,0.8);}
+		/* 设置条目 */	
+		.item {height: 1.0rem;line-height: 1.0rem;padding-left:0.3rem;background-color: #fff;}	
+		.item_ico {float: left;width: 0.58rem;padding: 0.2rem 0.2rem 0.2rem 0;}	
+		.item_arrow {float: right;width: 0.32rem;padding: 0.34rem 0.3rem 0.3rem 0;}	
+		.info_icon{width:0.5rem;margin-top:0.05rem;}
+		.pw_icon{width:0.6rem;}
+	
+		.presshover {background-color: #FAFAFA;}
+		.firstblock,.secondblock,.thirdblock{margin-bottom: 0.4rem;}
+		.logoff{background: #F63F3F;border-radius: 0.1rem;color:white;display:block;width:100%;height:0.8rem;line-height: 1.1rem;width:6.7rem;margin:auto;margin-bottom: 0.4rem;height:1.1rem;}	
+        #vs{ font-size: 0.32rem;}
+
+    </style>	
+</head>	
+<body>	
+	<div class="login" >	
+		<img id="ppp" src="../../icon/avatar_gray.png" alt="" class="personal_logo" onclick="getpic()">
+		<div class="userinfo"  tapmode>	
+			<div class="title" id="username" onclick="openwin(1)" ></div>
+			<button class="logbtn" onclick="logIn()" id="login">立即登录</button>	
+		</div>	
+	</div>	
+	<!-- 第一块 -->	
+	<div class="firstblock">	
+		<div class="item" tapmode="presshover" onclick="openwin(1)">	
+			<img src="../../icon/info.png" alt="" class="item_ico info_icon">	
+			<span>个人资料</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div>
+		<div class="item" tapmode="presshover" onclick="openwin(2)">	
+			<img src="../../icon/transfercus.png" alt="" class="item_ico">	
+			<span>转移客户</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div>
+		
+		<div class="item" tapmode="presshover" onclick="openwin(7)">	
+			<img src="../../icon/data_manage.png" alt="" class="item_ico">	
+			<span>数据管理</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div> 
+		<div class="item" tapmode="presshover" onclick="openwin(4)">	
+			<img src="../../icon/team.png" alt="" class="item_ico">	
+			<span>员工信息</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow">	
+			<div class="h1" ></div>
+		</div>	
+	</div>	
+
+	<div class="secondblock">	
+		<div class="item" tapmode="presshover" onclick="openwin(3)">	
+			<img src="../../icon/password.png" alt="" class="item_ico  pw_icon">	
+			<span>密码修改</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow">	
+		</div><div class="h1"></div>
+		
+		<div class="item" tapmode="presshover" >	
+			<img src="../../icon/set.png" alt="" class="item_ico ">	
+			<span id="vs">当前版本</span>	
+		</div><div class="h1"></div>
+		<div class="h1"></div>
+		<div class="item" tapmode="presshover" onclick="openwin(6)">	
+			<img src="../../icon/help.png" alt="" class="item_ico">	
+			<span>帮助</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow">
+		</div>
+		<div class="h1"></div>
+		<div class="item" tapmode="presshover" onclick="openwin(5)">	
+			<img src="../../icon/about.png" alt="" class="item_ico">
+			<span>关于名楼经纪</span>	
+			<img src="../../image/arrow.png" alt="" class="item_arrow" >	
+		</div>	
+	</div>	
+	
+	<button class="logoff" onclick="logOff()">退出登录</button>
+</body>	
+
+
+
+<script type="text/javascript" src="../../script/api.js"></script>	
+<script src="../../script/global_variables.js"></script>
+<script type="text/javascript" src="../../script/zepto.js"></script>
+<script type="text/javascript">	
+    apiready = function(){
+        initmy();
+        versionin();
+	};
+	
+	//初始化  显示用户姓名
+	function initmy(){
+	      //获取用户userid,判断用户是否在登陆状态
+		userid=$api.getStorage("userid");
+	 
+	    var username=document.getElementById("username");
+	    var logbtn=document.getElementById("login");
+	    
+	    //如果用户已登陆，显示名字
+	    if(userid)
+	    {
+	    	//显示用户姓名
+	        logbtn.style.display="none";
+	    	username.innerHTML=$api.getStorage("realname");
+	        username.style.display="inline-block";
+	        document.getElementsByClassName("logoff")[0].style.display="block";
+	       
+	       
+	    }
+	    //未登录，显示点击登陆按钮
+	    else
+	    {
+	        username.style.display="none";
+	        logbtn.style.display="inline-block";
+	        document.getElementsByClassName("logoff")[0].style.display="none";
+	        
+	    }
+	    if($api.getStorage("roleType")!=5)
+	    {
+	        document.getElementsByClassName("item")[3].style.display="none";
+	    }
+	    else
+	    {
+	       document.getElementsByClassName("item")[3].style.display="inline-block";
+	    }
+	}
+	
+	function logOff(){
+	    $api.clearStorage();
+	    api.openWin({
+	        name: 'login_win',
+	        url: '../login_win.html',
+	        pageParam:{from:'logoff'},
+	        reload:true
+        });
+	}
+	
+	//版本信息调用
+	function versionin()
+	{
+	  var appv1 = "1.0";
+	   var appv2 = $api.getStorage('appv');
+	   if(appv2>appv1)
+	   	  appv1=appv2;
+	   $api.setStorage('appv',appv1);	
+	   	  
+		var appvios1 = "1.0";
+	   var appvios2 = $api.getStorage('appvios');
+	   if(appvios2>appvios1)
+	   	  appvios1=appvios2;
+	   $api.setStorage('appvios',appvios1);
+	    if(api.systemType == "android")
+	        {
+	        var appversion = $api.getStorage('appv')
+	        document.getElementById("vs").innerHTML="版本号："+appversion;
+	        }
+	        else
+	        {
+	        var appversion= $api.getStorage('appvios')
+	        document.getElementById("vs").innerHTML="版本号："+appversion;
+	        }  
+	   
+	   
+	}
+	
+	function logIn(){
+	   if(!$api.getStorage("userid"))
+	   {
+		    api.openWin({
+		        name: 'login_win',
+		        url: '../login_win.html',
+		        pageParam:{from:'login'},
+		        reload:true
+	        });
+	   }
+	}
+	
+  
+ 
+    function getpic(){
+		api.getPicture({
+			sourceType: 'album',
+			encodingType: 'png',
+			mediaValue: 'pic',
+			destinationType: 'url',
+			allowEdit: true,
+			quality: 100,
+			targetWidth: 100,
+			targetHeight: 100,
+			saveToPhotoAlbum: false
+		    }, function(ret, err) {
+			    if (ret && ret.data) {
+			    console.log(JSON.stringify(ret));
+				
+				document.getElementById("ppp").src=ret.data;
+				console.log(document.getElementById("ppp").src);
+			    deal_apply_img=ret.data;
+			} else {
+				alert("上传失败");
+			}
+		});
+
+    }
+    
+	function openwin(n){
+	    if(n==1)
+	    {
+	        if($api.getStorage("userid"))
+	        {
+		        api.openWin({
+		            name: 'personalinformation',
+		            url: './personal_info/personalinformation_win.html',
+		            pageParam:{from:"aboutmy"},
+		            reload:true
+	            });
+            }
+            else{
+                api.toast({
+	                msg:'请先登录！'
+                });
+            }
+	    }
+	    else if(n==2)
+	    {
+	        if($api.getStorage("userid"))
+	        {
+		        if($api.getStorage("storeid")!=0)
+		        {
+			        api.openWin({
+			            name: 'transferconnector_win',
+			            url: './transfer_cus/transferconnector_win.html'
+		            });
+	            }
+	            else
+	            {
+	                api.confirm({
+					    title: '添加门店编号',
+					    msg: '您尚未添加门店编号，是否去填写门店编号',
+					    buttons: ['取消', '是的']
+						}, function(ret, err){
+						    if(ret.buttonIndex==2)
+						        api.openWin({
+				                    name: 'personalinformation_win',
+				                    url: './personal_info/personalinformation_win.html'
+			                    });
+					  });
+	            }
+            }
+            else
+            {
+                api.toast({
+	                msg:'请先登录！'
+                });
+            }
+	    }
+	    else if(n==3)
+	    {
+            if($api.getStorage("userid"))
+	        {
+		        api.openWin({
+		            name: 'modifyPw_win',
+		            url: './modify_password/modifyPw_win.html'
+	            });
+            }
+            else{
+                api.toast({
+	                msg:'请先登录！'
+                });
+            }
+	    }
+	    else if(n==4)
+	    {
+	    	if($api.getStorage("userid"))
+	        {
+		        api.openWin({
+		            name: 'staff_win',
+		            url: './staff_record/staff_win.html'
+	            });
+            }
+            else{
+                api.toast({
+	                msg:'请先登录！'
+                });
+            }
+	    }
+	    else if(n==5)
+	    {
+	        api.openWin({
+	            name: 'about',
+	            url: './about_minglou/about_win.html'
+            });
+	    }
+	    else if(n==6)
+	    {
+	        api.openWin({
+	            name: 'help',
+	            url: './help/help_win.html'
+            });
+	    }
+	    else if(n==7)
+	    {
+            if($api.getStorage("userid"))
+	        {
+		        api.openWin({
+		            name: 'searchBytime_win',
+		            url: './data_manage/searchBytime_win.html'
+	            });
+            }
+            else{
+                api.toast({
+	                msg:'请先登录！'
+                });
+            }
+            
+	    }
+	}
+</script>	
+</html>	

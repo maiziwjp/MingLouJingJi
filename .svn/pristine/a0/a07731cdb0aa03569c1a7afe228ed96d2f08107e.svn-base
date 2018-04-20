@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>楼盘详情</title>
+   <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+   <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+   <link rel="stylesheet" type="text/css" href="../../css/stylesheet/iconfont.css">
+   <link rel="stylesheet" type="text/css" href="../../css/lhf-index.css">
+   <link rel="stylesheet" type="text/css" href="../../css/frame_common.css">
+   
+    <style>
+     body{margin:0px;}
+    .buildingTypelist{display:inline-block;width:100%;line-height:0.4rem;padding:0.2rem;padding-left:0;}
+    .buildingTypelist::-webkit-scrollbar{width:0;height:0}
+    .buildingTypelist img{width:1.5rem;height:1.5rem;margin:0.2rem 0.07rem;}
+    #allmap { width: 100%;height: 4.0rem;overflow: hidden; margin:0;font-family:"微软雅黑";margin-bottom:0.4rem;}
+    #address{height:0.8rem;line-height: 0.8rem;background: white;padding:0 0.2rem;color:#0af;font-size:0.3rem;}
+    footer{display:none;height:0.9rem;line-height:0.9rem;color:white;background:#0af;text-align: center;position: fixed;bottom:0;width:100%;font-size:0.33rem;}
+ 	 /* lhf edit */
+ 	.index-detail{background: transparent;}
+ 	.index-detail .intro{margin:0;padding:0.3rem;text-align: left;border:none;background: white;font-size: 0.3rem;}
+ 	.intro .fisrtline{padding:0.3rem 0 0.1rem; }
+ 	.fisrtline .name{font-size: 0.36rem;font-weight: 700;color:#333;margin-right: 0.4rem;display: inline-block;}
+ 	.fisrtline p{vertical-align:text-bottom;}
+ 	.fisrtline .type{width:auto;}
+ 	.intro p{display: inline-block;padding-top:0.2rem;}
+ 	.intro strong{display: inline-block;width:1.3rem;padding:0;color:#666;vertical-align: middle;}
+ 	.intro span{display: inline-block;width:1.8rem;overflow: auto;color:#999;white-space:nowrap;vertical-align: middle;}
+ 	.intro span::-webkit-scrollbar{width:0;height:0}
+ 	.dcc{margin-top:0.2rem;}
+ 	.index-detail .intro .type {margin-top: 0.1rem 0;display: inline-block;line-height: 0.4rem;height: 0.4rem;color: #f60;border: 1px solid #f60;padding: 0 0.09rem;border-radius: 0.4rem; margin-right: 0.25rem; }
+    .index-detail .iconfont { display: inline-block;text-align: left;font-size: 0.28rem; padding-right:0.3rem;}
+    .index-detail .iconfont .icon-xingbiexuanzhong {color: #f60; width:auto;}
+ 	.icon-xingbiexuanzhong:before{vertical-align: bottom;padding-right:0.1rem;}
+ 	.apartment img{display:inline-block;width:1.3rem;height:1.3rem;margin-right:1.0rem;}
+ 	
+ 	.box{margin-top: 0.2rem;background: white;padding:0;}
+ 	.box .box-title{height:0.9rem;line-height: 0.9rem;border-bottom: 1px solid #ccc;padding:0 0.3rem;font-size: 0.32rem;font-weight: 700;color:#333;}
+    .box .content{padding: 0.3rem;font-size: 0.3rem;color:#666; }
+    </style> 
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FQaiTP8n3LQG2uBZIdn9StKLMBYvG04L"></script>
+</head>
+<body class="color-gray" >
+  <div id="article">
+  
+  </div>
+  <footer id="footer" onclick="openRecCus()">
+  	推荐客户
+  </footer>
+   <!--定义juicer模板 -->
+<script type="text/template" id="tmp"> 
+     <header class="header "> 
+      <div id="wraper" class="imgs-wrap">
+        <section id="picWrap">
+          <div id="picList">
+            {@each carouselpic as item}
+            <img src="${item}" />
+            {@/each}
+          </div>
+        </section>
+        <p id="picBtns">
+            {@each carouselpic as item,index}
+            {@if index==0}
+            <span class="active"></span>
+            {@else}
+            <span></span>
+            {@/if}
+            
+            {@/each}
+        </p>
+      </div>
+  </header>
+  <section class="index-detail">
+    <div class="intro">
+      <div class="fisrtline"><label class="name">${buildingName}</label> <p> {@each propertyType as item1}<span class="type">${item1}</span> {@/each}</p></div>
+      <p><strong>均价</strong> <span>${priceAvg}元/m²</span></p>
+      {@if coverArea!=0}<p><strong>占地面积</strong><span> ${coverArea}m²</span></p>{@/if}
+      {@if constructionArea!=0}<p><strong>建筑面积</strong> <span>${constructionArea}m²</span></p>{@/if}
+      {@if yearLimit!=0}<p><strong>年限</strong> <span>${yearLimit}年</span></p>{@/if}
+      {@if openingtime!=0}<p><strong>开盘时间</strong> <span>${openingtime|ctotime}</span></p>{@/if}
+      {@if checkInTime!=0}<p><strong>入住时间</strong> <span>${checkInTime|ctotime}</span></p>{@/if}
+      {@if decotype!=''}<p><strong>装修状态</strong> <span> ${decotype}</span></p>{@/if}
+      {@if tel!=''}<p><strong>联系电话</strong> <span>${tel}</span></p>{@/if}
+      
+      {@if buildingState!=''}
+      <p class="iconfont"><span class="icon-xingbiexuanzhong">${buildingState}</span></p>
+      {@/if}
+      {@if requirement!=''}
+   	  <p class="iconfont"><span class="icon-xingbiexuanzhong">${requirement}</span></p> 
+      {@/if}
+      {@if confirmState!=''}
+      <p class="iconfont"><span class="icon-xingbiexuanzhong">${confirmState}</span></p>
+      {@/if}
+    </div>
+    
+    {@each apartment as item}
+     <div class="intro dcc apartment">
+     <div class="fisrtline"><label class="name">户型</label></div>
+     	  <img src="${item.picurl}" />
+          {@if item.outarea!=''}<p><strong>户型面积</strong> <span> ${item.outarea}m²</span></p>{@/if}
+          {@if item.apartname!=''}<p><strong>类型</strong> <span> ${item.apartname}</span></p>{@/if}
+          {@if item.aprice!=''}<p><strong>参考价</strong> <span> ${item.aprice}元</span></p>{@/if}
+    </div>
+    {@/each}
+    
+    <div class="box">
+      <p class="box-title">楼盘特色</p>
+      <div class="content">
+        <p>${feature}</p>
+      </div>
+    </div>
+    
+    {@if address!=''}
+    <div class="box">
+      <p class="box-title">楼盘地址</p>
+      <div class="content">
+        <p >${address}</p>
+        <div id="allmap" onclick="opennavi()"></div>
+      </div>
+    </div>
+    {@/if}
+    
+    {@if notes!=''}
+    <div class="box">
+      <p class="box-title">楼盘详情</p>
+      <div class="buildingTypelist" >
+  	       <p>${notes}</p>
+  	  </br>
+    </div>  
+   {@/if}
+   
+  </section> 
+</script>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script src="../../script/tween.js"></script>
+  <script src="../../script/global_variables.js"></script>
+  <!--ajax-->
+  <script src="../../script/zepto.js"></script>
+  <!--模版引擎-->  
+  <script src="../../script/juicer.js"></script>
+  <script src="../../script/carousel.js"></script>
+ 
+  <script>
+    apiready = function(){
+         buildingid=api.pageParam.buildingid;
+        // alert(buildingid);
+         ifLocal=api.pageParam.ifLocal;
+         getbuildingdetail(buildingid);
+	}; 
+	
+	function openRecCus(){
+	   if($api.getStorage("storeid"))
+	   {
+		building.id=buildingid;
+		building.buildingName=buildingName;
+		building.commission=Commission;
+		building.propertyType=1;
+			api.openWin({
+		        name: 'recommend_cus_win',
+		        url: './record/recommend_cus_win.html',
+		        pageParam:{
+		            id:building.id,
+		        	name:building.buildingName,
+		        	commission:building.commission,
+		        	propertyType:building.propertyType,		        	
+		        },
+		        reload:true
+	        });
+     }
+     else{
+	      api.confirm({
+		    title: '添加门店编号',
+		    msg: '您尚未添加门店编号，是否去填写门店编号',
+		    buttons: ['取消', '是的']
+			}, function(ret, err){
+			    if(ret.buttonIndex==2)
+			        api.openWin({
+	                    name: 'personalinformation_win',
+	                    url: '../aboutMy/personal_info/personalinformation_win.html'
+                  });
+		  });
+	  }
+	}
+	
+    function getbuildingdetail(buildingid){
+    	//alert(buildingid);
+      $.ajax({
+        type: 'get',
+        url: ipAddress+'/building/getbuildingDetail/'+buildingid,
+        data:{},
+        success: function(data){
+	      buildingName=data.building.buildingname;
+	      Commission=data.building.commission;
+          building=data.building;
+          var dt = format(data);
+          var tmp = document.getElementById("tmp").innerHTML;
+          juicer.register('ctotime', ctotime);
+          var result = juicer(tmp, dt);
+          console.log(JSON.stringify(result));
+          document.getElementById("article").innerHTML = result;
+          x=data.building.lon;
+          y=data.building.lat;
+          carousel();
+          if(ifLocal)
+          {
+         	document.getElementById("footer").style.display="block";
+         	document.getElementById("article").style.marginBottom="0.9rem";
+          }
+          else
+          {
+         	document.getElementById("footer").style.display="none";
+         	document.getElementById("article").style.marginBottom="0";
+          }
+          setPoint(data.building.lon, data.building.lat, data.building.buildingName);
+        },
+        error: function(xhr, type){
+        }
+      })
+    }
+    
+    function format(data) {
+      var types = ['普通住宅', '公寓', '别墅', '写字楼', '经济适用房', 'Townhouse', '酒店式公寓', '商铺', '商住', '建筑综合体', '两限房', '自住型商品房'];
+      var dtypes = ['毛坯','简装', '中装', '4精装', '婚装', '高装', '豪装', '老装修'];
+      var rms = '';
+      var bbudingState = ['热销中', '预售', '已结束'];
+      var bds = '';
+      var confirmstate = ['驻场确认','开发商确认'];
+      var bd = data.building;
+      apartment=data.apartment;
+      for(var i=0;i<data.apartment.length;i++)
+      {
+      	apartment[i].picurl=data.apartmentImglist[i];
+      	console.log(apartment.picurl);
+      }
+      console.log(JSON.stringify(apartment));
+      var obj = {
+        buildingName: bd.buildingname,
+        apartment:apartment || [],
+        propertyType: [],//
+        priceAvg: bd.avgprice,
+        requirement: '',
+        feature: bd.features,
+        address:bd.address,
+        openingtime:bd.openingtime,
+        constructionArea:bd.constarea,
+        coverArea:bd.coverarea,
+        checkInTime:bd.checkintime,
+        yearLimit:bd.holdyears,
+        decotype:dtypes[bd.decotype-1],
+        tel:bd.contact.split("|")[1],
+        expire:bd.expire,
+        carouselpic:bd.carouselpic || [],
+        notes:bd.notes
+      }
+      var tps = [];
+      
+      if (bd.propertyType) {
+        tps.push(types[bd.propertyType-1]);
+      }
+      if (bd.decotype) {
+        tps.push(dtypes[bd.decotype-1]);
+      }
+      if (bd.requirement) {
+        rms = requirements[bd.requirement-1];
+      }
+      if (bd.buildingState) {
+        bds = bbudingState[bd.buildingState-1];
+      }
+      obj.propertyType = tps;
+      obj.requirement = rms;     
+      obj.buildingState = bds;  
+      obj.confirmState=bd.confirmState?confirmstate[bd.confirmState-1]:'';
+      
+      console.log(JSON.stringify(obj));
+      return obj;
+    }
+
+    function setPoint(x, y, title) {
+      // 百度地图API功能
+      // 百度地图API功能
+      var map = new BMap.Map("allmap");
+      var point = new BMap.Point(x, y);
+      var marker = new BMap.Marker(point);  // 创建标注
+      map.addOverlay(marker);              // 将标注添加到地图中
+      map.centerAndZoom(point, 15);
+      var opts = {
+        width : 200,     // 信息窗口宽度
+        height: 80,     // 信息窗口高度
+        title : '定位地址', // 信息窗口标题
+        enableMessage:true,//设置允许信息窗发送短息
+        message:""
+      }
+      var infoWindow = new BMap.InfoWindow(title, opts);  // 创建信息窗口对象 
+      map.openInfoWindow(infoWindow,point);
+      var myGeo = new BMap.Geocoder(); 
+      // 根据坐标得到地址描述    
+      myGeo.getLocation(new BMap.Point(x, y), function(result){ 
+        if (result){ 
+          //document.getElementById("address").innerHTML=result.address;
+          window.address=result.address;
+        } 
+      });
+    }
+    
+    function ctotime(data){
+        var date;
+        if(data!=0)
+            date=new Date(data);
+        else
+            return "未知";
+        return date.getFullYear()+'-'+parseInt(date.getMonth()+1)+'-'+date.getDate();
+    }
+    
+    function opennavi(){
+        api.openWin({
+	        name: 'navigation_win',
+	        url: './navigation_win.html',
+	        reload:true,
+	        pageParam:{x:x,y:y,des:address}
+        });
+        
+    }
+    
+    function carousel() {
+	  var oPicList=document.getElementById("picList");
+	    var aBtns=document.getElementById("picBtns").children;
+	    var cell = 7.5;
+	    var iScroll=0;
+	    var iStartX=0;
+	    var iStartPageX=0;
+	    var iNow=0;
+	    var oTimer=0;
+	    oPicList.innerHTML+=oPicList.innerHTML;
+	    oPicList.style.width = cell * aBtns.length * 2 + "rem";
+	    function autoPlay()
+	    {
+	        oTimer=setInterval(function(){
+	            iNow++;
+	            next();
+	        },3000);
+	    }
+	    function next()
+	    {
+	        iScroll=-iNow*window.screen.width;
+	        //alert(iScroll);
+	        for(var i=0;i<aBtns.length;i++)
+	        {
+	            aBtns[i].className="";
+	        }
+	        //aBtns[iNow%aBtns.length].className="active";
+	        if(iNow>=aBtns.length)
+	        {
+	            tweenMove(oPicList,{translateX:iScroll},300,"easeOut",function(){
+	                iNow=iNow%aBtns.length;
+	                iScroll=-iNow*window.screen.width;
+	                css(oPicList, "translateX", iScroll);
+	            });
+	        }
+	        else
+	        {
+	            tweenMove(oPicList,{translateX:iScroll},500,"easeOut");
+	        }
+	    }
+	    autoPlay();
+	}
+  </script>
+</body>
+</html>

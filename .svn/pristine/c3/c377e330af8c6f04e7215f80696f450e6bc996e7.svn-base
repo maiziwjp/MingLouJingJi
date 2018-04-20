@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>添加客户</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../css/stylesheet/iconfont.css">
+    <link rel="stylesheet" href="../css/stylesheet/icon1.css">
+    <style>
+        input,button,select,textarea,p{outline:none;margin:0px;padding: 0;}
+        textarea{resize:none}  
+        button{font-size: 0.34rem;}
+
+        .body{margin-top:0.45rem;font-size:0.32rem;}
+		.hidden{display:none;}
+		.clearfix:after{
+			content:"";
+			display:block;
+			height:0;
+			clear:both;
+		}
+        .my_item{
+            background: white;
+            padding:0.22rem 0.3rem;
+            border-bottom: 1px solid #cccccc;
+            height:0.9rem;
+        }
+		.add_btn{
+		   display: block;
+		   width:6.7rem;
+		   margin:auto;
+		   background: #0af;
+		   color:white;
+		   height:1.1rem;
+		   line-height: 1.1rem;
+		   border-radius: 0.22rem;
+		   margin-bottom: 0.40rem;
+		}
+	    
+		.fllowup{display:-webkit-flex;min-height: 0.9rem;padding:0.2rem 0.3rem;width:100%;line-height:0.5rem;font-size:0.3rem;background: white;border-bottom: 1px solid #cccccc;}
+		.content{display:inline-block;width:3.8rem;}
+		.name{display:inline-block;width:1.2rem;}
+		.time{display:inline-block;width:2.3rem;font-size:0.28rem;color:#CCCCCC}
+		
+		.remark{width:100%;background: white;line-height:0.45rem;padding:0.225rem 0.3rem;min-height:0.9rem;}
+		.remark label{display: inline-block;vertical-align: text-top;}
+		.item{margin-bottom: 0.5rem;}
+		p{height: 0.8rem;line-height: 0.8rem;padding:0 0.3rem;}
+		#remark{outline:none;-webkit-user-select:text;}
+    </style>
+</head>
+<body class="bg-gray">
+  <div class="body">
+      <div class="item remark">
+          <label>备注：</label>
+          <label id="oldremark" ></label>
+	  </div>
+      
+	  <div class="my_item item">
+          <label>跟进方式：</label>
+          <select id="method">
+              <option value="去电">去电</option><option value="约访">约访</option>
+		  </select> 
+	  </div>
+      
+      <div class="fllowup " id="follow1"><span class="content"></span><span class="name"></span><span class="time"></span></div>
+      <div class="fllowup hidden" id="follow2"><span class="content"></span><span class="name"></span><span class="time"></span></div>
+      <div class="fllowup item hidden" id="follow3"><span class="content"></span><span class="name"></span><span class="time"></span></div>
+      
+      <p>请在下面写跟进</p>
+	  <div class="remark item">
+	      <div contenteditable="true" name="remark" id="remark"></div>
+	  </div>
+      <button class="add_btn" onclick="addcustomer()">提交</button>
+  </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/zepto.js"></script>
+<script src="../script/global_variables.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+        api.setStatusBarStyle({
+            style: 'light',
+            color: '#000'
+        });
+        document.getElementById("remark").focus();
+	    customerid=api.pageParam.customerid*1;
+	    userid=$api.getStorage("userid")*1;
+	    showdata();
+	};
+	
+	function showdata(){
+	    $.ajax({
+			  type: 'get',
+			  url: ipAddress+'/minglou/customerRemark/getcustomerRemarkdto/'+customerid,
+			  data:'',
+			  success: function(data){
+			     document.getElementById("oldremark").innerHTML=data.customerRemarkdto.remark||"暂无";
+			     if(data.customerRemarkdto.customerRemarkList[0]!=null)
+			     {
+			           document.getElementById("follow1").getElementsByTagName("span")[0].innerHTML=data.customerRemarkdto.customerRemarkList[0].remark;
+			           document.getElementById("follow1").getElementsByTagName("span")[1].innerHTML=data.customerRemarkdto.customerRemarkList[0].customerName;
+			           var date=new Date(data.customerRemarkdto.customerRemarkList[0].addtime);
+			           var time=date.getFullYear()+'-'+parseInt(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes();
+			           document.getElementById("follow1").getElementsByTagName("span")[2].innerHTML=time;
+			     }
+			     else
+			           document.getElementById("follow1").getElementsByTagName("span")[0].innerHTML="暂无跟进记录";
+			     if(data.customerRemarkdto.customerRemarkList[1]!=null)
+			     {
+			           document.getElementById("follow2").style.display="-webkit-flex";
+			           document.getElementById("follow2").getElementsByTagName("span")[0].innerHTML=data.customerRemarkdto.customerRemarkList[1].remark;
+			           document.getElementById("follow2").getElementsByTagName("span")[1].innerHTML=data.customerRemarkdto.customerRemarkList[1].customerName;
+			           var date=new Date(data.customerRemarkdto.customerRemarkList[1].addtime);
+			           var time=date.getFullYear()+'-'+parseInt(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes();
+			           document.getElementById("follow2").getElementsByTagName("span")[2].innerHTML=time;
+			     }
+			     else
+			           document.getElementById("follow2").style.display="none";
+			     if(data.customerRemarkdto.customerRemarkList[2]!=null)
+			     {
+			           document.getElementById("follow3").style.display="-webkit-flex";
+			           document.getElementById("follow3").getElementsByTagName("span")[0].innerHTML=data.customerRemarkdto.customerRemarkList[2].remark;
+			           document.getElementById("follow3").getElementsByTagName("span")[1].innerHTML=data.customerRemarkdto.customerRemarkList[2].customerName;
+			           var date=new Date(data.customerRemarkdto.customerRemarkList[1].addtime);
+			           var time=date.getFullYear()+'-'+parseInt(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes();
+			           document.getElementById("follow3").getElementsByTagName("span")[2].innerHTML=time;
+			     }
+			     else
+			           document.getElementById("follow3").style.display="none";
+			  },
+			  error: function(xhr, type){
+			  }
+		})
+	}
+	
+	function getdata(){
+	    rank=1;
+	    method=document.getElementById("method").value;
+	    remark=document.getElementById("remark").innerHTML;
+	}
+	
+	function addcustomer(){
+	    getdata();
+	    if(remark.length<6)
+	    {
+	        document.getElementById("remark").focus();
+	        api.toast({
+	            msg:'字数不能少于6个',
+	            location:'top'
+            });
+	    }
+	    else
+	    {
+		    $.ajax({
+				  type: 'post',
+				  url: ipAddress+'/minglou/customerRemark/addCustomerRemark',
+				  dataType:'json',
+				  data:{
+				         customerid:customerid,userid:userid,remark:remark,
+				         method:method,rank:rank,
+				        },
+				  success: function(data){
+				     api.toast({
+		                 msg:'成功跟进记录！'
+	                 });
+	                 var jsfun = 'getDetail();';
+					 api.execScript({
+					     name: 'connector.detail_win',
+					     frameName: 'connector.detail',
+					     script: jsfun
+					 });
+				     setTimeout('api.closeWin();',800);
+				  },
+				  error: function(xhr, type){
+				    if(xhr.status==200)
+				    {
+				        api.toast({
+			                 msg:'成功跟进记录！'
+		                 });
+		                 var jsfun = 'getDetail();';
+						 api.execScript({
+						     name: 'connector.detail_win',
+						     frameName: 'connector.detail',
+						     script: jsfun
+						 });
+					     setTimeout('api.closeWin();',800);
+				    }
+				    else
+				    {
+				        api.toast({
+	                        msg:'发生错误:'+xhr.statusText+'，请重试'
+                        });
+				    }
+				 }
+			})
+	    }
+	}
+	
+	function close(){
+        api.closeWin();
+    }
+</script>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="root">
+<head>
+  <meta charset="UTF-8">
+  <title>跟进纪录</title>
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/7.5;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
+    <link rel="stylesheet" type="text/css" href="../../../css/stylesheet/index.css">
+    <link rel="stylesheet" href="../../../css/stylesheet/icon1.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/btn_style.css">
+    <link rel="stylesheet" href="../../../css/clipboard.css">
+    <style>
+    /* 总体样式 */
+    html,body{height:100%;background: #ececec;}
+    /* gunzi */
+    .full:before{left:0.6rem;}
+    
+    .clearfix:after{content:"";display:block;height:0;clear:both;}
+    #follower-context .dates .date{color:#999;}
+    #follower-context .dates .date-item .title{color:#f63f3f;}
+    #follower-context .dates .date-item .title:before{background: #f63f3f;}
+    .content{font-size: 0.28rem;}
+    .content label{color:#333;margin-right:0.2rem;}
+    .content span{color:#666;margin-right:0.2rem;}
+    .content p{margin-right:0.5rem;}
+    .remark{word-break: break-all;}
+    /* 用户名字 */
+    .customerName,.buildingname{width:100%;height:0.8rem;line-height:0.8rem;font-size:0.34rem;padding:0 0.3rem;position:fixed;z-index:100;background: white;border-bottom:1px #ccc solid;}
+    .customerName{top:0;}
+    .buildingname{top:0.8rem;}
+    .customerName:active,.buildingname:active{opacity:0.8;}
+    /* 订单 */
+    .order{margin-top:1.8rem;position:relative;z-index:98;background: white;border-radius:0.1rem 0.1rem;margin-left:0.2rem;margin-right:0.2rem;}
+    /* 状态条  */
+    .status_group{padding:0.2rem 0.6rem;position: relative;height:1.3rem;}
+    /* 详细信息 */
+    .order-detail{background: white;margin:0.2rem 0.2rem 0;position: relative;z-index: 99;}
+    .order-detail .state{padding:0.3rem;border-bottom:1px solid #ccc;}
+    .order-detail .state_name{color:#0089ff;}
+    .order-detail .anname{color:#FF0000;}
+    .order-detail .time{color:#999;}
+    .order-detail .notes{padding:0.3rem;font-size:0.34rem;}
+    /* 自己写的样式 */
+    #follower { 
+      height: 1.26rem;
+      padding-top: 0.3rem;
+    }
+    button,div{outline:none;}
+     /* 弹窗 */
+    .pop-up{ display:none; position:fixed;bottom:0;z-index:999;width:100%;background: white;font-size:0.32rem;border:1px solid #ccc;}
+    .pop-up .body{padding:0.3rem;}
+    .pop-up textarea{outline:none;width:100%;font-size: 0.28rem;}
+    .pop-up label{font-size:0.4rem;margin-bottom: 0.2rem;display: inline-block;}
+    .pop-up button{height:0.9rem;line-height: 0.9rem;}
+    .pop-up .footer{border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;}
+    .pop-up .leftbtn{display: inline-block;width:48%;border-right: 1px solid #ccc;text-align: center;color:#999;}
+    .pop-up .rightbtn{display: inline-block;width:48%;text-align: center;color:#f63f3f;}
+     #remark{outline:none;-webkit-user-select:text;word-break: break-all;}
+     /* 右箭头 */
+     .item_arrow{float:right;height:0.4rem;margin:0.2rem 0;}
+     /*底部固定栏*/ 
+    .footer{background:#fff;position:fixed;bottom:0;left:0;z-index:999999;width:100%;}
+    .content{font-size:0.38rem;color:#fff;height:0.9rem;line-height:0.9rem;}
+    .bottombar .content{text-align:center;}
+    .bottombar div:first-child{color:#0089FF;}
+    .bottombar div:last-child{color:#f63f3f;}
+    .bottombar{display: -webkit-box;display: -webkit-flex;-webkit-flex-flow: row;}  
+    /* 点击效果 */
+    .footer:active{opacity:0.7;}
+    </style>
+</head>
+<body class="bg-gray full">
+
+  <div class="customerName" tapmode="presshover">	
+	  <span id="customerName"></span>			
+  </div>
+  <div class="buildingname" tapmode="presshover" onclick="openbuilding()">	
+	  <span id="buildingName"></span>	
+	  <img src="../../../image/arrow.png" alt="" class="item_arrow">				
+  </div>
+  
+  <div id="hh1" class="order" >  
+    <div class="status_group">
+	    <div class="status_bar">
+	    	<div class="status"><div class="circle"></div></div><div class="status"><div class="circle">
+	    	</div></div><div class="status"><div class="circle">
+	    	</div></div><div class="status"><div class="circle">
+	    	</div></div>
+	    </div>
+	    <div class="status_name" >
+	    	<div class="name">界定中</div>
+	    	<div class="name">已界定</div>
+	    	<div class="name">已带看</div>
+	    	<div class="name">已成交</div>
+	    </div>
+    </div>
+  </div>
+  
+  <article id="article">
+  	 
+	 
+  </article> 
+  
+   
+  
+  <footer class="footer" style="display:none;"  id="dealApply" onclick="opendeal()">
+    <div class="bottombar">
+    	<div class="content" style="width:100%" >成交申请</div>
+    </div>
+  </footer> 
+  
+  <footer class="footer" style="display:none;"  id="watchApply" onclick="openwatch()">
+    <div class="bottombar">
+    	<div class="content" style="width:100%" >带看申请</div>
+    </div>
+  </footer>
+  
+   <script  id="date" type="text/template">
+      {@each dataList as item,index}
+        <div  class="order-detail" >  
+	  	    <div class="state">
+	  	        {@if item.state===0||item.state===2||item.state===4||item.state===8||item.state===14}
+	  	        <div class="anname">${item.state|tostate}</div>
+	  	        {@else}
+	  	    	<div class="state_name">${item.state|tostate}</div>
+	  	    	{@/if}
+	  	    	<div class="time">${item.createtime|gettime}</div>
+	  	    </div>
+	  	    <div class="notes">
+			   ${item.notes|tonotes}
+		    </div>
+	    </div>
+      {@/each}
+   </script>   
+<script type="text/javascript" src="../../../script/api.js"></script>
+<!-- 图片懒加载 -->  
+<script src="../../../script/img.js"></script>
+<!--模版引擎-->  
+<script src="../../../script/juicer.js"></script>
+<script src="../../../script/global_variables.js"></script>
+<!--ajax-->
+<script src="../../../script/zepto.js"></script>
+<script src="../../../script/clipboard.js"></script>
+<script src="../../../script/btn.js"></script>
+<script>
+    apiready = function(){
+		 	//状态栏
+		api.setStatusBarStyle({
+		     style: 'light',
+		 color: '#000'
+		});
+		//获取数据
+		orderid=api.pageParam.orderid;
+		state=api.pageParam.state;
+		buildingid=api.pageParam.buildingid;
+		buildingName=api.pageParam.buildingName;
+		customerName=api.pageParam.customerName;
+		mycustomerid=api.pageParam.mycustomerid;
+		 
+		oWrapper = document.getElementById('article');
+		pageNum=1;
+		pageSize=7;
+		locked=false;
+		//初始化方法
+		init();
+		//提交按钮
+		showbtn();
+		if(state>=2&&state<=4)
+		{
+			state=1;
+		}
+		else if(state==5)
+		{
+			state=2;
+		}
+		else if(state>=6&&state<=9)
+		{
+			state=3;
+		}
+		else if(state>=10&&state<=15)
+		{
+			state=4;
+		}
+		else
+		{
+			state=0;
+		}
+		document.getElementById("customerName").innerHTML=customerName;
+		document.getElementById("buildingName").innerHTML=buildingName;
+		genStatus("hh1",state);
+		
+		//下拉加载
+		api.addEventListener({name: 'scrolltobottom'}, function(ret, err){
+	       pageNum++;
+	       getlist();       
+	    });
+	};
+
+	function showbtn(){
+		
+		if(state==5||state==6||state==8)
+		{
+			document.getElementById("watchApply").style.display="block";
+			document.getElementById("dealApply").style.display="none";
+		}
+		else if(state>=9&&state<=12||state==14||state==7)
+		{
+			document.getElementById("watchApply").style.display="none";
+			document.getElementById("dealApply").style.display="block";
+		}
+		else
+		{
+			document.getElementById("watchApply").style.display="none";
+			document.getElementById("dealApply").style.display="none";
+		}
+	}
+	
+	
+	function init(){
+		pageNum=1;
+		oWrapper.innerHTML="";
+		getlist();
+	}
+	
+	function getlist(){
+	  if(!locked)
+	  {
+	  	  locked=true;
+		  $.ajax({
+		      type: 'post',
+		      url: ipAddress+'/orderhis/getList/'+pageNum+'/'+pageSize,
+		      data:  {orderid:orderid},
+		      success: function(data){
+		      	 if(data.code=="200")
+		      	 {
+			         if(data.orderhisList.objs.length>0)
+			           xuanran(data.orderhisList.objs);
+		         }
+		         else
+		         {
+		         	alert(data.msg);
+		         }
+		         locked=false;
+		      },
+		      error: function(xhr, type){
+		      	 locked=false;
+		      }
+		  })
+	  }
+	}
+	
+	
+	function xuanran(datalist){
+	    var temp = document.getElementById('date');
+	    // 整合juicer模版
+	    juicer.register('tostate', tostate);
+	    juicer.register('gettime', gettime);
+	    juicer.register('tonotes', tonotes);
+	    var result = juicer(temp.innerHTML, {dataList:datalist});
+	    var oWrapper = document.getElementById('article');
+	    oWrapper.innerHTML += result;
+	}
+	
+	/* 渲染函数  */
+	//渲染时方法
+	var statelist=["已失效","","系统判重客","界定中","重客","已界定","已带看","带看确认申请","带看确认审核不通过","带看确认申请通过"
+	,"认筹","下定金","签约","成交确认申请","成交确认失败","成交确认审核通过"];
+	function tostate(data){
+		if(data==99)
+			return "交易已关闭";
+		return statelist[data];
+	}
+	
+	function gettime(data){
+	    var date=new Date(data);
+	    return date.getFullYear()+"-"+parseInt(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+	}
+	function tonotes(data){
+		var datalist=data.split("|");
+		length=datalist.length?datalist.length-1:0;
+		return datalist[length];
+	}
+	
+	
+	//打开其他页面
+	function openwatch(){
+		api.openWin({
+	      name: 'order_watch_win',
+	      url: './order_watch_win.html',
+	      pageParam: {
+	      	orderid:orderid,
+	      	buildingName:buildingName,
+	      	customerName:customerName
+	      },
+	    });
+	}
+	
+	function opendeal(){
+		api.openWin({
+	      name: 'order_deal_win',
+	      url: './order_deal_win.html',
+	      pageParam: {
+	      	orderid:orderid,
+	      	buildingName:buildingName,
+	      	customerName:customerName
+	      },
+	    });
+	}
+	
+	function openbuilding(){
+		api.openWin({
+	      name: 'building.detail_win',
+	      url: '../../building/building.detail_win.html',
+	      pageParam: {
+	      	buildingid:buildingid
+	      },
+	    });
+	}
+</script>
+</body>
+</html>
